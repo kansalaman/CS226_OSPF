@@ -41,6 +41,7 @@
   <transforms xmlns="http://www.xilinx.com/XMLSchema">
     <transform xil_pn:end_ts="1555180755" xil_pn:name="TRAN_copyInitialToXSTAbstractSynthesis" xil_pn:start_ts="1555180755">
       <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
     </transform>
     <transform xil_pn:end_ts="1555180755" xil_pn:name="TRAN_schematicsToHdl" xil_pn:prop_ck="7351641426546454542" xil_pn:start_ts="1555180755">
       <status xil_pn:value="SuccessfullyRun"/>
@@ -69,6 +70,9 @@
     <transform xil_pn:end_ts="1555219831" xil_pn:in_ck="3854351499096253" xil_pn:name="TRANEXT_xstsynthesize_spartan6" xil_pn:prop_ck="5010928418961849643" xil_pn:start_ts="1555219815">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="InputAdded"/>
+      <status xil_pn:value="InputChanged"/>
       <outfile xil_pn:name="Parser.lso"/>
       <outfile xil_pn:name="Parser.ngc"/>
       <outfile xil_pn:name="Parser.ngr"/>
