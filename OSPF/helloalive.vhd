@@ -30,15 +30,16 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity helloalive is
-    Port ( clk : in  STD_LOGIC;
-           out1 : out  STD_LOGIC_VECTOR (7 downto 0);
-           on : in  STD_LOGIC;
-           networkmask: in STD_LOGIC_VECTOR(31 downto 0);
+    Port (  clk : in  STD_LOGIC;
+            out1 : out  STD_LOGIC_VECTOR (7 downto 0);
+            on : in  STD_LOGIC;
+            networkmask: in STD_LOGIC_VECTOR(31 downto 0);
             ospftemplate: in std_logic(191 downto 0);
             neighbor: out STD_LOGIC_VECTOR(31 downto 0);
-				clk : in std_logic;
-            val: out std_logic
-           );
+            clk : in std_logic;
+            val: out std_logic;
+            reply_signal: in std_logic
+        );
 
     end helloalive;
 
@@ -65,6 +66,7 @@ hellopacket(95 downto 64) <= routerdeadinterval;
 hellopacket(127 downto 96) <= zero32;
 hellopacket(159 downto 128) <= zero32;
 hellopacket(191 downto 160) <= neighbor;
+signal cur_buffer(7 downto 0) <= zero8;
 type states is (COUNTING, SENDING);
 signal p_state, n_state : states := COUNTING;
 
@@ -76,10 +78,27 @@ if (clk='1' and clk'event) then
 		p_state <= n_state;
 		p_hellotimer <= n_hellotimer;
 		p_sendtimer <= n_sendtimer;
-		out1 <= cur_buffer;
-end procss;
-SEQ2: process(clk, p_hellotimer, p_sendtimer)
+        out1 <= cur_buffer;
+    end if;
+
+end process;
+COMB1: process(clk, p_hellotimer, p_sendtimer, reply_signal)
 begin
+    case( p_state ) is
+    
+        when COUNTING =>
+            if (reply_signal = '1') then
+                n_state <= SENDING;
+                n_sendtimer <= tts - "00000001"
+            elsif (p_hellotimer = zero8) then
+                n_state <= SENDING;
+                n_sendtimer <= tts - "00000001";
+            else
+                n_hellotimer = p_hellotimer-"00000001";    
+            end if ;
+        when others =>
+            
+    end case ;
 end process;	
 end Behavioral;
 
