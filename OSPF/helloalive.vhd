@@ -93,11 +93,19 @@ begin
             elsif (p_hellotimer = zero8) then
                 n_state <= SENDING;
                 n_sendtimer <= tts - "00000001";
+                val <= '1';
             else
                 n_hellotimer = p_hellotimer-"00000001";    
             end if ;
         when others =>
-            
+            if (p_sendtimer = zero8) then
+                n_state  <= COUNTING;
+                p_hellotimer <= hellotimer;
+                val <= '0'
+            else
+                    
+                n_sendtimer <= p_sendtimer - "00000001";
+            end if ;
     end case ;
 end process;	
 end Behavioral;
