@@ -19,7 +19,7 @@ entity helloalive is
             neighbor: in STD_LOGIC_VECTOR(31 downto 0);
             clk : in std_logic;
             val: out std_logic :='0';
-            reply_signal: in std_logic
+            reply_signal: in std_logic := '0'
         );
 
     end helloalive;
@@ -28,6 +28,8 @@ architecture Behavioral of helloalive is
 constant tts : STD_LOGIC_VECTOR(8 downto 0) := "001000100";
 constant hellointerval : STD_LOGIC_VECTOR(15 downto 0) := "0000000001100100";
 constant options, rtrpri : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
+constant networkmaskm : STD_LOGIC_VECTOR(31 downto 0) := networkmask;
+constant IPheaderm : STD_LOGIC_VECTOR (159 downto 0) := IPheader;
 signal hellotimer : STD_LOGIC_VECTOR(15 downto 0) := hellointerval - tts;
 signal p_hellotimer, n_hellotimer : STD_LOGIC_VECTOR(15 downto 0) := hellotimer;
 signal n_sendtimer, p_sendtimer : STD_LOGIC_VECTOR(8 downto 0) := tts;
@@ -37,9 +39,11 @@ constant zero8 : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
 signal cur_buffer : STD_LOGIC_VECTOR(7 downto 0) := zero8;
 type states is (COUNTING, SENDING);
 signal p_state, n_state : states := COUNTING;
-signal hellopacket : STD_LOGIC_VECTOR(191 downto 0) := networkmask & hellointerval & options & 
+signal hellopacket : STD_LOGIC_VECTOR(191 downto 0) := networkmaskm & hellointerval & options & 
                                                     rtrpri & routerdeadinterval & zero32 & zero32 & neighbor;
-signal completepacket : STD_LOGIC_VECTOR(543 downto 0) := IPheader & ospfhelloheader & hellopacket;
+signal completepacket : STD_LOGIC_VECTOR(543 downto 0) := IPheaderm & ospfhelloheader & hellopacket;
+--signal hellopacket : STD_LOGIC_VECTOR(191 downto 0) := hellopacketm;
+--signal completepacket : STD_LOGIC_VECTOR(543 downto 0) :=  completepacketm;
 -- ospfheader(15 downto 8) <= "0000001"; --type
 -- hellopacket(31 downto 0) <= networkmask;
 -- hellopacket(47 downto 32) <= hellointerval;
@@ -86,12 +90,10 @@ begin
             else
                 n_sendtimer <= p_sendtimer - "00000001";
                 completepacket <= completepacket(535 downto 0) & completepacket(543 downto 536);
-            end if ;
+					 cur_buffer <= completepacket(543 downto 536);
+				end if ;
     end case ;
 end process;	
-
-val <= '0';
-cur_buffer <= completepacket(543 downto 536);
 end Behavioral;
 
  
