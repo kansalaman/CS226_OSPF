@@ -1,5 +1,5 @@
-set -tmpdir "/home/yash20/isefiles/CS226_OSPF/OSPF/xst/projnav.tmp"
-set -xsthdpdir "/home/yash20/isefiles/CS226_OSPF/OSPF/xst"
+set -tmpdir "/home/ansh/Desktop/Academics/Semester 4/CS 226/CS226_OSPF/OSPF/xst/projnav.tmp"
+set -xsthdpdir "/home/ansh/Desktop/Academics/Semester 4/CS 226/CS226_OSPF/OSPF/xst"
 run -compileonly yes
 -p xc6slx45t-2-csg324
 -top helloalive

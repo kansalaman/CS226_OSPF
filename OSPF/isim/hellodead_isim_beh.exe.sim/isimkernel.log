@@ -1,0 +1,29 @@
+Command line:
+   hellodead_isim_beh.exe
+     -simmode  gui
+     -simrunnum  1
+     -socket  43633
+
+Thu Apr 25 23:45:25 2019
+
+
+ Elaboration Time: 0.02 sec
+
+ Current Memory Usage: 197.132 Meg
+
+ Total Signals          : 6
+ Total Nets             : 75
+ Total Signal Drivers   : 1
+ Total Blocks           : 3
+ Total Primitive Blocks : 3
+ Total Processes        : 0
+ Total Traceable Variables  : 13
+ Total Scalar Nets and Variables : 558
+Total Line Count : 0
+
+ Total Simulation Time: 0.08 sec
+
+ Current Memory Usage: 272.634 Meg
+
+Thu Apr 25 23:46:18 2019
+

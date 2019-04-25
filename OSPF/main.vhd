@@ -15,6 +15,12 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
+-- Configuration of the router: 
+-- (Not sure)
+-- Router ID: 192.168.0.1
+-- Interface IPs : 192.168.i.1 (ensure different subnets for each interface?)
+-- Subnet mask: 255.255.255.0 for every one?
+
 entity main is
     Port ( in1 : in  STD_LOGIC_VECTOR (8 downto 0);
            out1 : out  STD_LOGIC_VECTOR (7 downto 0);

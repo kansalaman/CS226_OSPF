@@ -1,0 +1,10 @@
+Command line:
+   tb_helloalive_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  53781
+
+Thu Apr 25 23:50:58 2019
+
+
+ Elaboration Time: 0.02 sec

@@ -1,0 +1,2 @@
+vhdl work "helloalive.vhd"
+vhdl work "tb_helloalive.vhd"
