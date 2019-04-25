@@ -90,7 +90,7 @@ begin
             else
                 n_sendtimer <= p_sendtimer - "00000001";
                 completepacket <= completepacket(535 downto 0) & completepacket(543 downto 536);
-					 cur_buffer <= completepacket(543 downto 536);
+                cur_buffer <= completepacket(543 downto 536);
 				end if ;
     end case ;
 end process;	
