@@ -35,8 +35,8 @@ entity main is
 end main;
 
 architecture Behavioral of main is
-signal neighbor1, neighbor2, neighbor3, neighbor4, neighbor5, neighbor6, neighbor7
-        neighbor8 : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
+signal neighbor1, neighbor2, neighbor3, neighbor4, neighbor5, neighbor6, neighbor7,
+		 neighbor8 : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
 -- ZEROS = empty
 variable OSPFheader : STD_LOGIC_VECTOR(191 downto 0) := (others => '0');
 -- Assemble template

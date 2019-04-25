@@ -19,7 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 use IEEE.NUMERIC_STD.ALL;
@@ -30,12 +30,11 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity helloalive is
-    Port (  clk : in  STD_LOGIC;
-            out1 : out  STD_LOGIC_VECTOR (7 downto 0);
-            on : in  STD_LOGIC;
+    Port (  out1 : out  STD_LOGIC_VECTOR (7 downto 0);
+            on1 : in  STD_LOGIC;
             networkmask: in STD_LOGIC_VECTOR(31 downto 0);
-            ospftemplate: in std_logic(191 downto 0);
-            neighbor: out STD_LOGIC_VECTOR(31 downto 0);
+            ospftemplate: in STD_LOGIC_VECTOR(191 downto 0);
+            neighbor: inout STD_LOGIC_VECTOR(31 downto 0);
             clk : in std_logic;
             val: out std_logic;
             reply_signal: in std_logic
@@ -50,10 +49,52 @@ constant tts : STD_LOGIC_VECTOR(8 downto 0) := "00010100";
 constant hellointerval : STD_LOGIC_VECTOR(15 downto 0) := "01000000";
 constant options, rtrpri : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
 signal hellotimer : STD_LOGIC_VECTOR(7 downto 0);
-signal sendtimer : STD_LOGIC_VECTOR(7 downto 0) := tts;
+signal p_hellotimer, n_hellotimer : STD_LOGIC_VECTOR(7 downto 0);
+signal n_sendtimer, p_sendtimer : STD_LOGIC_VECTOR(7 downto 0) := tts;
 constant routerdeadinterval : STD_LOGIC_VECTOR(31 downto 0) := "0000000010000000"; -- 2x hello_interval
 constant zero32 : STD_LOGIC_VECTOR(31 downto 0) := (others => '0'); -- DR and BDR
 constant zero8 : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
+signal cur_buffer : STD_LOGIC_VECTOR(7 downto 0) := zero8;
+type states is (COUNTING, SENDING);
+signal p_state, n_state : states := COUNTING;
+
+
+begin
+SEQ1: process(clk)
+begin
+if (clk='1' and clk'event) then
+		p_state <= n_state;
+		p_hellotimer <= n_hellotimer;
+		p_sendtimer <= n_sendtimer;
+      out1 <= cur_buffer;
+    end if;
+
+end process;
+COMB1: process(clk, p_hellotimer, p_sendtimer, reply_signal)
+begin
+    case( p_state ) is
+    
+        when COUNTING =>
+            if (reply_signal = '1') then
+                n_state <= SENDING;
+                n_sendtimer <= tts - "00000001";
+            elsif (p_hellotimer = zero8) then
+                n_state <= SENDING;
+                n_sendtimer <= tts - "00000001";
+                val <= '1';
+            else
+                n_hellotimer <= p_hellotimer - "00000001";    
+            end if;
+        when others =>
+            if (p_sendtimer = zero8) then
+                n_state  <= COUNTING;
+                n_hellotimer <= hellotimer;
+                val <= '0';
+            else
+                n_sendtimer <= p_sendtimer - "00000001";
+            end if ;
+    end case ;
+end process;	
 hellotimer <= hellointerval - tts;
 ospfheader <= ospftemplate;
 val <= '0';
@@ -66,47 +107,6 @@ hellopacket(95 downto 64) <= routerdeadinterval;
 hellopacket(127 downto 96) <= zero32;
 hellopacket(159 downto 128) <= zero32;
 hellopacket(191 downto 160) <= neighbor;
-signal cur_buffer(7 downto 0) <= zero8;
-type states is (COUNTING, SENDING);
-signal p_state, n_state : states := COUNTING;
 
-
-begin
-SEQ1: process(clk)
-begin
-if (clk='1' and clk'event) then
-		p_state <= n_state;
-		p_hellotimer <= n_hellotimer;
-		p_sendtimer <= n_sendtimer;
-        out1 <= cur_buffer;
-    end if;
-
-end process;
-COMB1: process(clk, p_hellotimer, p_sendtimer, reply_signal)
-begin
-    case( p_state ) is
-    
-        when COUNTING =>
-            if (reply_signal = '1') then
-                n_state <= SENDING;
-                n_sendtimer <= tts - "00000001"
-            elsif (p_hellotimer = zero8) then
-                n_state <= SENDING;
-                n_sendtimer <= tts - "00000001";
-                val <= '1';
-            else
-                n_hellotimer = p_hellotimer-"00000001";    
-            end if ;
-        when others =>
-            if (p_sendtimer = zero8) then
-                n_state  <= COUNTING;
-                p_hellotimer <= hellotimer;
-                val <= '0'
-            else
-                    
-                n_sendtimer <= p_sendtimer - "00000001";
-            end if ;
-    end case ;
-end process;	
 end Behavioral;
 
