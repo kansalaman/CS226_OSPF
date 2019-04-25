@@ -43,8 +43,21 @@ variable OSPFheader : STD_LOGIC_VECTOR(191 downto 0) := (others => '0');
 variable IPheader : STD_LOGIC_VECTOR(159 downto 0) := (others => '0');
 -- Assemble template
 constant nullneigh : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
-begin 
+signal ospfhelloheader : STD_LOGIC_VECTOR(191 downto 0);
 
+begin 
+ospfhelloheader(183 downto 176) <= "00000001"; -- type
+
+-- parser(...) all the output signals have been mapped.
+
+-- GEN1: helloalive(out1, '1', networkmask, ospfhelloheader, IPheader1, neighbor1, clk, val1, reply_signal1);
+-- GEN2: helloalive(out2, '1', networkmask, ospfhelloheader, IPheader2, neighbor2, clk, val2, reply_signal2);
+-- GEN3: helloalive(out3, '1', networkmask, ospfhelloheader, IPheader3, neighbor3, clk, val3, reply_signal3);
+-- GEN4: helloalive(out4, '1', networkmask, ospfhelloheader, IPheader4, neighbor4, clk, val4, reply_signal4);
+-- GEN5: helloalive(out5, '1', networkmask, ospfhelloheader, IPheader5, neighbor5, clk, val5, reply_signal5);
+-- GEN6: helloalive(out6, '1', networkmask, ospfhelloheader, IPheader6, neighbor6, clk, val6, reply_signal6);
+-- GEN7: helloalive(out7, '1', networkmask, ospfhelloheader, IPheader7, neighbor7, clk, val7, reply_signal7);
+-- GEN8: helloalive(out8, '1', networkmask, ospfhelloheader, IPheader8, neighbor8, clk, val8, reply_signal8);
 
 end Behavioral;
 

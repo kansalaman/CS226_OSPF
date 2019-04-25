@@ -1,21 +1,6 @@
 ----------------------------------------------------------------------------------
 -- Company: 
 -- Engineer: 
--- 
--- Create Date:    19:56:49 04/20/2019 
--- Design Name: 
--- Module Name:    helloalive - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
---
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -24,16 +9,13 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -- arithmetic functions with Signed or Unsigned values
 use IEEE.NUMERIC_STD.ALL;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity helloalive is
     Port (  out1 : out  STD_LOGIC_VECTOR (7 downto 0);
             on1 : in  STD_LOGIC;
             networkmask: in STD_LOGIC_VECTOR(31 downto 0);
-            ospftemplate: in STD_LOGIC_VECTOR(191 downto 0);
+            ospfhelloheader: in STD_LOGIC_VECTOR(191 downto 0);
+            IPheader : in STD_LOGIC_VECTOR(31 downto 0);
             neighbor: inout STD_LOGIC_VECTOR(31 downto 0);
             clk : in std_logic;
             val: out std_logic;
@@ -43,13 +25,11 @@ entity helloalive is
     end helloalive;
 
 architecture Behavioral of helloalive is
-signal ospfheader : STD_LOGIC_VECTOR(191 downto 0);
-signal hellopacket : STD_LOGIC_VECTOR(191 downto 0);
 constant tts : STD_LOGIC_VECTOR(8 downto 0) := "00010100";
 constant hellointerval : STD_LOGIC_VECTOR(15 downto 0) := "01000000";
 constant options, rtrpri : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
-signal hellotimer : STD_LOGIC_VECTOR(7 downto 0);
-signal p_hellotimer, n_hellotimer : STD_LOGIC_VECTOR(7 downto 0);
+signal hellotimer : STD_LOGIC_VECTOR(7 downto 0) := hellointerval - tts;
+signal p_hellotimer, n_hellotimer : STD_LOGIC_VECTOR(7 downto 0) := hellotimer;
 signal n_sendtimer, p_sendtimer : STD_LOGIC_VECTOR(7 downto 0) := tts;
 constant routerdeadinterval : STD_LOGIC_VECTOR(31 downto 0) := "0000000010000000"; -- 2x hello_interval
 constant zero32 : STD_LOGIC_VECTOR(31 downto 0) := (others => '0'); -- DR and BDR
@@ -57,7 +37,20 @@ constant zero8 : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
 signal cur_buffer : STD_LOGIC_VECTOR(7 downto 0) := zero8;
 type states is (COUNTING, SENDING);
 signal p_state, n_state : states := COUNTING;
+signal hellopacket : STD_LOGIC_VECTOR(191 downto 0) := "0000001" & networkmask & hellointerval & options & 
+                                                    rtrpri & routerdeadinterval & zero32 & zero32 & neighbor;
+signal completepacket : STD_LOGIC_VECTOR(543 downto 0) := IPheader & ospfhelloheader & hellopacket;
+-- ospfheader(15 downto 8) <= "0000001"; --type
+-- hellopacket(31 downto 0) <= networkmask;
+-- hellopacket(47 downto 32) <= hellointerval;
+-- hellopacket(55 downto 48) <= options;
+-- hellopacket(63 downto 56) <= rtrpri;
+-- hellopacket(95 downto 64) <= routerdeadinterval;
+-- hellopacket(127 downto 96) <= zero32;
+-- hellopacket(159 downto 128) <= zero32;
+-- hellopacket(191 downto 160) <= neighbor;
 
+--sending packet requires 68 clock cycles
 
 begin
 SEQ1: process(clk)
@@ -72,8 +65,7 @@ if (clk='1' and clk'event) then
 end process;
 COMB1: process(clk, p_hellotimer, p_sendtimer, reply_signal)
 begin
-    case( p_state ) is
-    
+    case( p_state ) is  
         when COUNTING =>
             if (reply_signal = '1') then
                 n_state <= SENDING;
@@ -92,21 +84,13 @@ begin
                 val <= '0';
             else
                 n_sendtimer <= p_sendtimer - "00000001";
+                completepacket <= completepacket(535 downto 0) & hellopacket(543 downto 536);
             end if ;
     end case ;
 end process;	
-hellotimer <= hellointerval - tts;
-ospfheader <= ospftemplate;
+
 val <= '0';
-ospfheader(15 downto 8) <= "0000001";
-hellopacket(31 downto 0) <= networkmask;
-hellopacket(47 downto 32) <= hellointerval;
-hellopacket(55 downto 48) <= options;
-hellopacket(63 downto 56) <= rtrpri;
-hellopacket(95 downto 64) <= routerdeadinterval;
-hellopacket(127 downto 96) <= zero32;
-hellopacket(159 downto 128) <= zero32;
-hellopacket(191 downto 160) <= neighbor;
+cur_buffer <= hellopacket(543 downto 536);
+    end Behavioral;
 
-end Behavioral;
-
+ 
