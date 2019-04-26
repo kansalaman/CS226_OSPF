@@ -109,10 +109,7 @@ begin
 				else
 					n_state <= p_state;
 				end if ;
-				n_state <= p_state;
 			else
-				msb := in_index;
-				lsb := in_index - 7;
 				msb := in_index;
 				lsb := in_index - 7;
 				case( ID_part ) is
@@ -149,10 +146,7 @@ begin
 				else
 					n_state <= p_state;
 				end if ;
-				n_state <= p_state;
 			else
-				msb := in_index;
-				lsb := in_index - 7;
 				msb := in_index;
 				lsb := in_index - 7;
 				case( ID_part ) is
@@ -189,7 +183,6 @@ begin
 				else
 					n_state <= p_state;
 				end if ;
-				n_state <= p_state;
 			else
 				msb := in_index;
 				lsb := in_index - 7;
@@ -217,28 +210,6 @@ begin
 				end case;
 			end if ;
 	end case ;
-	--if(inval = '0') then
-	--	case( p_state ) is
-	--		when DOWN =>
-	--			if (hellogenin = '1' and helloactivein = '0') then
-	--				n_state <= INIT;
-	--			else
-	--				n_state <= p_state;
-	--			end if ;
-	--		when others =>
-	--			if (helloactivein = '1') then
-	--				n_state <= DOWN;
-	--			else
-	--				n_state <= p_state;
-	--			end if ;
-	--			n_state <= p_state;
-	--	end case;
-	--else
-	--	msb := in_index;
-	--	lsb := in_index - 7;
-		
-	--end if;
-
 end process;
 
 end Behavioral;
