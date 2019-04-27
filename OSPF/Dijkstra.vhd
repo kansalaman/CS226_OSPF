@@ -32,7 +32,8 @@ entity Dijkstra is
     ( 
     	din : in  STD_LOGIC_VECTOR ((PORTS*(NETWORK_SIZE+COST_SIZE) - 1) downto 0);
 		addr : out  STD_LOGIC_VECTOR ((NETWORK_SIZE - 1) downto 0);
-		enable : out  STD_LOGIC := '0'
+		enable : out  STD_LOGIC := '0';
+		clk : in STD_LOGIC
 	);
 end Dijkstra;
 
