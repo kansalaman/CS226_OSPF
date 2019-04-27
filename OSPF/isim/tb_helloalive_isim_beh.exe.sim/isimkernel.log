@@ -1,29 +1,29 @@
 Command line:
    tb_helloalive_isim_beh.exe
      -simmode  gui
-     -simrunnum  0
-     -socket  37149
+     -simrunnum  1
+     -socket  34079
 
-Fri Apr 26 00:29:02 2019
+Sat Apr 27 22:59:13 2019
 
 
- Elaboration Time: 0.01 sec
+ Elaboration Time: 0.02 sec
 
- Current Memory Usage: 197.759 Meg
+ Current Memory Usage: 197.632 Meg
 
- Total Signals          : 28
- Total Nets             : 1240
- Total Signal Drivers   : 16
+ Total Signals          : 27
+ Total Nets             : 1048
+ Total Signal Drivers   : 11
  Total Blocks           : 6
  Total Primitive Blocks : 5
  Total Processes        : 4
  Total Traceable Variables  : 25
- Total Scalar Nets and Variables : 2047
-Total Line Count : 32
+ Total Scalar Nets and Variables : 1855
+Total Line Count : 36
 
- Total Simulation Time: 0.02 sec
+ Total Simulation Time: 0.19 sec
 
- Current Memory Usage: 273.261 Meg
+ Current Memory Usage: 273.134 Meg
 
-Fri Apr 26 00:31:13 2019
+Sat Apr 27 23:00:49 2019
 
