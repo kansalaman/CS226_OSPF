@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "secureip" -o "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb_isim_beh.exe" -prj "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb_beh.prj" "work.helloActParseTb" 
