@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "secureip" -o "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/parser_tb_isim_beh.exe" -prj "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/parser_tb_beh.prj" "work.parser_tb" 
