@@ -5,17 +5,17 @@ Parameter TMPDIR set to /home/ise/ISE/CS226_OSPF/OSPF/xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
 Parameter xsthdpdir set to /home/ise/ISE/CS226_OSPF/OSPF/xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
-Reading design: Comparator_Single.prj
+Reading design: Comparator.prj
 
 TABLE OF CONTENTS
   1) Synthesis Options Summary
@@ -48,15 +48,18 @@ Parsing architecture <Behavioral> of entity <comparator_simple>.
 Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Single.vhd" into library work
 Parsing entity <Comparator_Single>.
 Parsing architecture <Behavioral> of entity <comparator_single>.
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator.vhd" into library work
+Parsing entity <Comparator>.
+Parsing architecture <Behavioral> of entity <comparator>.
 
 
-Total REAL time to Xst completion: 9.00 secs
-Total CPU time to Xst completion: 8.64 secs
+Total REAL time to Xst completion: 10.00 secs
+Total CPU time to Xst completion: 8.74 secs
  
 --> 
 
 
-Total memory usage is 299748 kilobytes
+Total memory usage is 299768 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    0 (   0 filtered)

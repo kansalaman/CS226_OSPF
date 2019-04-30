@@ -19,24 +19,26 @@ use IEEE.NUMERIC_STD.ALL;
 entity Comparator_Simple is
 	Generic
 	(
-		SIZE : integer := 6
+		COST_SIZE : integer := 6;
+		NETWORK_SIZE : integer := 6
 	);
 	Port
 	(
-		in1, in2 : in STD_LOGIC_VECTOR(SIZE-1 downto 0);
-		out1 : out STD_LOGIC_VECTOR(SIZE-1 downto 0)
+		index1, index2 : in STD_LOGIC_VECTOR(COST_SIZE-1 downto 0);
+		cost1, cost2 : in STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0);
+		out1 : out STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0)
 	);
 end Comparator_Simple;
 
 architecture Behavioral of Comparator_Simple is
 
 begin
-SEQ : process (in1, in2)
+SEQ : process (index1, index2, cost1, cost2)
 begin
-  if (in1 < in2) then
-  	out1 <= in1;
+  if (cost1 < cost2) then
+  	out1 <= index1;
   else
-  	out1 <= in2;
+  	out1 <= index2;
   end if;
 end process SEQ;
 end Behavioral;

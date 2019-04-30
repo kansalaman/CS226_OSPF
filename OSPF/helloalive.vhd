@@ -29,7 +29,6 @@ constant tts : STD_LOGIC_VECTOR(8 downto 0) := "001000100";
 constant hellointerval : STD_LOGIC_VECTOR(15 downto 0) := "0000000001100100";
 constant options, rtrpri : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
 constant networkmaskm : STD_LOGIC_VECTOR(31 downto 0) := networkmask;
-constant IPheaderm : STD_LOGIC_VECTOR (159 downto 0) := IPheader;
 signal hellotimer : STD_LOGIC_VECTOR(15 downto 0) := hellointerval - tts;
 signal p_hellotimer, n_hellotimer : STD_LOGIC_VECTOR(15 downto 0) := hellotimer;
 signal n_sendtimer, p_sendtimer : STD_LOGIC_VECTOR(8 downto 0) := tts;
@@ -41,7 +40,8 @@ type states is (COUNTING, SENDING);
 signal p_state, n_state : states := COUNTING;
 signal hellopacket : STD_LOGIC_VECTOR(191 downto 0) := networkmaskm & hellointerval & options & 
                                                     rtrpri & routerdeadinterval & zero32 & zero32 & neighbor;
-signal completepacket : STD_LOGIC_VECTOR(543 downto 0) := IPheaderm & ospfhelloheader & hellopacket;
+signal completepacket : STD_LOGIC_VECTOR(543 downto 0) := IPheader & ospfhelloheader & networkmaskm & hellointerval & options & 
+                                                    rtrpri & routerdeadinterval & zero32 & zero32 & neighbor;
 --signal hellopacket : STD_LOGIC_VECTOR(191 downto 0) := hellopacketm;
 --signal completepacket : STD_LOGIC_VECTOR(543 downto 0) :=  completepacketm;
 -- ospfheader(15 downto 8) <= "0000001"; --type

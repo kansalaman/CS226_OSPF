@@ -1,14 +1,14 @@
-Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/ansh/Desktop/Academics/Semester 4/CS 226/CS226_OSPF/OSPF/tb_helloalive_isim_beh.exe -prj /home/ansh/Desktop/Academics/Semester 4/CS 226/CS226_OSPF/OSPF/tb_helloalive_beh.prj work.tb_helloalive 
-ISim P.20131013 (signature 0xfbc00daa)
-Number of CPUs detected in this system: 4
-Turning on mult-threading, number of parallel sub-compilation jobs: 8 
+Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -relaunch -intstyle "ise" -incremental -lib "secureip" -o "/home/ise/ISE/CS226_OSPF/OSPF/tb_helloalive_isim_beh.exe" -prj "/home/ise/ISE/CS226_OSPF/OSPF/tb_helloalive_beh.prj" "work.tb_helloalive" 
+ISim P.20160913 (signature 0xfbc00daa)
+Number of CPUs detected in this system: 1
+Turning on mult-threading, number of parallel sub-compilation jobs: 0 
 Determining compilation order of HDL files
-Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/CS226_OSPF/OSPF/helloalive.vhd" into library work
-Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/CS226_OSPF/OSPF/tb_helloalive.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/helloalive.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/tb_helloalive.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 98952 KB
-Fuse CPU Usage: 1270 ms
+Fuse Memory Usage: 98392 KB
+Fuse CPU Usage: 1290 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package numeric_std
@@ -18,7 +18,7 @@ Compiling architecture behavioral of entity helloalive [helloalive_default]
 Compiling architecture behavior of entity tb_helloalive
 Time Resolution for simulation is 1ps.
 Compiled 8 VHDL Units
-Built simulation executable /home/ansh/Desktop/Academics/Semester 4/CS 226/CS226_OSPF/OSPF/tb_helloalive_isim_beh.exe
-Fuse Memory Usage: 674812 KB
-Fuse CPU Usage: 1400 ms
-GCC CPU Usage: 300 ms
+Built simulation executable /home/ise/ISE/CS226_OSPF/OSPF/tb_helloalive_isim_beh.exe
+Fuse Memory Usage: 117200 KB
+Fuse CPU Usage: 1580 ms
+GCC CPU Usage: 220 ms

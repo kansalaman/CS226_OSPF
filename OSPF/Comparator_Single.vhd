@@ -16,48 +16,51 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
 entity Comparator_Single is
 	Generic 
 	( 
 		NETWORK_SIZE : integer := 6;
-		COST_SIZE : integer := 6
+		COST_SIZE : integer := 6;
+		NODES_SIZE : integer := 6	--Bits
 	);	  
     Port 
     (
-    	costs : in STD_LOGIC_VECTOR(((2 ** NETWORK_SIZE)*COST_SIZE) - 1);
-    	out1 : out STD_LOGIC_VECTOR((NETWORK_SIZE - 1) downto 0) := (others => '0')
+    	costs : in STD_LOGIC_VECTOR(((2 ** NODES_SIZE)*COST_SIZE) - 1 downto 0);
+    	indices : in STD_LOGIC_VECTOR(((2 ** NODES_SIZE)*NETWORK_SIZE) - 1 downto 0);
+    	out1 : out STD_LOGIC_VECTOR(((2 ** (NODES_SIZE - 1))*NETWORK_SIZE) - 1 downto 0) := (others => '0')
     );
 end Comparator_Single;
+
 
 architecture Behavioral of Comparator_Single is
 component Comparator_Simple is
 	Generic
 	(
-		SIZE : integer := 6
+		COST_SIZE : integer := 6;
+		NETWORK_SIZE : integer := 6
 	);
 	Port
 	(
-		in1, in2 : in STD_LOGIC_VECTOR(SIZE-1 downto 0);
-		out1 : out STD_LOGIC_VECTOR(SIZE-1 downto 0)
+		index1, index2 : in STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0);
+		cost1, cost2 : in STD_LOGIC_VECTOR(COST_SIZE-1 downto 0);
+		out1 : out STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0)
 	);
 end component;
 begin
-  	COMPGEN : for i in 0 to (2 ** (NETWORK_SIZE - 1) - 1) generate
+  	COMPGEN : for i in 0 to (2 ** (COST_SIZE - 1) - 1) generate
   		X : Comparator_Simple
   		generic map
   		(
-  			SIZE => COST_SIZE
+  			COST_SIZE => COST_SIZE,
+  			NETWORK_SIZE => NETWORK_SIZE
   		)
   		port map
   		(
-  			in1 => costs(((2*i + 1)*COST_SIZE - 1) downto (2*i*COST_SIZE)),
-  			in2 => costs(((2*i + 2)*COST_SIZE - 1) downto ((2*i + 1)*COST_SIZE)),
-  			out1 => out1((i+1)*COST_SIZE-1 downto i*COST_SIZE)
+  			index1 => indices((2*I + 1)*NETWORK_SIZE - 1 downto 2*NETWORK_SIZE),
+  			index2 => indices((2*I + 2)*NETWORK_SIZE - 1 downto (2*I + 1)*NETWORK_SIZE),
+  			cost1 => costs((2*I + 1)*NETWORK_SIZE - 1 downto 2*NETWORK_SIZE),
+  			cost2 => costs((2*I + 2)*NETWORK_SIZE - 1 downto (2*I + 1)*NETWORK_SIZE),
+  			out1 => out1((I+1)*NETWORK_SIZE - 1 downto I*NETWORK_SIZE)
   		);
   --		SEQ: process(costs)
   --		begin
