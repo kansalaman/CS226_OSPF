@@ -48,7 +48,7 @@ component Comparator_Single is
     	costs : in STD_LOGIC_VECTOR(((2 ** NODES_SIZE)*COST_SIZE) - 1 downto 0);
     	indices : in STD_LOGIC_VECTOR(((2 ** NODES_SIZE)*NETWORK_SIZE) - 1 downto 0);
     	out_index : out STD_LOGIC_VECTOR(((2 ** (NODES_SIZE - 1))*NETWORK_SIZE) - 1 downto 0) := (others => '0');
-    	out_cost : in STD_LOGIC_VECTOR((2 ** (NODES_SIZE - 1)*COST_SIZE) - 1 downto 0) := (others => '0')
+    	out_cost : out STD_LOGIC_VECTOR((2 ** (NODES_SIZE - 1)*COST_SIZE) - 1 downto 0) := (others => '0')
     );
 end component;
 
@@ -143,7 +143,7 @@ MODULE1 : Comparator_Single
 	(
 		NETWORK_SIZE => NETWORK_SIZE,
 		COST_SIZE => COST_SIZE,
-		NODES_SIZE => 32
+		NODES_SIZE => 5
 	)
 	port map
 	(
@@ -157,7 +157,7 @@ MODULE2 : Comparator_Single
 	(
 		NETWORK_SIZE => NETWORK_SIZE,
 		COST_SIZE => COST_SIZE,
-		NODES_SIZE => 16
+		NODES_SIZE => 4
 	)
 	port map
 	(
@@ -171,7 +171,7 @@ MODULE3 : Comparator_Single
 	(
 		NETWORK_SIZE => NETWORK_SIZE,
 		COST_SIZE => COST_SIZE,
-		NODES_SIZE => 8
+		NODES_SIZE => 3
 	)
 	port map
 	(
@@ -185,7 +185,7 @@ MODULE4 : Comparator_Single
 	(
 		NETWORK_SIZE => NETWORK_SIZE,
 		COST_SIZE => COST_SIZE,
-		NODES_SIZE => 4
+		NODES_SIZE => 2
 	)
 	port map
 	(
@@ -199,7 +199,7 @@ MODULE5 : Comparator_Single
 	(
 		NETWORK_SIZE => NETWORK_SIZE,
 		COST_SIZE => COST_SIZE,
-		NODES_SIZE => 2
+		NODES_SIZE => 1
 	)
 	port map
 	(

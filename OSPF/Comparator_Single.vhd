@@ -27,7 +27,8 @@ entity Comparator_Single is
     (
     	costs : in STD_LOGIC_VECTOR(((2 ** NODES_SIZE)*COST_SIZE) - 1 downto 0);
     	indices : in STD_LOGIC_VECTOR(((2 ** NODES_SIZE)*NETWORK_SIZE) - 1 downto 0);
-    	out1 : out STD_LOGIC_VECTOR(((2 ** (NODES_SIZE - 1))*NETWORK_SIZE) - 1 downto 0) := (others => '0')
+    	out_index : out STD_LOGIC_VECTOR(((2 ** (NODES_SIZE - 1))*NETWORK_SIZE) - 1 downto 0) := (others => '0');
+    	out_cost : out STD_LOGIC_VECTOR(((2 ** (NODES_SIZE - 1))*COST_SIZE) - 1 downto 0) := (others => '0')
     );
 end Comparator_Single;
 
@@ -41,13 +42,14 @@ component Comparator_Simple is
 	);
 	Port
 	(
-		index1, index2 : in STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0);
-		cost1, cost2 : in STD_LOGIC_VECTOR(COST_SIZE-1 downto 0);
-		out1 : out STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0)
+		index1, index2 : in STD_LOGIC_VECTOR(COST_SIZE-1 downto 0);
+		cost1, cost2 : in STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0);
+		out_index : out STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0);
+		out_cost : out STD_LOGIC_VECTOR(COST_SIZE-1 downto 0)
 	);
 end component;
 begin
-  	COMPGEN : for i in 0 to (2 ** (COST_SIZE - 1) - 1) generate
+  	COMPGEN : for I in 0 to (2 ** (NODES_SIZE - 1) - 1) generate
   		X : Comparator_Simple
   		generic map
   		(
@@ -56,11 +58,12 @@ begin
   		)
   		port map
   		(
-  			index1 => indices((2*I + 1)*NETWORK_SIZE - 1 downto 2*NETWORK_SIZE),
+   		index1 => indices((2*I + 1)*NETWORK_SIZE - 1 downto 2*I*NETWORK_SIZE),
   			index2 => indices((2*I + 2)*NETWORK_SIZE - 1 downto (2*I + 1)*NETWORK_SIZE),
-  			cost1 => costs((2*I + 1)*NETWORK_SIZE - 1 downto 2*NETWORK_SIZE),
+  			cost1 => costs((2*I + 1)*NETWORK_SIZE - 1 downto 2*I*NETWORK_SIZE),
   			cost2 => costs((2*I + 2)*NETWORK_SIZE - 1 downto (2*I + 1)*NETWORK_SIZE),
-  			out1 => out1((I+1)*NETWORK_SIZE - 1 downto I*NETWORK_SIZE)
+  			out_index => out_index((I+1)*NETWORK_SIZE - 1 downto I*NETWORK_SIZE),
+  			out_cost => out_cost((I+1)*COST_SIZE - 1 downto I*COST_SIZE)
   		);
   --		SEQ: process(costs)
   --		begin

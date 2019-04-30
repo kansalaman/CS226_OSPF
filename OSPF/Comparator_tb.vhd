@@ -10,35 +10,39 @@
   ARCHITECTURE behavior OF testbench IS 
 
   -- Component Declaration
-          COMPONENT <component name>
-          PORT(
-                  <port1> : IN std_logic;
-                  <port2> : IN std_logic_vector(3 downto 0);       
-                  <port3> : OUT std_logic_vector(3 downto 0)
-                  );
+          COMPONENT Comparator
+          Generic 
+          ( 
+            NETWORK_SIZE : integer := 6;
+            COST_SIZE : integer := 6
+          );    
+          Port 
+          (
+            costs : in STD_LOGIC_VECTOR(((2 ** NETWORK_SIZE)*COST_SIZE) - 1 downto 0);
+            out_index : out STD_LOGIC_VECTOR((NETWORK_SIZE - 1) downto 0);
+            out_cost : out STD_LOGIC_VECTOR((COST_SIZE - 1) downto 0)
+          );
           END COMPONENT;
 
-          SIGNAL <signal1> :  std_logic;
-          SIGNAL <signal2> :  std_logic_vector(3 downto 0);
-          
-
+  signal costs : STD_LOGIC_VECTOR(64*6 - 1 downto 0);
+  signal out_index, out_cost : STD_LOGIC_VECTOR(5 downto 0);
   BEGIN
-
-  -- Component Instantiation
-          uut: <component name> PORT MAP(
-                  <port1> => <signal1>,
-                  <port3> => <signal2>
+  --costs <= "000000000001000010000011000100000101000110000111001000001001001010001011001100001101001110001111010000010001010010010011010100010101010110010111011000011001011010011011011100011101011110011111100000100001100010100011100100100101100110100111101000101001101010101011101100101101101110101111110000110001110010110011110100110101110110110111111000111001111010111011111100111101111110111111";
+  costs <= "111111000000111101111111111011111010111001111000110111110110110101110100110011110010110001110000101111101110101101101100101011101010101001101000100111100110100101100100100011100010100001100000011111011110011101011100011011011010011001011000010111010110010101010100010011010010010001010000001111001110001101001100001011001010001001001000000111000110000101000100000011000010000001000000";
+  -- -- Component Instantiation
+          uut: Comparator
+          PORT MAP
+          (
+                  costs => costs,
+                  out_index => out_index,
+                  out_cost => out_cost
           );
-
 
   --  Test Bench Statements
      tb : PROCESS
      BEGIN
 
         wait for 100 ns; -- wait until global set/reset completes
-
-        -- Add user defined stimulus here
-
         wait; -- will wait forever
      END PROCESS tb;
   --  End Test Bench 

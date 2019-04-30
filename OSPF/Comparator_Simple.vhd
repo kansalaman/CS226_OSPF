@@ -24,9 +24,10 @@ entity Comparator_Simple is
 	);
 	Port
 	(
-		index1, index2 : in STD_LOGIC_VECTOR(COST_SIZE-1 downto 0);
-		cost1, cost2 : in STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0);
-		out1 : out STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0)
+		index1, index2 : in STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0);
+		cost1, cost2 : in STD_LOGIC_VECTOR(COST_SIZE-1 downto 0);
+		out_index : out STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0);
+		out_cost : out STD_LOGIC_VECTOR(COST_SIZE-1 downto 0)
 	);
 end Comparator_Simple;
 
@@ -36,9 +37,11 @@ begin
 SEQ : process (index1, index2, cost1, cost2)
 begin
   if (cost1 < cost2) then
-  	out1 <= index1;
+  	out_index <= index1;
+	out_cost <= cost1;
   else
-  	out1 <= index2;
+  	out_index <= index2;
+	out_cost <= cost2;
   end if;
 end process SEQ;
 end Behavioral;
