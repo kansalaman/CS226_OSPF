@@ -1,0 +1,28 @@
+Command line:
+   Dijkstra_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  46349
+
+Tue Apr 30 16:22:47 2019
+
+
+ Elaboration Time: 0.09 sec
+
+ Current Memory Usage: 203.854 Meg
+
+ Total Signals          : 494
+ Total Nets             : 3269
+ Total Signal Drivers   : 163
+ Total Blocks           : 145
+ Total Primitive Blocks : 75
+ Total Processes        : 75
+ Total Traceable Variables  : 236
+ Total Scalar Nets and Variables : 4117
+
+ Total Simulation Time: 0.11 sec
+
+ Current Memory Usage: 281.453 Meg
+
+Tue Apr 30 16:23:37 2019
+

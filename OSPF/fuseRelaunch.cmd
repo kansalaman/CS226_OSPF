@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "secureip" -o "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra_isim_beh.exe" -prj "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra_beh.prj" "Dijkstra" 

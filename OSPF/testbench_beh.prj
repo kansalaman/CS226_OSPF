@@ -1,4 +1,0 @@
-vhdl work "Comparator_Simple.vhd"
-vhdl work "Comparator_Single.vhd"
-vhdl work "Comparator.vhd"
-vhdl work "Comparator_tb.vhd"
