@@ -20,9 +20,10 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
-use IEEE.NUMERIC_STD.ALL;
+--use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
@@ -48,8 +49,8 @@ architecture Behavioral of helloActParse is
 	signal neighbor_id : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
 	signal old_neighbor : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
 	signal active_neighbor : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
-	signal ID_part, ID_next : STD_LOGIC_VECTOR(1 downto 0) := "00";
-	signal in_index, in_index_next : integer := 31;
+	signal ID_part : STD_LOGIC_VECTOR(1 downto 0) := "00";
+	signal in_index : STD_LOGIC_VECTOR(1 downto 0) := (others => '1');
 	signal curr_time, next_time : STD_LOGIC_VECTOR(9 downto 0) := (others => '0');
 	constant zero_time : STD_LOGIC_VECTOR(9 downto 0) := (others => '0');
 	constant max_time : STD_LOGIC_VECTOR(9 downto 0) := (others => '1');
@@ -61,10 +62,16 @@ begin
 	if (clk = '1' and clk'event) then
 		p_state <= n_state;
 		curr_time <= next_time;
+		if (ID_part = "00" and in_val = '1') then
+			old_neighbor <= active_neighbor;
+		end if;
+		if (ID_part = "00" and routerid_val = '1') then
+			router_id <= neighbor_id;
+		end if ;
 	end if;
 end process;
 
-COMBSTATE : process(p_state, ID_part, old_neighbor, routerid_val, curr_time, hellogenin)
+COMBSTATE : process(p_state, ID_part, old_neighbor, routerid_val, curr_time, hellogenin, self)
 begin
 	case( p_state ) is
 	
@@ -119,47 +126,50 @@ SEQUPDATE : process(clk)
 begin
 	if (clk = '1' and clk'event) then
 		if(in_val = '1') then
-			msb := in_index;
-			lsb := in_index - 7;
+			msb := conv_integer(in_index)*8 + 7;
+			lsb := conv_integer(in_index)*8;
 			case( ID_part ) is
 				when "00" =>
 					active_neighbor(msb downto lsb) <= in1;
-					in_index <= in_index - 8;
+					in_index <= in_index - 1;
 					ID_part <= "01";
 				when "01" =>
 					active_neighbor(msb downto lsb) <= in1;
-					in_index <= in_index - 8;
+					in_index <= in_index - 1;
 					ID_part <= "10";
 				when "10" =>
 					active_neighbor(msb downto lsb) <= in1;
-					in_index <= in_index - 8;
+					in_index <= in_index - 1;
 					ID_part <= "11";
 				when others =>
 					active_neighbor(msb downto lsb) <= in1;
 					ID_part <= "00";
-					in_index <= 31;
+					in_index <= (others => '1');
 			end case;
 		elsif (routerid_val = '1') then
-			msb := in_index;
-			lsb := in_index - 7;
+			msb := conv_integer(in_index)*8 + 7;
+			lsb := conv_integer(in_index)*8;
 			case( ID_part ) is
 				when "00" =>
 					neighbor_id(msb downto lsb) <= in1;
-					in_index <= in_index - 8;
+					in_index <= in_index - 1;
 					ID_part <= "01";
 				when "01" =>
 					neighbor_id(msb downto lsb) <= in1;
-					in_index <= in_index - 8;
+					in_index <= in_index - 1;
 					ID_part <= "10";
 				when "10" =>
 					neighbor_id(msb downto lsb) <= in1;
-					in_index <= in_index - 8;
+					in_index <= in_index - 1;
 					ID_part <= "11";
 				when others =>
 					neighbor_id(msb downto lsb) <= in1;
 					ID_part <= "00";
-					in_index <= 31;
+					in_index <= (others => '1');
 			end case;
+		else
+			in_index <= (others => '1');
+			ID_part <= (others => '0');
 		end if;
 	end if ;		
 end process;
@@ -168,17 +178,5 @@ stateout <= "00" when p_state = DOWN else
 				"01" when p_state = INIT else
 				"10" when p_state = ONE_WAY else
 				"11";
-process(neighbor_id, ID_part, routerid_val)
-begin
-	if (ID_part = "00" and routerid_val = '1') then
-		router_id <= neighbor_id;
-	end if ;
-end process;
 
-process(active_neighbor, ID_part, in_val)
-begin
-	if (ID_part = "00" and in_val = '1') then
-		old_neighbor <= active_neighbor;
-	end if;
-end process;
 end Behavioral;

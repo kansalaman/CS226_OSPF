@@ -1,6 +1,5 @@
 ISim log file
 Running: /home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb_isim_beh.wdb 
-INFO: There is another simulation running in the same directory. Using database file name isim1.wdb.
 ISim P.20131013 (signature 0xfbc00daa)
 WARNING: A WEBPACK license was found.
 WARNING: Please use Xilinx License Configuration Manager to check out a full ISim license.
@@ -14,7 +13,7 @@ Simulator is doing circuit initialization process.
 Finished circuit initialization process.
 # restart
 # restart
-# run 20us
+# run 20.00us
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
 # exit 0
