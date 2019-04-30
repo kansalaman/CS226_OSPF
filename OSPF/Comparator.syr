@@ -1,0 +1,410 @@
+Release 14.7 - xst P.20160913 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.05 secs
+ 
+--> 
+Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.05 secs
+ 
+--> 
+Reading design: Comparator.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Parsing
+  3) HDL Elaboration
+  4) HDL Synthesis
+       4.1) HDL Synthesis Report
+  5) Advanced HDL Synthesis
+       5.1) Advanced HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Partition Report
+  8) Design Summary
+       8.1) Primitive and Black Box Usage
+       8.2) Device utilization summary
+       8.3) Partition Resource Summary
+       8.4) Timing Report
+            8.4.1) Clock Information
+            8.4.2) Asynchronous Control Signals Information
+            8.4.3) Timing Summary
+            8.4.4) Timing Details
+            8.4.5) Cross Clock Domains Report
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "Comparator.prj"
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "Comparator"
+Output Format                      : NGC
+Target Device                      : xc6slx45t-2-csg324
+
+---- Source Options
+Top Module Name                    : Comparator
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Shift Register Extraction          : YES
+ROM Style                          : Auto
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Shift Register Minimum Size        : 2
+Use DSP Block                      : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+LUT Combining                      : Auto
+Reduce Control Sets                : Auto
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100000
+Add Generic Clock Buffer(BUFG)     : 16
+Register Duplication               : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Auto
+Use Synchronous Set                : Auto
+Use Synchronous Reset              : Auto
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Power Reduction                    : NO
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+DSP48 Utilization Ratio            : 100
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Parsing                                  *
+=========================================================================
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.vhd" into library work
+Parsing entity <Comparator_Simple>.
+Parsing architecture <Behavioral> of entity <comparator_simple>.
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Single.vhd" into library work
+Parsing entity <Comparator_Single>.
+Parsing architecture <Behavioral> of entity <comparator_single>.
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator.vhd" into library work
+Parsing entity <Comparator>.
+Parsing architecture <Behavioral> of entity <comparator>.
+
+=========================================================================
+*                            HDL Elaboration                            *
+=========================================================================
+
+Elaborating entity <Comparator> (architecture <Behavioral>) with generics from library <work>.
+
+Elaborating entity <Comparator_Simple> (architecture <Behavioral>) with generics from library <work>.
+
+Elaborating entity <Comparator_Single> (architecture <Behavioral>) with generics from library <work>.
+
+Elaborating entity <Comparator_Single> (architecture <Behavioral>) with generics from library <work>.
+
+Elaborating entity <Comparator_Single> (architecture <Behavioral>) with generics from library <work>.
+
+Elaborating entity <Comparator_Single> (architecture <Behavioral>) with generics from library <work>.
+
+Elaborating entity <Comparator_Single> (architecture <Behavioral>) with generics from library <work>.
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <Comparator>.
+    Related source file is "/home/ise/ISE/CS226_OSPF/OSPF/Comparator.vhd".
+        NETWORK_SIZE = 6
+        COST_SIZE = 6
+    Summary:
+	no macro.
+Unit <Comparator> synthesized.
+
+Synthesizing Unit <Comparator_Simple>.
+    Related source file is "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.vhd".
+        COST_SIZE = 6
+        NETWORK_SIZE = 6
+    Found 6-bit comparator greater for signal <cost1[5]_cost2[5]_LessThan_1_o> created at line 39
+    Summary:
+	inferred   1 Comparator(s).
+	inferred   2 Multiplexer(s).
+Unit <Comparator_Simple> synthesized.
+
+Synthesizing Unit <Comparator_Single_1>.
+    Related source file is "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Single.vhd".
+        NETWORK_SIZE = 6
+        COST_SIZE = 6
+        NODES_SIZE = 5
+    Summary:
+	no macro.
+Unit <Comparator_Single_1> synthesized.
+
+Synthesizing Unit <Comparator_Single_2>.
+    Related source file is "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Single.vhd".
+        NETWORK_SIZE = 6
+        COST_SIZE = 6
+        NODES_SIZE = 4
+    Summary:
+	no macro.
+Unit <Comparator_Single_2> synthesized.
+
+Synthesizing Unit <Comparator_Single_3>.
+    Related source file is "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Single.vhd".
+        NETWORK_SIZE = 6
+        COST_SIZE = 6
+        NODES_SIZE = 3
+    Summary:
+	no macro.
+Unit <Comparator_Single_3> synthesized.
+
+Synthesizing Unit <Comparator_Single_4>.
+    Related source file is "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Single.vhd".
+        NETWORK_SIZE = 6
+        COST_SIZE = 6
+        NODES_SIZE = 2
+    Summary:
+	no macro.
+Unit <Comparator_Single_4> synthesized.
+
+Synthesizing Unit <Comparator_Single_5>.
+    Related source file is "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Single.vhd".
+        NETWORK_SIZE = 6
+        COST_SIZE = 6
+        NODES_SIZE = 1
+    Summary:
+	no macro.
+Unit <Comparator_Single_5> synthesized.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Comparators                                          : 63
+ 6-bit comparator greater                              : 63
+# Multiplexers                                         : 126
+ 6-bit 2-to-1 multiplexer                              : 126
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Comparators                                          : 63
+ 6-bit comparator greater                              : 63
+# Multiplexers                                         : 126
+ 6-bit 2-to-1 multiplexer                              : 126
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <Comparator> ...
+
+Optimizing unit <Comparator_Single_1> ...
+
+Optimizing unit <Comparator_Single_2> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block Comparator, actual ratio is 4.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Design Summary                             *
+=========================================================================
+
+Top Level Output File Name         : Comparator.ngc
+
+Primitive and Black Box Usage:
+------------------------------
+# BELS                             : 588
+#      GND                         : 1
+#      LUT2                        : 16
+#      LUT3                        : 249
+#      LUT4                        : 18
+#      LUT5                        : 193
+#      LUT6                        : 93
+#      MUXF7                       : 11
+#      MUXF8                       : 6
+#      VCC                         : 1
+# IO Buffers                       : 396
+#      IBUF                        : 384
+#      OBUF                        : 12
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 6slx45tcsg324-2 
+
+
+Slice Logic Utilization: 
+ Number of Slice LUTs:                  569  out of  27288     2%  
+    Number used as Logic:               569  out of  27288     2%  
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:    569
+   Number with an unused Flip Flop:     569  out of    569   100%  
+   Number with an unused LUT:             0  out of    569     0%  
+   Number of fully used LUT-FF pairs:     0  out of    569     0%  
+   Number of unique control sets:         0
+
+IO Utilization: 
+ Number of IOs:                         396
+ Number of bonded IOBs:                 396  out of    190   208% (*) 
+
+Specific Feature Utilization:
+
+WARNING:Xst:1336 -  (*) More than 100% of Device resources are used
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+Timing Report
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+No clock signals found in this design
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -2
+
+   Minimum period: No path found
+   Minimum input arrival time before clock: No path found
+   Maximum output required time after clock: No path found
+   Maximum combinational path delay: 33.702ns
+
+Timing Details:
+---------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 54128422 / 12
+-------------------------------------------------------------------------
+Delay:               33.702ns (Levels of Logic = 25)
+  Source:            costs<92> (PAD)
+  Destination:       out_cost<4> (PAD)
+
+  Data Path: costs<92> to out_cost<4>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             3   1.328   1.221  costs_92_IBUF (costs_92_IBUF)
+     LUT6:I0->O            1   0.254   0.682  COMPSIMPLE[7].INIT/cost1[5]_cost2[5]_LessThan_1_o13 (COMPSIMPLE[7].INIT/cost1[5]_cost2[5]_LessThan_1_o12)
+     LUT3:I2->O            1   0.254   0.790  COMPSIMPLE[7].INIT/cost1[5]_cost2[5]_LessThan_1_o15_SW0 (N76)
+     LUT5:I3->O           11   0.250   1.267  COMPSIMPLE[7].INIT/cost1[5]_cost2[5]_LessThan_1_o15 (COMPSIMPLE[7].INIT/cost1[5]_cost2[5]_LessThan_1_o)
+     LUT3:I0->O            1   0.235   1.137  COMPSIMPLE[7].INIT/Mmux_out_cost31 (tempcosts<44>)
+     LUT6:I0->O            1   0.254   0.682  MODULE1/COMPGEN[3].X/cost1[5]_cost2[5]_LessThan_1_o13 (MODULE1/COMPGEN[3].X/cost1[5]_cost2[5]_LessThan_1_o12)
+     LUT5:I4->O            1   0.254   1.137  MODULE1/COMPGEN[3].X/cost1[5]_cost2[5]_LessThan_1_o15_SW0 (N100)
+     LUT6:I0->O            7   0.254   1.340  MODULE1/COMPGEN[3].X/cost1[5]_cost2[5]_LessThan_1_o15 (MODULE1/COMPGEN[3].X/cost1[5]_cost2[5]_LessThan_1_o)
+     LUT5:I0->O            2   0.254   1.181  MODULE1/COMPGEN[3].X/Mmux_out_cost31 (tempcosts<212>)
+     LUT6:I0->O            1   0.254   0.682  MODULE2/COMPGEN[1].X/cost1[5]_cost2[5]_LessThan_1_o13 (MODULE2/COMPGEN[1].X/cost1[5]_cost2[5]_LessThan_1_o12)
+     LUT3:I2->O            1   0.254   0.910  MODULE2/COMPGEN[1].X/cost1[5]_cost2[5]_LessThan_1_o15_SW0 (N132)
+     LUT5:I2->O            8   0.235   1.172  MODULE2/COMPGEN[1].X/cost1[5]_cost2[5]_LessThan_1_o15 (MODULE2/COMPGEN[1].X/cost1[5]_cost2[5]_LessThan_1_o)
+     LUT3:I0->O            3   0.235   1.042  MODULE2/COMPGEN[1].X/Mmux_out_cost11 (tempcosts<298>)
+     LUT6:I2->O            9   0.254   1.406  MODULE3/COMPGEN[0].X/cost1[5]_cost2[5]_LessThan_1_o12 (MODULE3/COMPGEN[0].X/cost1[5]_cost2[5]_LessThan_1_o11)
+     LUT5:I0->O            3   0.254   1.196  MODULE3/COMPGEN[0].X/Mmux_out_cost31 (tempcosts<338>)
+     LUT6:I1->O            1   0.254   0.000  MODULE4/COMPGEN[0].X/cost1[5]_cost2[5]_LessThan_1_o13_G (N169)
+     MUXF7:I1->O           1   0.175   0.682  MODULE4/COMPGEN[0].X/cost1[5]_cost2[5]_LessThan_1_o13 (MODULE4/COMPGEN[0].X/cost1[5]_cost2[5]_LessThan_1_o12)
+     LUT5:I4->O            1   0.254   1.137  MODULE4/COMPGEN[0].X/cost1[5]_cost2[5]_LessThan_1_o15_SW0 (N82)
+     LUT6:I0->O           10   0.254   1.438  MODULE4/COMPGEN[0].X/cost1[5]_cost2[5]_LessThan_1_o15 (MODULE4/COMPGEN[0].X/cost1[5]_cost2[5]_LessThan_1_o)
+     LUT5:I0->O            2   0.254   1.156  MODULE4/COMPGEN[0].X/Mmux_out_cost31 (tempcosts<362>)
+     LUT6:I1->O            1   0.254   0.682  MODULE5/COMPGEN[0].X/cost1[5]_cost2[5]_LessThan_1_o13 (MODULE5/COMPGEN[0].X/cost1[5]_cost2[5]_LessThan_1_o12)
+     LUT3:I2->O            1   0.254   0.910  MODULE5/COMPGEN[0].X/cost1[5]_cost2[5]_LessThan_1_o15_SW0 (N86)
+     LUT5:I2->O           11   0.235   1.267  MODULE5/COMPGEN[0].X/cost1[5]_cost2[5]_LessThan_1_o15 (MODULE5/COMPGEN[0].X/cost1[5]_cost2[5]_LessThan_1_o)
+     LUT3:I0->O            1   0.235   0.681  MODULE5/COMPGEN[0].X/Mmux_out_cost51 (out_cost_4_OBUF)
+     OBUF:I->O                 2.912          out_cost_4_OBUF (out_cost<4>)
+    ----------------------------------------
+    Total                     33.702ns (9.904ns logic, 23.798ns route)
+                                       (29.4% logic, 70.6% route)
+
+=========================================================================
+
+Cross Clock Domains Report:
+--------------------------
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 31.00 secs
+Total CPU time to Xst completion: 28.02 secs
+ 
+--> 
+
+
+Total memory usage is 394468 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

@@ -1,0 +1,5 @@
+xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.syr" 
+xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.syr" 
+xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.syr" 
+xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.syr" 
+xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.syr" 

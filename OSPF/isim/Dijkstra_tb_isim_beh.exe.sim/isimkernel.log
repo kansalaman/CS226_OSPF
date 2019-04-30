@@ -1,0 +1,5 @@
+Command line:
+   Dijkstra_tb_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  38937

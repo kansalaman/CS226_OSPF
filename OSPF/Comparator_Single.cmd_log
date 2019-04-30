@@ -1,0 +1,1 @@
+xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Single.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Single.syr" 

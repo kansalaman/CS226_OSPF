@@ -5,8 +5,5 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="HDLCompiler" num="960" delta="unknown" >"/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.vhd" Line 151: Expression has incompatible type
-</msg>
-
 </messages>
 

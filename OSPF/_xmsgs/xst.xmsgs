@@ -5,8 +5,4 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="error" file="HDLCompiler" num="885" delta="old" >"/home/ise/ISE/CS226_OSPF/OSPF/main.vhd" Line 47: Variable outside of subprogram or process must be &apos;shared&apos;
-</msg>
-
 </messages>
-

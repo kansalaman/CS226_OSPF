@@ -1,6 +1,9 @@
-set -tmpdir "/home/ise/ISE/CS226_OSPF/OSPF/xst/projnav.tmp"
-set -xsthdpdir "/home/ise/ISE/CS226_OSPF/OSPF/xst"
-run -compileonly yes
+set -tmpdir "xst/projnav.tmp"
+set -xsthdpdir "xst"
+run
+-ifn Comparator_Single.prj
+-ofn Comparator_Single
+-ofmt NGC
 -p xc6slx45t-2-csg324
 -top Comparator_Single
 -opt_mode Speed
@@ -12,7 +15,6 @@ run -compileonly yes
 -rtlview Yes
 -glob_opt AllClockNets
 -read_cores YES
--sd {"ipcore_dir"  }
 -write_timing_constraints NO
 -cross_clock_analysis NO
 -hierarchy_separator /
@@ -48,4 +50,3 @@ run -compileonly yes
 -iob Auto
 -equivalent_register_removal YES
 -slice_utilization_ratio_maxmargin 5
--ifn Comparator_Single.prj

@@ -1,5 +1,5 @@
 ISim log file
-Running: /home/ise/ISE/CS226_OSPF/OSPF/Dijkstra_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/ise/ISE/CS226_OSPF/OSPF/Dijkstra_isim_beh.wdb 
+Running: /home/ise/ISE/CS226_OSPF/OSPF/Dijkstra_tb_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/ise/ISE/CS226_OSPF/OSPF/Dijkstra_tb_isim_beh.wdb 
 ISim P.20160913 (signature 0xfbc00daa)
 ----------------------------------------------------------------------
 WARNING:Security:42 - Your software subscription period has lapsed. Your current version of Xilinx tools will continue to function, but you no longer qualify for Xilinx software updates or new releases.
@@ -13,4 +13,28 @@ Time resolution is 1 ps
 # run 1000 ns
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
-# exit 0
+at 5 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+at 5 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 15 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 25 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 35 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 45 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 55 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 65 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 75 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 85 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 95 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+# restart
+# run 200ns
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+at 5 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 15 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 25 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 35 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 45 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 55 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 65 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 75 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 85 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+at 95 ns(1), Instance /dijkstra_tb/RAM/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
