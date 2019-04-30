@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -lib "secureip" -o "/home/ise/ISE/CS226_OSPF/OSPF/tb_helloalive_isim_beh.exe" -prj "/home/ise/ISE/CS226_OSPF/OSPF/tb_helloalive_beh.prj" "work.tb_helloalive" 
+-intstyle "ise" -incremental -lib "secureip" -o "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb_isim_beh.exe" -prj "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb_beh.prj" "work.helloActParseTb" 

@@ -103,15 +103,15 @@ BEGIN
       
       -- insert stimulus here 
       for i in 0 to 15 loop
-		  wait for clk_period;
-		  inval <= '1';
-        in1 <= conv_std_logic_vector(i, 8);
+          wait for clk_period;
+          inval <= '1';
+			 in1 <= conv_std_logic_vector(i, 8);
       end loop;
-		inval <= '0';
+        inval <= '0';
       helloactivein <= '1';
-	   wait for clk_period;
-	   helloactivein <= '0';
-	   wait for clk_period;
+       wait for clk_period;
+       helloactivein <= '0';
+       wait for clk_period;
       wait;
    end process;
 
