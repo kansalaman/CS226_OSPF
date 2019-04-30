@@ -1,6 +1,9 @@
-set -tmpdir "/home/ansh/Desktop/Academics/Semester 4/CS 226/CS226_OSPF/OSPF/xst/projnav.tmp"
-set -xsthdpdir "/home/ansh/Desktop/Academics/Semester 4/CS 226/CS226_OSPF/OSPF/xst"
-run -compileonly yes
+set -tmpdir "xst/projnav.tmp"
+set -xsthdpdir "xst"
+run
+-ifn helloalive.prj
+-ofn helloalive
+-ofmt NGC
 -p xc6slx45t-2-csg324
 -top helloalive
 -opt_mode Speed
@@ -12,6 +15,7 @@ run -compileonly yes
 -rtlview Yes
 -glob_opt AllClockNets
 -read_cores YES
+-sd {"ipcore_dir"  }
 -write_timing_constraints NO
 -cross_clock_analysis NO
 -hierarchy_separator /
@@ -47,4 +51,3 @@ run -compileonly yes
 -iob Auto
 -equivalent_register_removal YES
 -slice_utilization_ratio_maxmargin 5
--ifn helloalive.prj

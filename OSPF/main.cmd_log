@@ -1,0 +1,2 @@
+xst -intstyle ise -ifn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/main.xst" -ofn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/main.syr" 
+xst -intstyle ise -ifn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/main.xst" -ofn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/main.syr" 
