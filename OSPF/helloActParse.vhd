@@ -37,7 +37,6 @@ entity helloActParse is
            --neighbor : in  STD_LOGIC_VECTOR (31 downto 0);
            in1 : in  STD_LOGIC_VECTOR (7 downto 0);
            hellogenin : in  STD_LOGIC;
-           helloactivein : in STD_LOGIC;
            stateout : out STD_LOGIC_VECTOR(1 downto 0);
            router_id : out STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
            in_val : in  STD_LOGIC);
@@ -51,6 +50,9 @@ architecture Behavioral of helloActParse is
 	signal active_neighbor : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
 	signal ID_part, ID_next : STD_LOGIC_VECTOR(1 downto 0) := "00";
 	signal in_index, in_index_next : integer := 31;
+	signal curr_time, next_time : STD_LOGIC_VECTOR(9 downto 0) := (others => '0');
+	constant zero_time : STD_LOGIC_VECTOR(9 downto 0) := (others => '0');
+	constant max_time : STD_LOGIC_VECTOR(9 downto 0) := (others => '1');
 
 begin
 
@@ -58,48 +60,59 @@ SEQ1 : process(clk)
 begin
 	if (clk = '1' and clk'event) then
 		p_state <= n_state;
+		curr_time <= next_time;
 	end if;
 end process;
 
-COMBSTATE : process(p_state, ID_part, old_neighbor, routerid_val, helloactivein, hellogenin)
+COMBSTATE : process(p_state, ID_part, old_neighbor, routerid_val, curr_time, hellogenin)
 begin
 	case( p_state ) is
 	
 		when DOWN =>
 			if (hellogenin = '1') then
 				n_state <= INIT;
+				next_time <= max_time;
 			elsif (routerid_val = '1') then
 				n_state <= ONE_WAY;
+				next_time <= max_time;
 			else
 				n_state <= p_state;
+				next_time <= zero_time;
 			end if ;
 		when INIT =>
-			if(helloactivein = '1') then
+			if (curr_time = zero_time) then
 				n_state <= DOWN;
+				next_time <= zero_time;
 			elsif (routerid_val = '1') then
 				n_state <= ONE_WAY;
+				next_time <= max_time;
 			else
 				n_state <= p_state;
+				next_time <= curr_time - 1;
 			end if;
 		when ONE_WAY =>
-			if (helloactivein = '1') then
+			if (curr_time = zero_time) then
 				n_state <= DOWN;
+				next_time <= zero_time;
 			elsif (old_neighbor = self) then
 				n_state <= TWO_WAY;
+				next_time <= max_time;
 			else
 				n_state <= p_state;
+				next_time <= curr_time - 1;
 			end if ;
 		when others =>
-			if (helloactivein = '1') then
+			if (curr_time = zero_time) then
 				n_state <= DOWN;
+				next_time <= zero_time;
 			else
 				n_state <= p_state;
+				next_time <= curr_time - 1;
 			end if;
 	end case ;
 end process;
 
 
---COMBUPDATE : process(in_val, in1, self, ID_part, in_index, active_neighbor)
 SEQUPDATE : process(clk)
 	variable msb : integer;
 	variable lsb : integer;

@@ -47,7 +47,6 @@ ARCHITECTURE behavior OF helloActParseTb IS
          routerid_val : IN  std_logic;
          in1 : IN  std_logic_vector(7 downto 0);
          hellogenin : IN  std_logic;
-         helloactivein : IN  std_logic;
          stateout : OUT  std_logic_vector(1 downto 0);
          router_id : OUT  std_logic_vector(31 downto 0);
          in_val : IN  std_logic
@@ -61,7 +60,6 @@ ARCHITECTURE behavior OF helloActParseTb IS
    signal routerid_val : std_logic := '0';
    signal in1 : std_logic_vector(7 downto 0) := (others => '0');
    signal hellogenin : std_logic := '0';
-   signal helloactivein : std_logic := '0';
    signal in_val : std_logic := '0';
 
     --Outputs
@@ -80,7 +78,6 @@ BEGIN
           routerid_val => routerid_val,
           in1 => in1,
           hellogenin => hellogenin,
-          helloactivein => helloactivein,
           stateout => stateout,
           router_id => router_id,
           in_val => in_val
@@ -112,6 +109,7 @@ BEGIN
       wait for clk_period*4;
       routerid_val <= '0';
 		in1 <= (others => '0');
+		wait for clk_period*20;
       -- insert stimulus here 
       for i in 0 to 15 loop
           wait for clk_period;
@@ -121,11 +119,7 @@ BEGIN
 		wait for clk_period;
 		in_val <= '0';
 		in1 <= (others => '0');
-		wait for clk_period;
-      helloactivein <= '1';
-      wait for clk_period;
-      helloactivein <= '0';
-      wait for clk_period;
+      wait for clk_period*1100;
       -- insert stimulus here 
 
       wait;
