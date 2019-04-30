@@ -1,1 +1,0 @@
--intstyle "ise" -incremental -lib "secureip" -o "/home/ise/ISE/CS226_OSPF/OSPF/testbench_isim_beh.exe" -prj "/home/ise/ISE/CS226_OSPF/OSPF/testbench_beh.prj" "testbench" 

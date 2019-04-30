@@ -23,7 +23,7 @@ end hellodead;
 architecture Behavioral of hellodead is
 signal isactive : std_logic := '0';
 signal p_state, n_state: states := WAITING;
-signal counter: STD_LO = routerdeadinterval
+signal counter: STD_LO := routerdeadinterval;
 
 begin
 -- Hello Parser keeps the value mapped to some variable permanently and changes the value if necessary.
@@ -31,5 +31,6 @@ begin
 -- calculate time at which the neighbour value is to be checked == routerdeadinterval
 -- change the mapped value of down signal iff neighbour's hello-packet content neighvalue does not match my routerID. 
 -- the down signal is always set to some value but will be considered only if the main FSM is in its two-way
+
 end Behavioral;
 

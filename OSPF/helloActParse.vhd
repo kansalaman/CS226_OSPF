@@ -212,4 +212,9 @@ begin
 	end case ;
 end process;
 
+stateout <= "00" when p_state = DOWN else
+				"01" when p_state = INIT else
+				"10" when p_state = ONE_WAY else
+				"11";
+
 end Behavioral;
