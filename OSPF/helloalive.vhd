@@ -14,9 +14,10 @@ entity helloalive is
     Port (  out1 : out  STD_LOGIC_VECTOR (7 downto 0);
             on1 : in  STD_LOGIC;
             networkmask: in STD_LOGIC_VECTOR(31 downto 0);
+            isgen : out std_logic;
             ospfhelloheader: in STD_LOGIC_VECTOR(191 downto 0);
             IPheader : in STD_LOGIC_VECTOR(159 downto 0);
-            neighbor: in STD_LOGIC_VECTOR(31 downto 0);
+            neighbor: in STD_LOGIC_VECTOR(31 downto 0); -- My neighbours.
             clk : in std_logic;
             val: out std_logic :='0';
             reply_signal: in std_logic := '0'

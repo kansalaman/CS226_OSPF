@@ -23,7 +23,7 @@ end hellodead;
 architecture Behavioral of hellodead is
 signal isactive : std_logic := '0';
 signal p_state, n_state: states := WAITING;
-signal counter = routerdeadinterval
+signal counter: STD_LO = routerdeadinterval
 
 begin
 -- Hello Parser keeps the value mapped to some variable permanently and changes the value if necessary.
