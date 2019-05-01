@@ -33,9 +33,9 @@ entity Dijkstra is
     	din : in  STD_LOGIC_VECTOR ((PORTS*(NETWORK_SIZE+COST_SIZE) - 1) downto 0);
 		addr_read : out  STD_LOGIC_VECTOR ((NETWORK_SIZE - 1) downto 0) := (others => '0');
 		read : out STD_LOGIC;
-		write : out STD_LOGIC;
-		addr_write : out STD_LOGIC_VECTOR ((NETWORK_SIZE - 1) downto 0);
-		dout : out STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0);
+		write : out STD_LOGIC := '0';
+		addr_write : out STD_LOGIC_VECTOR ((NETWORK_SIZE - 1) downto 0) := (others => '0');
+		dout : out STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0) := (others => '0');
 		enable : in  STD_LOGIC := '0';
 		done : out STD_LOGIC := '1';
 		help : out STD_LOGIC_VECTOR(PORTS-1 downto 0) := (others => '0');
@@ -71,10 +71,10 @@ signal p_visited, n_visited : STD_LOGIC_VECTOR ((MAX_NODES-1) downto 0) := (othe
 signal p_costs, n_costs : STD_LOGIC_VECTOR((MAX_NODES*COST_SIZE) - 1 downto 0) := ((COST_SIZE - 1) downto 0 => '0', others => '1');
 signal p_prevNode, n_prevNode : STD_LOGIC_VECTOR((MAX_NODES * NETWORK_SIZE - 1) downto 0) := (NETWORK_SIZE - 1 downto 0 => '0', others => '1');
 signal p_minNode, n_minNode : STD_LOGIC_VECTOR ((NETWORK_SIZE - 1) downto 0) := (others => '0');
-signal p_newNodes, n_newNodes : STD_LOGIC_VECTOR ((PORTS*NETWORK_SIZE - 1)   downto 0);
+signal p_newNodes : STD_LOGIC_VECTOR ((PORTS*NETWORK_SIZE - 1)   downto 0);
 signal minIndex : STD_LOGIC_VECTOR(NETWORK_SIZE - 1 downto 0);
 signal minCost : STD_LOGIC_VECTOR(COST_SIZE - 1 downto 0);
-signal p_newCosts, n_newCosts : STD_LOGIC_VECTOR ((PORTS*COST_SIZE - 1) downto 0);
+signal p_newCosts : STD_LOGIC_VECTOR ((PORTS*COST_SIZE - 1) downto 0);
 signal n_counter, p_counter : STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0) := (others => '0');
 begin
 
