@@ -49,6 +49,7 @@ ARCHITECTURE behavior OF Dijkstra_tb IS
          dout : OUT  std_logic_vector(5 downto 0);
          enable : IN  std_logic;
          done : OUT  std_logic;
+			help : OUT STD_LOGIC_VECTOR(7 downto 0);
          clk : IN  std_logic
         );
     END COMPONENT;
@@ -76,6 +77,7 @@ END COMPONENT;
    signal addr_write : std_logic_vector(5 downto 0);
    signal dout : std_logic_vector(5 downto 0);
    signal done : std_logic;
+	signal help : std_logic_vector(7 downto 0);
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -92,6 +94,7 @@ BEGIN
           dout => dout,
           enable => enable,
           done => done,
+			 help => help,
           clk => clk
         );
 	RAM: RAMDijkstra PORT MAP(

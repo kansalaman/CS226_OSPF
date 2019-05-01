@@ -1,0 +1,6 @@
+vhdl isim_temp "ipcore_dir/RAMDijkstra.vhd"
+vhdl isim_temp "Comparator_Simple.vhd"
+vhdl isim_temp "Comparator_Single.vhd"
+vhdl isim_temp "Comparator.vhd"
+vhdl isim_temp "Dijkstra.vhd"
+vhdl isim_temp "Dijkstra_tb.vhd"

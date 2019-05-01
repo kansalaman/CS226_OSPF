@@ -31,13 +31,14 @@ entity Dijkstra is
     Port 
     ( 
     	din : in  STD_LOGIC_VECTOR ((PORTS*(NETWORK_SIZE+COST_SIZE) - 1) downto 0);
-		addr_read : out  STD_LOGIC_VECTOR ((NETWORK_SIZE - 1) downto 0);
+		addr_read : out  STD_LOGIC_VECTOR ((NETWORK_SIZE - 1) downto 0) := (others => '0');
 		read : out STD_LOGIC;
 		write : out STD_LOGIC;
 		addr_write : out STD_LOGIC_VECTOR ((NETWORK_SIZE - 1) downto 0);
 		dout : out STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0);
 		enable : in  STD_LOGIC := '0';
 		done : out STD_LOGIC := '1';
+		help : out STD_LOGIC_VECTOR(PORTS-1 downto 0) := (others => '0');
 		clk : in STD_LOGIC
 	);
 end Dijkstra;
@@ -60,15 +61,15 @@ end component;
 
 constant MAX_NODES : integer := 2 ** NETWORK_SIZE;
 constant MAX_COST : integer := 2 ** COST_SIZE;
-constant onesN: STD_LOGIC_VECTOR((NETWORK_SIZE -1) downto 0) := (others => '0');
-type STATES is (IDLE, WORK, WRITE_D);
+constant onesN: STD_LOGIC_VECTOR((NETWORK_SIZE -1) downto 0) := (others => '1');
+type STATES is (IDLE, WORK, WORK_WAIT, WRITE_D);
 constant zeros : STD_LOGIC_VECTOR((MAX_NODES-1) downto 0) := (others => '0');
 constant ones : STD_LOGIC_VECTOR((MAX_NODES-1) downto 0) := (others => '1');
 signal p_state, n_state : STATES := IDLE;
 signal p_visited, n_visited : STD_LOGIC_VECTOR ((MAX_NODES-1) downto 0) := (others => '0');
 --signal p_prevUpdated, n_prevUpdated : STD_LOGIC_VECTOR ((PORTS - 1) downto 0) := (others => '0');
 signal p_costs, n_costs : STD_LOGIC_VECTOR((MAX_NODES*COST_SIZE) - 1 downto 0) := ((COST_SIZE - 1) downto 0 => '0', others => '1');
-signal p_prevNode, n_prevNode : STD_LOGIC_VECTOR((MAX_NODES * NETWORK_SIZE - 1) downto 0) := (others => '1');
+signal p_prevNode, n_prevNode : STD_LOGIC_VECTOR((MAX_NODES * NETWORK_SIZE - 1) downto 0) := (NETWORK_SIZE - 1 downto 0 => '0', others => '1');
 signal p_minNode, n_minNode : STD_LOGIC_VECTOR ((NETWORK_SIZE - 1) downto 0) := (others => '0');
 signal p_newNodes, n_newNodes : STD_LOGIC_VECTOR ((PORTS*NETWORK_SIZE - 1)   downto 0);
 signal minIndex : STD_LOGIC_VECTOR(NETWORK_SIZE - 1 downto 0);
@@ -112,18 +113,21 @@ begin
 end process;
 	 	
 COMB: process(p_minNode, minIndex, p_state, enable, p_visited, p_counter, p_prevNode)
+variable indextemp : integer := 0;
+variable newNodeLogic : STD_LOGIC_VECTOR(NETWORK_SIZE - 1 downto 0) := "000000";
+variable newNodeIndex, minNodeIndex, newNodeCI, minNodeCI, newNodeNI, minNodeNI : integer := 0;
 begin
 	case p_state is
 		when IDLE =>
 			n_visited <= (others => '0');
-			--n_costs <= ((COST_SIZE - 1) downto 0 => '0', others => '1');
-			n_prevNode <= (others => '1');
-			if (enable = '1') then
+			n_costs <= ((COST_SIZE - 1) downto 0 => '0', others => '1');
+			n_prevNode <= (NETWORK_SIZE - 1 downto 0 => '0', others => '1');
+		if (enable = '1') then
 			n_state <= WORK;
 			--n_minNode <= minIndex;
 		--	--n_newNodes
-			addr_read <= minIndex;
 			read <= '1';
+			addr_read <= minIndex;
 		else
 			n_state <= IDLE;
 			read <= '0';
@@ -131,16 +135,57 @@ begin
 		end if;
 
 		when WORK =>
-			if (p_visited = ones) then
+			if (p_visited(MAX_NODES-1) = '1') then
 				n_state <= WRITE_D;
 			else
-				n_state <= WORK;
+				n_state <= WORK_WAIT;
+			WORK_LOOPS : for i in 0 to PORTS-1 loop
+			if (p_newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i) < onesN) then
+				minNodeIndex := to_integer(unsigned(p_minNode));
+				newNodeLogic := p_newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
+				newNodeIndex := to_integer(unsigned(p_newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i)));
+				newNodeCI := newNodeIndex*COST_SIZE;
+				minNodeCI := minNodeIndex*COST_SIZE;
+				newNodeNI := newNodeIndex*NETWORK_SIZE;
+				minNodeNI := minNodeIndex*NETWORK_SIZE;
+				if (p_visited(newNodeIndex) = '0') then
+					if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
+						--if (newNodeCI = 0) then
+						--	help(i) <= '1';
+						--else
+						--	help(i) <= '0';
+						--end if;
+						n_costs(((newNodeCI + COST_SIZE) - 1) downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
+						if (p_minNode = "000000") then -- CHECK IF MINIMUM NODE IS THE ROUTER ITSELF; DIRECT PATH
+							n_prevNode(newNodeNI + NETWORK_SIZE - 1 downto newNodeNI) <= newNodeLogic;
+						else	
+							n_prevNode(newNodeNI + NETWORK_SIZE - 1 downto newNodeNI) <= p_prevNode(minNodeNI + NETWORK_SIZE - 1 downto minNodeNI);
+						end if;
+					end if;
+				end if;
 			end if;
-			n_costs((to_integer(unsigned(p_minNode)) + 1)*COST_SIZE - 1 downto to_integer(unsigned(p_minNode))*COST_SIZE) <= (others => '1');
-			n_visited(to_integer(unsigned(p_minNode))) <= '1';
-
+			end loop;
+		end if;
+		n_costs((to_integer(unsigned(p_minNode)) + 1)*COST_SIZE - 1 downto to_integer(unsigned(p_minNode))*COST_SIZE) <= (others => '1');
+		n_visited(to_integer(unsigned(p_minNode))) <= '1';
+		addr_read <= minIndex;
+--			indextemp := to_integer(unsigned(p_minNode));
+--			n_costs((to_integer(unsigned(p_minNode)) + 1)*COST_SIZE - 1 downto to_integer(unsigned(p_minNode))*COST_SIZE) <= (others => '1');
+--			n_costs(5 downto 0) <= (others => '1');
+--			n_costs((indextemp + 1)*COST_SIZE - 1 downto indextemp*COST_SIZE) <= (others => '1');
+--			if (to_integer(unsigned(p_minNode)) = 0) then
+--			help(4) <= '1';
+--			help(2) <= '0';
+--			else
+--			help(2) <= '1';
+--			help(4) <= '0';
+--			end if;
+--			n_visited(to_integer(unsigned(p_minNode))) <= '1';
+		
+		when WORK_WAIT =>
+			n_state <= WORK;
 		when others =>
-			n_costs <= ((COST_SIZE - 1) downto 0 => '0', others => '1');
+--			n_costs <= ((COST_SIZE - 1) downto 0 => '0', others => '1');
 			if (p_counter = onesN) then
 				n_state <= IDLE;
 				n_counter <= (others => '0');
@@ -154,35 +199,11 @@ begin
 			end if;
 	end case;
 end process;
-
-WORK_LOOPS : for i in 0 to PORTS-1 generate
-	X: process(p_minNode, p_costs, p_newCosts, p_prevNode, p_newNodes, p_visited, p_state)
-	variable newNodeLogic : STD_LOGIC_VECTOR(NETWORK_SIZE - 1 downto 0) := "000000";
-	variable newNodeIndex, minNodeIndex, newNodeCI, minNodeCI, newNodeNI, minNodeNI : integer := 0;
-	begin
-		if (p_state = WORK) then
-			minNodeIndex := to_integer(unsigned(p_minNode));
-			newNodeLogic := p_newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
-			newNodeIndex := to_integer(unsigned(newNodeLogic));
-			newNodeCI := newNodeIndex*COST_SIZE;
-			minNodeCI := minNodeIndex*COST_SIZE;
-			newNodeNI := newNodeIndex*NETWORK_SIZE;
-			minNodeNI := minNodeIndex*NETWORK_SIZE;
-			if (p_visited(newNodeIndex) = '0') then
-				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
-					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
-					if (p_minNode = "000000") then -- CHECK IF MINIMUM NODE IS THE ROUTER ITSELF; DIRECT PATH
-						n_prevNode(newNodeNI + NETWORK_SIZE - 1 downto newNodeNI) <= newNodeLogic;
-					else
-						n_prevNode(newNodeNI + NETWORK_SIZE - 1 downto newNodeNI) <= p_prevNode(minNodeNI + NETWORK_SIZE - 1 downto minNodeNI);
-					end if;
-				else
-					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI);
-				end if;
-			end if;
-		end if;
-	end process;
-end generate;
+--	X: process(p_minNode, p_costs, p_newCosts, p_prevNode, p_newNodes, p_visited, p_state)
+--	begin
+--	if (p_state = WORK) then
+--		end if;
+--	end process;
 
 --X0: process(p_minNode, p_costs, p_newCosts, p_prevNode, p_newNodes, p_visited, p_state)
 --	variable newNodeLogic : STD_LOGIC_VECTOR(NETWORK_SIZE - 1 downto 0) := "000000";
