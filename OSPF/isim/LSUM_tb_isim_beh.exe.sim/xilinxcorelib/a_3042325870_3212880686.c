@@ -1371,7 +1371,7 @@ LAB0:    t1 = (1 != 4);
 
 LAB3:
 LAB1:    return;
-LAB2:    t2 = (t0 + 65764);
+LAB2:    t2 = (t0 + 65324);
     xsi_report(t2, 387U, (unsigned char)3);
     goto LAB3;
 
@@ -1388,7 +1388,7 @@ LAB0:    t1 = (0 != 2);
 
 LAB3:
 LAB1:    return;
-LAB2:    t2 = (t0 + 66151);
+LAB2:    t2 = (t0 + 65711);
     xsi_report(t2, 265U, (unsigned char)0);
     goto LAB3;
 
@@ -1410,7 +1410,7 @@ LAB0:    t1 = (t0 + 26592U);
 
 LAB3:
 LAB1:    return;
-LAB2:    t1 = (t0 + 66416);
+LAB2:    t1 = (t0 + 65976);
     xsi_report(t1, 52U, (unsigned char)3);
     goto LAB3;
 
@@ -1432,7 +1432,7 @@ LAB0:    t1 = (t0 + 26712U);
 
 LAB3:
 LAB1:    return;
-LAB2:    t1 = (t0 + 66468);
+LAB2:    t1 = (t0 + 66028);
     xsi_report(t1, 52U, (unsigned char)3);
     goto LAB3;
 

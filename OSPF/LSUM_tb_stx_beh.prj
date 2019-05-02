@@ -1,0 +1,4 @@
+vhdl isim_temp "ipcore_dir/FIFOLSU.vhd"
+vhdl isim_temp "ipcore_dir/RAMDB.vhd"
+vhdl isim_temp "LinkStateUpdateMachine.vhd"
+vhdl isim_temp "LSUM_tb.vhd"
