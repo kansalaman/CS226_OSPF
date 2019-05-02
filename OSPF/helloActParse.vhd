@@ -20,9 +20,10 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
-use IEEE.NUMERIC_STD.ALL;
+--use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
@@ -32,22 +33,27 @@ use IEEE.NUMERIC_STD.ALL;
 entity helloActParse is
     Port ( clk : in  STD_LOGIC;
     	   self : in STD_LOGIC_VECTOR(31 downto 0);
-           --networkmask : in  STD_LOGIC_VECTOR (31 downto 0);
+		   routerid_val : in STD_LOGIC;
            --ospftemplate : in  STD_LOGIC_VECTOR (191 downto 0);
            --neighbor : in  STD_LOGIC_VECTOR (31 downto 0);
            in1 : in  STD_LOGIC_VECTOR (7 downto 0);
            hellogenin : in  STD_LOGIC;
-           helloactivein : in STD_LOGIC;
            stateout : out STD_LOGIC_VECTOR(1 downto 0);
-           inval : in  STD_LOGIC);
+           router_id : out STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
+           in_val : in  STD_LOGIC);
 end helloActParse;
 
 architecture Behavioral of helloActParse is
 	type FSM is (ONE_WAY, DOWN, INIT, TWO_WAY);
 	signal p_state, n_state : FSM := DOWN;
-	signal active_neighbour : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
-	signal ID_part, ID_next : STD_LOGIC_VECTOR(1 downto 0) := "00";
-	signal in_index, in_index_next : integer := 31;
+	signal neighbor_id : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
+	signal old_neighbor : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
+	signal active_neighbor : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
+	signal ID_part : STD_LOGIC_VECTOR(1 downto 0) := "00";
+	signal in_index : STD_LOGIC_VECTOR(1 downto 0) := (others => '1');
+	signal curr_time, next_time : STD_LOGIC_VECTOR(9 downto 0) := (others => '0');
+	constant zero_time : STD_LOGIC_VECTOR(9 downto 0) := (others => '0');
+	constant max_time : STD_LOGIC_VECTOR(9 downto 0) := (others => '1');
 
 begin
 
@@ -55,161 +61,117 @@ SEQ1 : process(clk)
 begin
 	if (clk = '1' and clk'event) then
 		p_state <= n_state;
-		ID_part <= ID_next;
-		in_index <= in_index_next;
-	end if ;
+		curr_time <= next_time;
+		if (ID_part = "00" and in_val = '1') then
+			old_neighbor <= active_neighbor;
+		end if;
+		if (ID_part = "00" and routerid_val = '1') then
+			router_id <= neighbor_id;
+		end if ;
+	end if;
 end process;
 
-COMB1 : process(inval, p_state, hellogenin, helloactivein, active_neighbour, in1, self, id_part, in_index)
+COMBSTATE : process(p_state, ID_part, old_neighbor, routerid_val, curr_time, hellogenin, self)
+begin
+	case( p_state ) is
+	
+		when DOWN =>
+			if (hellogenin = '1') then
+				n_state <= INIT;
+				next_time <= max_time;
+			elsif (routerid_val = '1') then
+				n_state <= ONE_WAY;
+				next_time <= max_time;
+			else
+				n_state <= p_state;
+				next_time <= zero_time;
+			end if ;
+		when INIT =>
+			if (curr_time = zero_time) then
+				n_state <= DOWN;
+				next_time <= zero_time;
+			elsif (routerid_val = '1') then
+				n_state <= ONE_WAY;
+				next_time <= max_time;
+			else
+				n_state <= p_state;
+				next_time <= curr_time - 1;
+			end if;
+		when ONE_WAY =>
+			if (curr_time = zero_time) then
+				n_state <= DOWN;
+				next_time <= zero_time;
+			elsif (old_neighbor = self) then
+				n_state <= TWO_WAY;
+				next_time <= max_time;
+			else
+				n_state <= p_state;
+				next_time <= curr_time - 1;
+			end if ;
+		when others =>
+			if (curr_time = zero_time) then
+				n_state <= DOWN;
+				next_time <= zero_time;
+			else
+				n_state <= p_state;
+				next_time <= curr_time - 1;
+			end if;
+	end case ;
+end process;
+
+
+SEQUPDATE : process(clk)
 	variable msb : integer;
 	variable lsb : integer;
 begin
-	case( p_state ) is
-		when DOWN =>
-			if (inval = '0') then
-				if (hellogenin = '1' and helloactivein = '0') then
-					n_state <= INIT;
-				else
-					n_state <= p_state;
-				end if ;
-			else
-				msb := in_index;
-				lsb := in_index - 7;
-				case( ID_part ) is
-					when "00" =>
-						active_neighbour(msb downto lsb) <= in1;
-						in_index_next <= in_index - 8;
-						ID_next <= "01";
-						n_state <= ONE_WAY;
-					when "01" =>
-						active_neighbour(msb downto lsb) <= in1;
-						in_index_next <= in_index - 8;
-						ID_next <= "10";
-						n_state <= ONE_WAY;
-					when "10" =>
-						active_neighbour(msb downto lsb) <= in1;
-						in_index_next <= in_index - 8;
-						ID_next <= "11";
-						n_state <= ONE_WAY;
-					when others =>
-						active_neighbour(msb downto lsb) <= in1;
-						ID_next <= "00";
-						in_index_next <= 31;
-						if(active_neighbour = self) then
-							n_state <= TWO_WAY;
-						else
-							n_state <= ONE_WAY;
-						end if;
-				end case;
-			end if ;
-		when INIT =>
-			if (inval = '0') then
-				if (helloactivein = '1') then
-					n_state <= DOWN;
-				else
-					n_state <= p_state;
-				end if ;
-			else
-				msb := in_index;
-				lsb := in_index - 7;
-				case( ID_part ) is
-					when "00" =>
-						active_neighbour(msb downto lsb) <= in1;
-						in_index_next <= in_index - 8;
-						ID_next <= "01";
-						n_state <= ONE_WAY;
-					when "01" =>
-						active_neighbour(msb downto lsb) <= in1;
-						in_index_next <= in_index - 8;
-						ID_next <= "10";
-						n_state <= ONE_WAY;
-					when "10" =>
-						active_neighbour(msb downto lsb) <= in1;
-						in_index_next <= in_index - 8;
-						ID_next <= "11";
-						n_state <= ONE_WAY;
-					when others =>
-						active_neighbour(msb downto lsb) <= in1;
-						ID_next <= "00";
-						in_index_next <= 31;
-						if(active_neighbour = self) then
-							n_state <= TWO_WAY;
-						else
-							n_state <= ONE_WAY;
-						end if;
-				end case;
-			end if ;
-		when ONE_WAY =>
-			if (inval = '0') then
-				if (helloactivein = '1') then
-					n_state <= DOWN;
-				else
-					n_state <= p_state;
-				end if ;
-			else
-				msb := in_index;
-				lsb := in_index - 7;
-				case( ID_part ) is
-					when "00" =>
-						active_neighbour(msb downto lsb) <= in1;
-						in_index_next <= in_index - 8;
-						ID_next <= "01";
-						n_state <= ONE_WAY;
-					when "01" =>
-						active_neighbour(msb downto lsb) <= in1;
-						in_index_next <= in_index - 8;
-						ID_next <= "10";
-						n_state <= ONE_WAY;
-					when "10" =>
-						active_neighbour(msb downto lsb) <= in1;
-						in_index_next <= in_index - 8;
-						ID_next <= "11";
-						n_state <= ONE_WAY;
-					when others =>
-						active_neighbour(msb downto lsb) <= in1;
-						ID_next <= "00";
-						in_index_next <= 31;
-						if(active_neighbour = self) then
-							n_state <= TWO_WAY;
-						else
-							n_state <= ONE_WAY;
-						end if;
-				end case;
-			end if ;
-		when others =>
-			if (inval = '0') then
-				if (helloactivein = '1') then
-					n_state <= DOWN;
-				else
-					n_state <= p_state;
-				end if ;
-			else
-				msb := in_index;
-				lsb := in_index - 7;
-				case( ID_part ) is
-					when "00" =>
-						active_neighbour(msb downto lsb) <= in1;
-						in_index_next <= in_index - 8;
-						ID_next <= "01";
-						n_state <= TWO_WAY;
-					when "01" =>
-						active_neighbour(msb downto lsb) <= in1;
-						in_index_next <= in_index - 8;
-						ID_next <= "10";
-						n_state <= TWO_WAY;
-					when "10" =>
-						active_neighbour(msb downto lsb) <= in1;
-						in_index_next <= in_index - 8;
-						ID_next <= "11";
-						n_state <= TWO_WAY;
-					when others =>
-						active_neighbour(msb downto lsb) <= in1;
-						ID_next <= "00";
-						in_index_next <= 31;
-						n_state <= TWO_WAY;
-				end case;
-			end if ;
-	end case ;
+	if (clk = '1' and clk'event) then
+		if(in_val = '1') then
+			msb := conv_integer(in_index)*8 + 7;
+			lsb := conv_integer(in_index)*8;
+			case( ID_part ) is
+				when "00" =>
+					active_neighbor(msb downto lsb) <= in1;
+					in_index <= in_index - 1;
+					ID_part <= "01";
+				when "01" =>
+					active_neighbor(msb downto lsb) <= in1;
+					in_index <= in_index - 1;
+					ID_part <= "10";
+				when "10" =>
+					active_neighbor(msb downto lsb) <= in1;
+					in_index <= in_index - 1;
+					ID_part <= "11";
+				when others =>
+					active_neighbor(msb downto lsb) <= in1;
+					ID_part <= "00";
+					in_index <= (others => '1');
+			end case;
+		elsif (routerid_val = '1') then
+			msb := conv_integer(in_index)*8 + 7;
+			lsb := conv_integer(in_index)*8;
+			case( ID_part ) is
+				when "00" =>
+					neighbor_id(msb downto lsb) <= in1;
+					in_index <= in_index - 1;
+					ID_part <= "01";
+				when "01" =>
+					neighbor_id(msb downto lsb) <= in1;
+					in_index <= in_index - 1;
+					ID_part <= "10";
+				when "10" =>
+					neighbor_id(msb downto lsb) <= in1;
+					in_index <= in_index - 1;
+					ID_part <= "11";
+				when others =>
+					neighbor_id(msb downto lsb) <= in1;
+					ID_part <= "00";
+					in_index <= (others => '1');
+			end case;
+		else
+			in_index <= (others => '1');
+			ID_part <= (others => '0');
+		end if;
+	end if ;		
 end process;
 
 stateout <= "00" when p_state = DOWN else
