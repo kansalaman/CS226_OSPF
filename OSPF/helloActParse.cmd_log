@@ -7,3 +7,29 @@ xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst"
 xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
 xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
 xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -i -p xa7a100t-csg324-2I helloActParse.ngc helloActParse.ngd  
+map -intstyle ise -p xa7a100t-csg324-2I -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -mt off -ir off -pr off -lc off -power off -o helloActParse_map.ncd helloActParse.ngd helloActParse.pcf 
+par -w -intstyle ise -ol high -mt off helloActParse_map.ncd helloActParse.ncd helloActParse.pcf 
+trce -intstyle ise -v 3 -s 2I -n 3 -fastpaths -xml helloActParse.twx helloActParse.ncd -o helloActParse.twr helloActParse.pcf 
+netgen -intstyle ise -ar Structure -tm helloActParse -w -dir netgen/synthesis -ofmt vhdl -sim helloActParse.ngc helloActParse_synthesis.vhd 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -i -p xa7a100t-csg324-2I helloActParse.ngc helloActParse.ngd  
+map -intstyle ise -p xa7a100t-csg324-2I -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -mt off -ir off -pr off -lc off -power off -o helloActParse_map.ncd helloActParse.ngd helloActParse.pcf 
+par -w -intstyle ise -ol high -mt off helloActParse_map.ncd helloActParse.ncd helloActParse.pcf 
+trce -intstyle ise -v 3 -s 2I -n 3 -fastpaths -xml helloActParse.twx helloActParse.ncd -o helloActParse.twr helloActParse.pcf 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.syr" 

@@ -4,7 +4,7 @@ run
 -ifn helloActParse.prj
 -ofn helloActParse
 -ofmt NGC
--p xc6slx45t-2-csg324
+-p xa7a100t-2I-csg324
 -top helloActParse
 -opt_mode Speed
 -opt_level 1
@@ -15,6 +15,7 @@ run
 -rtlview Yes
 -glob_opt AllClockNets
 -read_cores YES
+-sd {"ipcore_dir"  }
 -write_timing_constraints NO
 -cross_clock_analysis NO
 -hierarchy_separator /
