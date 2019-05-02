@@ -62,7 +62,7 @@ end component;
 constant MAX_NODES : integer := 2 ** NETWORK_SIZE;
 constant MAX_COST : integer := 2 ** COST_SIZE;
 constant onesN: STD_LOGIC_VECTOR((NETWORK_SIZE -1) downto 0) := (others => '1');
-type STATES is (IDLE, WORK, WORK_WAIT, WRITE_D);
+type STATES is (IDLE, WORK, WRITE_D);
 constant zeros : STD_LOGIC_VECTOR((MAX_NODES-1) downto 0) := (others => '0');
 constant ones : STD_LOGIC_VECTOR((MAX_NODES-1) downto 0) := (others => '1');
 signal p_state, n_state : STATES := IDLE;
@@ -71,13 +71,14 @@ signal p_visited, n_visited : STD_LOGIC_VECTOR ((MAX_NODES-1) downto 0) := (othe
 signal p_costs, n_costs : STD_LOGIC_VECTOR((MAX_NODES*COST_SIZE) - 1 downto 0) := ((COST_SIZE - 1) downto 0 => '0', others => '1');
 signal p_prevNode, n_prevNode : STD_LOGIC_VECTOR((MAX_NODES * NETWORK_SIZE - 1) downto 0) := (NETWORK_SIZE - 1 downto 0 => '0', others => '1');
 signal p_minNode, n_minNode : STD_LOGIC_VECTOR ((NETWORK_SIZE - 1) downto 0) := (others => '0');
-signal p_newNodes : STD_LOGIC_VECTOR ((PORTS*NETWORK_SIZE - 1)   downto 0);
+signal newNodes : STD_LOGIC_VECTOR ((PORTS*NETWORK_SIZE - 1)   downto 0);
 signal minIndex : STD_LOGIC_VECTOR(NETWORK_SIZE - 1 downto 0);
 signal minCost : STD_LOGIC_VECTOR(COST_SIZE - 1 downto 0);
-signal p_newCosts : STD_LOGIC_VECTOR ((PORTS*COST_SIZE - 1) downto 0);
+signal newCosts : STD_LOGIC_VECTOR ((PORTS*COST_SIZE - 1) downto 0);
 signal n_counter, p_counter : STD_LOGIC_VECTOR(NETWORK_SIZE-1 downto 0) := (others => '0');
 begin
-
+newNodes <= din(PORTS*NETWORK_SIZE - 1 downto 0);
+newCosts <= din(PORTS*(NETWORK_SIZE + COST_SIZE) - 1 downto PORTS*NETWORK_SIZE);
 COMP : Comparator
 	port map
 	(
@@ -100,9 +101,7 @@ begin
 	 	p_costs <= n_costs;
 	 	p_prevNode <= n_prevNode;
 	 	p_minNode <= minIndex;
-	 	--p_newNodes <= n_newNodes;
-	 	p_newNodes <= din(PORTS*NETWORK_SIZE - 1 downto 0);
-	 	p_newCosts <= din(PORTS*(NETWORK_SIZE + COST_SIZE) - 1 downto PORTS*NETWORK_SIZE);
+	 	--newNodes <= n_newNodes;
 
 	 	if (n_state <= WRITE_D) then
 	 		p_counter <= n_counter;
@@ -112,7 +111,7 @@ begin
 	end if;
 end process;
 	 	
-COMB: process(p_minNode, minIndex, p_state, enable, p_visited, p_counter, p_prevNode)
+COMB: process(p_minNode, minIndex, p_state, enable, p_visited, p_counter, p_prevNode, newNodes, newCosts)
 variable indextemp : integer := 0;
 variable newNodeLogic : STD_LOGIC_VECTOR(NETWORK_SIZE - 1 downto 0) := "000000";
 variable newNodeIndex, minNodeIndex, newNodeCI, minNodeCI, newNodeNI, minNodeNI : integer := 0;
@@ -122,40 +121,40 @@ begin
 			n_visited <= (others => '0');
 			n_costs <= ((COST_SIZE - 1) downto 0 => '0', others => '1');
 			n_prevNode <= (NETWORK_SIZE - 1 downto 0 => '0', others => '1');
-		if (enable = '1') then
-			n_state <= WORK;
-			--n_minNode <= minIndex;
-		--	--n_newNodes
-			read <= '1';
-			addr_read <= minIndex;
-		else
-			n_state <= IDLE;
-			read <= '0';
-		--	n_minNode <= (others => '0');
-		end if;
+			if (enable = '1') then
+				n_state <= WORK;
+				--n_minNode <= minIndex;
+			--	--n_newNodes
+				read <= '1';
+				addr_read <= minIndex;
+			else
+				n_state <= IDLE;
+				read <= '0';
+			--	n_minNode <= (others => '0');
+			end if;
 
 		when WORK =>
 			if (p_visited(MAX_NODES-1) = '1') then
 				n_state <= WRITE_D;
 			else
-				n_state <= WORK_WAIT;
+				n_state <= WORK;
 			WORK_LOOPS : for i in 0 to PORTS-1 loop
-			if (p_newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i) < onesN) then
+			if (newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i) < onesN) then
 				minNodeIndex := to_integer(unsigned(p_minNode));
-				newNodeLogic := p_newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
-				newNodeIndex := to_integer(unsigned(p_newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i)));
+				newNodeLogic := newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
+				newNodeIndex := to_integer(unsigned(newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i)));
 				newNodeCI := newNodeIndex*COST_SIZE;
 				minNodeCI := minNodeIndex*COST_SIZE;
 				newNodeNI := newNodeIndex*NETWORK_SIZE;
 				minNodeNI := minNodeIndex*NETWORK_SIZE;
 				if (p_visited(newNodeIndex) = '0') then
-					if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
+					if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
 						--if (newNodeCI = 0) then
 						--	help(i) <= '1';
 						--else
 						--	help(i) <= '0';
 						--end if;
-						n_costs(((newNodeCI + COST_SIZE) - 1) downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
+						n_costs(((newNodeCI + COST_SIZE) - 1) downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
 						if (p_minNode = "000000") then -- CHECK IF MINIMUM NODE IS THE ROUTER ITSELF; DIRECT PATH
 							n_prevNode(newNodeNI + NETWORK_SIZE - 1 downto newNodeNI) <= newNodeLogic;
 						else	
@@ -181,9 +180,7 @@ begin
 --			help(4) <= '0';
 --			end if;
 --			n_visited(to_integer(unsigned(p_minNode))) <= '1';
-		
-		when WORK_WAIT =>
-			n_state <= WORK;
+
 		when others =>
 --			n_costs <= ((COST_SIZE - 1) downto 0 => '0', others => '1');
 			if (p_counter = onesN) then
@@ -199,28 +196,28 @@ begin
 			end if;
 	end case;
 end process;
---	X: process(p_minNode, p_costs, p_newCosts, p_prevNode, p_newNodes, p_visited, p_state)
+--	X: process(p_minNode, p_costs, newCosts, p_prevNode, newNodes, p_visited, p_state)
 --	begin
 --	if (p_state = WORK) then
 --		end if;
 --	end process;
 
---X0: process(p_minNode, p_costs, p_newCosts, p_prevNode, p_newNodes, p_visited, p_state)
+--X0: process(p_minNode, p_costs, newCosts, p_prevNode, newNodes, p_visited, p_state)
 --	variable newNodeLogic : STD_LOGIC_VECTOR(NETWORK_SIZE - 1 downto 0) := "000000";
 --	variable newNodeIndex, minNodeIndex, newNodeCI, minNodeCI, newNodeNI, minNodeNI : integer := 0;
 --	constant i : integer := 0;
 --	begin
 --		if (p_state = WORK) then
 --			minNodeIndex := to_integer(unsigned(p_minNode));
---			newNodeLogic := p_newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
+--			newNodeLogic := newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
 --			newNodeIndex := to_integer(unsigned(newNodeLogic));
 --			newNodeCI := newNodeIndex*COST_SIZE;
 --			minNodeCI := minNodeIndex*COST_SIZE;
 --			newNodeNI := newNodeIndex*NETWORK_SIZE;
 --			minNodeNI := minNodeIndex*NETWORK_SIZE;
 --			if (p_visited(newNodeIndex) = '0') then
---				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
---					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
+--				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
+--					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
 --					if (p_minNode = "000000") then -- CHECK IF MINIMUM NODE IS THE ROUTER ITSELF; DIRECT PATH
 --						n_prevNode(newNodeNI + NETWORK_SIZE - 1 downto newNodeNI) <= newNodeLogic;
 --					else
@@ -232,22 +229,22 @@ end process;
 --			end if;
 --		end if;
 --	end process;
---X1: process(p_minNode, p_costs, p_newCosts, p_prevNode, p_newNodes, p_visited, p_state)
+--X1: process(p_minNode, p_costs, newCosts, p_prevNode, newNodes, p_visited, p_state)
 --	variable newNodeLogic : STD_LOGIC_VECTOR(NETWORK_SIZE - 1 downto 0) := "000000";
 --	variable newNodeIndex, minNodeIndex, newNodeCI, minNodeCI, newNodeNI, minNodeNI : integer := 0;
 --	constant i : integer := 1;
 --	begin
 --		if (p_state = WORK) then
 --			minNodeIndex := to_integer(unsigned(p_minNode));
---			newNodeLogic := p_newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
+--			newNodeLogic := newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
 --			newNodeIndex := to_integer(unsigned(newNodeLogic));
 --			newNodeCI := newNodeIndex*COST_SIZE;
 --			minNodeCI := minNodeIndex*COST_SIZE;
 --			newNodeNI := newNodeIndex*NETWORK_SIZE;
 --			minNodeNI := minNodeIndex*NETWORK_SIZE;
 --			if (p_visited(newNodeIndex) = '0') then
---				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
---					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
+--				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
+--					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
 --					if (p_minNode = "000000") then -- CHECK IF MINIMUM NODE IS THE ROUTER ITSELF; DIRECT PATH
 --						n_prevNode(newNodeNI + NETWORK_SIZE - 1 downto newNodeNI) <= newNodeLogic;
 --					else
@@ -259,22 +256,22 @@ end process;
 --			end if;
 --		end if;
 --	end process;
---X2: process(p_minNode, p_costs, p_newCosts, p_prevNode, p_newNodes, p_visited, p_state)
+--X2: process(p_minNode, p_costs, newCosts, p_prevNode, newNodes, p_visited, p_state)
 --	variable newNodeLogic : STD_LOGIC_VECTOR(NETWORK_SIZE - 1 downto 0) := "000000";
 --	variable newNodeIndex, minNodeIndex, newNodeCI, minNodeCI, newNodeNI, minNodeNI : integer := 0;
 --	constant i : integer := 2;
 --	begin
 --		if (p_state = WORK) then
 --			minNodeIndex := to_integer(unsigned(p_minNode));
---			newNodeLogic := p_newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
+--			newNodeLogic := newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
 --			newNodeIndex := to_integer(unsigned(newNodeLogic));
 --			newNodeCI := newNodeIndex*COST_SIZE;
 --			minNodeCI := minNodeIndex*COST_SIZE;
 --			newNodeNI := newNodeIndex*NETWORK_SIZE;
 --			minNodeNI := minNodeIndex*NETWORK_SIZE;
 --			if (p_visited(newNodeIndex) = '0') then
---				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
---					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
+--				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
+--					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
 --					if (p_minNode = "000000") then -- CHECK IF MINIMUM NODE IS THE ROUTER ITSELF; DIRECT PATH
 --						n_prevNode(newNodeNI + NETWORK_SIZE - 1 downto newNodeNI) <= newNodeLogic;
 --					else
@@ -286,22 +283,22 @@ end process;
 --			end if;
 --		end if;
 --	end process;
---X3: process(p_minNode, p_costs, p_newCosts, p_prevNode, p_newNodes, p_visited, p_state)
+--X3: process(p_minNode, p_costs, newCosts, p_prevNode, newNodes, p_visited, p_state)
 --	variable newNodeLogic : STD_LOGIC_VECTOR(NETWORK_SIZE - 1 downto 0) := "000000";
 --	variable newNodeIndex, minNodeIndex, newNodeCI, minNodeCI, newNodeNI, minNodeNI : integer := 0;
 --	constant i : integer := 3;
 --	begin
 --		if (p_state = WORK) then
 --			minNodeIndex := to_integer(unsigned(p_minNode));
---			newNodeLogic := p_newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
+--			newNodeLogic := newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
 --			newNodeIndex := to_integer(unsigned(newNodeLogic));
 --			newNodeCI := newNodeIndex*COST_SIZE;
 --			minNodeCI := minNodeIndex*COST_SIZE;
 --			newNodeNI := newNodeIndex*NETWORK_SIZE;
 --			minNodeNI := minNodeIndex*NETWORK_SIZE;
 --			if (p_visited(newNodeIndex) = '0') then
---				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
---					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
+--				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
+--					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
 --					if (p_minNode = "000000") then -- CHECK IF MINIMUM NODE IS THE ROUTER ITSELF; DIRECT PATH
 --						n_prevNode(newNodeNI + NETWORK_SIZE - 1 downto newNodeNI) <= newNodeLogic;
 --					else
@@ -313,22 +310,22 @@ end process;
 --			end if;
 --		end if;
 --	end process;
---X4: process(p_minNode, p_costs, p_newCosts, p_prevNode, p_newNodes, p_visited, p_state)
+--X4: process(p_minNode, p_costs, newCosts, p_prevNode, newNodes, p_visited, p_state)
 --	variable newNodeLogic : STD_LOGIC_VECTOR(NETWORK_SIZE - 1 downto 0) := "000000";
 --	variable newNodeIndex, minNodeIndex, newNodeCI, minNodeCI, newNodeNI, minNodeNI : integer := 0;
 --	constant i : integer := 4;
 --	begin
 --		if (p_state = WORK) then
 --			minNodeIndex := to_integer(unsigned(p_minNode));
---			newNodeLogic := p_newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
+--			newNodeLogic := newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
 --			newNodeIndex := to_integer(unsigned(newNodeLogic));
 --			newNodeCI := newNodeIndex*COST_SIZE;
 --			minNodeCI := minNodeIndex*COST_SIZE;
 --			newNodeNI := newNodeIndex*NETWORK_SIZE;
 --			minNodeNI := minNodeIndex*NETWORK_SIZE;
 --			if (p_visited(newNodeIndex) = '0') then
---				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
---					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
+--				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
+--					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
 --					if (p_minNode = "000000") then -- CHECK IF MINIMUM NODE IS THE ROUTER ITSELF; DIRECT PATH
 --						n_prevNode(newNodeNI + NETWORK_SIZE - 1 downto newNodeNI) <= newNodeLogic;
 --					else
@@ -340,22 +337,22 @@ end process;
 --			end if;
 --		end if;
 --	end process;
---X5: process(p_minNode, p_costs, p_newCosts, p_prevNode, p_newNodes, p_visited, p_state)
+--X5: process(p_minNode, p_costs, newCosts, p_prevNode, newNodes, p_visited, p_state)
 --	variable newNodeLogic : STD_LOGIC_VECTOR(NETWORK_SIZE - 1 downto 0) := "000000";
 --	variable newNodeIndex, minNodeIndex, newNodeCI, minNodeCI, newNodeNI, minNodeNI : integer := 0;
 --	constant i : integer := 5;
 --	begin
 --		if (p_state = WORK) then
 --			minNodeIndex := to_integer(unsigned(p_minNode));
---			newNodeLogic := p_newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
+--			newNodeLogic := newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
 --			newNodeIndex := to_integer(unsigned(newNodeLogic));
 --			newNodeCI := newNodeIndex*COST_SIZE;
 --			minNodeCI := minNodeIndex*COST_SIZE;
 --			newNodeNI := newNodeIndex*NETWORK_SIZE;
 --			minNodeNI := minNodeIndex*NETWORK_SIZE;
 --			if (p_visited(newNodeIndex) = '0') then
---				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
---					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
+--				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
+--					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
 --					if (p_minNode = "000000") then -- CHECK IF MINIMUM NODE IS THE ROUTER ITSELF; DIRECT PATH
 --						n_prevNode(newNodeNI + NETWORK_SIZE - 1 downto newNodeNI) <= newNodeLogic;
 --					else
@@ -367,22 +364,22 @@ end process;
 --			end if;
 --		end if;
 --	end process;
---X6: process(p_minNode, p_costs, p_newCosts, p_prevNode, p_newNodes, p_visited, p_state)
+--X6: process(p_minNode, p_costs, newCosts, p_prevNode, newNodes, p_visited, p_state)
 --	variable newNodeLogic : STD_LOGIC_VECTOR(NETWORK_SIZE - 1 downto 0) := "000000";
 --	variable newNodeIndex, minNodeIndex, newNodeCI, minNodeCI, newNodeNI, minNodeNI : integer := 0;
 --	constant i : integer := 6;
 --	begin
 --		if (p_state = WORK) then
 --			minNodeIndex := to_integer(unsigned(p_minNode));
---			newNodeLogic := p_newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
+--			newNodeLogic := newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
 --			newNodeIndex := to_integer(unsigned(newNodeLogic));
 --			newNodeCI := newNodeIndex*COST_SIZE;
 --			minNodeCI := minNodeIndex*COST_SIZE;
 --			newNodeNI := newNodeIndex*NETWORK_SIZE;
 --			minNodeNI := minNodeIndex*NETWORK_SIZE;
 --			if (p_visited(newNodeIndex) = '0') then
---				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
---					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
+--				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
+--					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
 --					if (p_minNode = "000000") then -- CHECK IF MINIMUM NODE IS THE ROUTER ITSELF; DIRECT PATH
 --						n_prevNode(newNodeNI + NETWORK_SIZE - 1 downto newNodeNI) <= newNodeLogic;
 --					else
@@ -394,22 +391,22 @@ end process;
 --			end if;
 --		end if;
 --	end process;
---X7: process(p_minNode, p_costs, p_newCosts, p_prevNode, p_newNodes, p_visited, p_state)
+--X7: process(p_minNode, p_costs, newCosts, p_prevNode, newNodes, p_visited, p_state)
 --	variable newNodeLogic : STD_LOGIC_VECTOR(NETWORK_SIZE - 1 downto 0) := "000000";
 --	variable newNodeIndex, minNodeIndex, newNodeCI, minNodeCI, newNodeNI, minNodeNI : integer := 0;
 --	constant i : integer := 7;
 --	begin
 --		if (p_state = WORK) then
 --			minNodeIndex := to_integer(unsigned(p_minNode));
---			newNodeLogic := p_newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
+--			newNodeLogic := newNodes(NETWORK_SIZE*(i+1) - 1 downto NETWORK_SIZE*i);
 --			newNodeIndex := to_integer(unsigned(newNodeLogic));
 --			newNodeCI := newNodeIndex*COST_SIZE;
 --			minNodeCI := minNodeIndex*COST_SIZE;
 --			newNodeNI := newNodeIndex*NETWORK_SIZE;
 --			minNodeNI := minNodeIndex*NETWORK_SIZE;
 --			if (p_visited(newNodeIndex) = '0') then
---				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
---					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + p_newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
+--				if (p_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) > p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i)) then
+--					n_costs(newNodeCI + COST_SIZE - 1 downto newNodeCI) <= p_costs(minNodeCI + COST_SIZE -1 downto minNodeCI) + newCosts(COST_SIZE*(i+1)-1 downto COST_SIZE*i);
 --					if (p_minNode = "000000") then -- CHECK IF MINIMUM NODE IS THE ROUTER ITSELF; DIRECT PATH
 --						n_prevNode(newNodeNI + NETWORK_SIZE - 1 downto newNodeNI) <= newNodeLogic;
 --					else
