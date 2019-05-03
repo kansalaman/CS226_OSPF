@@ -50,7 +50,7 @@ constant zero8 : std_logic_vector(7 downto 0) := (others => '0');
 constant zero16 : std_logic_vector(15 downto 0) := (others => '0');
 constant zero32 : std_logic_vector(31 downto 0) := (others => '0');
 constant zeroA : std_logic_vector(ADDR_SIZE-1 downto 0) := (others => '0');
-constant hlen : integer := 8;
+constant hlen : integer := 18;
 -- RAMW1, RAMW2 are to consider for RAM read delays
 type STATES is (IDLE, RECV, DBLEN, MATCH, GET_AD, GET_SEQ, WRITE_DB, UPDATE, DUMP);
 
@@ -312,7 +312,7 @@ begin
 
     when UPDATE =>
       if (p_seqno > p_tSeqno) then
-        n_loc <= p_loc - "1011";      --Subtracting the SeqNo. offset 12 - 1
+        n_loc <= p_loc - "1011";      --Subtracting the SeqNo. offset 12 + 1
         n_state <= WRITE_DB;
         n_wc <= 0;
       else
@@ -334,7 +334,11 @@ begin
       else
         db_write <= '0';
         n_state <= IDLE;
-        dijkstra_on <= '1';
+        if (empty = '1') then
+          dijkstra_on <= '1';
+        else
+          dijkstra_on <= '0';
+        end if;
       end if;
 
       if (p_wc < to_integer(unsigned(p_len)) - 1 and p_wc > 16) then

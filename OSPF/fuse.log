@@ -1,22 +1,42 @@
-Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/tb_numones_isim_beh.exe -prj /home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/tb_numones_beh.prj work.tb_numones 
+Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB_isim_beh.exe -prj /home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB_beh.prj work.LSUGEN_TB 
 ISim P.20131013 (signature 0xfbc00daa)
 Number of CPUs detected in this system: 4
 Turning on mult-threading, number of parallel sub-compilation jobs: 8 
 Determining compilation order of HDL files
+Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/ipcore_dir/RAMDB.vhd" into library work
 Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/numones.vhd" into library work
-Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/tb_numones.vhd" into library work
+Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" into library work
+Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB.vhd" into library work
 Starting static elaboration
+WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1064: Index 8 is out of array constraint 7 downto 0 for target served
+WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1090: Index 8 is out of array constraint 7 downto 0 for target served
+WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1116: Index 8 is out of array constraint 7 downto 0 for target served
+WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1142: Index 8 is out of array constraint 7 downto 0 for target served
+WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1168: Index 8 is out of array constraint 7 downto 0 for target served
+WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1194: Index 8 is out of array constraint 7 downto 0 for target served
+WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1220: Index 8 is out of array constraint 7 downto 0 for target served
+WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1246: Index 8 is out of array constraint 7 downto 0 for target served
 Completed static elaboration
-Fuse Memory Usage: 96156 KB
-Fuse CPU Usage: 1360 ms
+Fuse Memory Usage: 104060 KB
+Fuse CPU Usage: 1180 ms
 Compiling package standard
 Compiling package std_logic_1164
+Compiling package std_logic_arith
+Compiling package std_logic_unsigned
+Compiling package textio
+Compiling package std_logic_textio
+Compiling architecture output_stage_behavioral of entity BLK_MEM_GEN_V7_3_output_stage [\BLK_MEM_GEN_V7_3_output_stage("...]
+Compiling architecture output_stage_behavioral of entity BLK_MEM_GEN_V7_3_output_stage [\BLK_MEM_GEN_V7_3_output_stage("...]
+Compiling architecture softecc_output_reg_stage_behavioral of entity BLK_MEM_GEN_V7_3_softecc_output_reg_stage [\BLK_MEM_GEN_V7_3_softecc_output...]
+Compiling architecture mem_module_behavioral of entity BLK_MEM_GEN_V7_3_mem_module [\BLK_MEM_GEN_V7_3_mem_module("bl...]
+Compiling architecture behavioral of entity BLK_MEM_GEN_V7_3 [\BLK_MEM_GEN_V7_3("blk_mem_gen_v...]
+Compiling architecture ramdb_a of entity RAMDB [ramdb_default]
 Compiling architecture behavioral of entity numones [numones_default]
-Compiling architecture behavior of entity tb_numones
+Compiling architecture behavioral of entity lsugen [\lsugen(12,8)\]
+Compiling architecture behavior of entity lsugen_tb
 Time Resolution for simulation is 1ps.
-Waiting for 1 sub-compilation(s) to finish...
-Compiled 5 VHDL Units
-Built simulation executable /home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/tb_numones_isim_beh.exe
-Fuse Memory Usage: 661944 KB
-Fuse CPU Usage: 1400 ms
-GCC CPU Usage: 830 ms
+Compiled 23 VHDL Units
+Built simulation executable /home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB_isim_beh.exe
+Fuse Memory Usage: 680816 KB
+Fuse CPU Usage: 1390 ms
+GCC CPU Usage: 1790 ms

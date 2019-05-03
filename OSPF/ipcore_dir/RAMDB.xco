@@ -1,7 +1,7 @@
 ##############################################################
 #
 # Xilinx Core Generator version 14.7
-# Date: Thu May  2 10:43:02 2019
+# Date: Fri May  3 17:18:56 2019
 #
 ##############################################################
 #
@@ -22,16 +22,16 @@ SET asysymbol = true
 SET busformat = BusFormatAngleBracketNotRipped
 SET createndf = false
 SET designentry = VHDL
-SET device = xq6slx150t
-SET devicefamily = qspartan6
+SET device = xa7a100t
+SET devicefamily = aartix7
 SET flowvendor = Other
 SET formalverification = false
 SET foundationsym = false
 SET implementationfiletype = Ngc
-SET package = fgg676
+SET package = csg324
 SET removerpms = false
 SET simulationfiles = Behavioral
-SET speedgrade = -2
+SET speedgrade = -2i
 SET verilogsim = false
 SET vhdlsim = true
 # END Project Options
@@ -46,7 +46,7 @@ CSET axi_id_width=4
 CSET axi_slave_type=Memory_Slave
 CSET axi_type=AXI4_Full
 CSET byte_size=8
-CSET coe_file=no_coe_file_loaded
+CSET coe_file="/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/ramdb.coe"
 CSET collision_warnings=ALL
 CSET component_name=RAMDB
 CSET disable_collision_warnings=false
@@ -59,7 +59,7 @@ CSET enable_b=Always_Enabled
 CSET error_injection_type=Single_Bit_Error_Injection
 CSET fill_remaining_memory_locations=true
 CSET interface_type=Native
-CSET load_init_file=false
+CSET load_init_file=true
 CSET mem_file=no_Mem_file_loaded
 CSET memory_type=Single_Port_RAM
 CSET operating_mode_a=WRITE_FIRST
@@ -105,4 +105,4 @@ CSET write_width_b=8
 MISC pkg_timestamp=2012-11-19T16:22:25Z
 # END Extra information
 GENERATE
-# CRC: 9c6ded19
+# CRC: 45c69a64

@@ -1,0 +1,4 @@
+vhdl isim_temp "ipcore_dir/RAMDB.vhd"
+vhdl isim_temp "numones.vhd"
+vhdl isim_temp "lsugen.vhd"
+vhdl isim_temp "LSUGEN_TB.vhd"

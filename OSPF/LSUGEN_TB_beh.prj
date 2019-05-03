@@ -1,0 +1,4 @@
+vhdl work "ipcore_dir/RAMDB.vhd"
+vhdl work "numones.vhd"
+vhdl work "lsugen.vhd"
+vhdl work "LSUGEN_TB.vhd"
