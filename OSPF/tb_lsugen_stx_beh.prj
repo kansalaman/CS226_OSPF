@@ -1,0 +1,3 @@
+vhdl isim_temp "numones.vhd"
+vhdl isim_temp "lsugen.vhd"
+vhdl isim_temp "tb_lsugen.vhd"

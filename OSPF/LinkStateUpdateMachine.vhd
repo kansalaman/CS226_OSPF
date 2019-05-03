@@ -312,7 +312,7 @@ begin
 
     when UPDATE =>
       if (p_seqno > p_tSeqno) then
-        n_loc <= p_loc - "1011";      --Subtracting the SeqNo. offset 12 + 1
+        n_loc <= p_loc - "1011";      --Subtracting the SeqNo. offset 12 - 1
         n_state <= WRITE_DB;
         n_wc <= 0;
       else

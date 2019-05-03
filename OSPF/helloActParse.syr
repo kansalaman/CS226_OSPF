@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.02 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.02 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
 Reading design: helloActParse.prj
@@ -111,7 +111,7 @@ Cores Search Directories           : {"ipcore_dir"  }
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
-Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" into library work
+Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/helloActParse.vhd" into library work
 Parsing entity <helloActParse>.
 Parsing architecture <Behavioral> of entity <helloactparse>.
 
@@ -120,15 +120,15 @@ Parsing architecture <Behavioral> of entity <helloactparse>.
 =========================================================================
 
 Elaborating entity <helloActParse> (architecture <Behavioral>) from library <work>.
-WARNING:HDLCompiler:871 - "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 66: Using initial value "00" for numlsa since it is never assigned
-WARNING:HDLCompiler:871 - "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 75: Using initial value "0000000000000000000000000000011100000000000000001111111111111111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" for dbd_packet since it is never assigned
+WARNING:HDLCompiler:871 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/helloActParse.vhd" Line 66: Using initial value "00" for numlsa since it is never assigned
+WARNING:HDLCompiler:871 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/helloActParse.vhd" Line 75: Using initial value "0000000000000000000000000000011100000000000000001111111111111111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" for dbd_packet since it is never assigned
 
 =========================================================================
 *                           HDL Synthesis                               *
 =========================================================================
 
 Synthesizing Unit <helloActParse>.
-    Related source file is "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd".
+    Related source file is "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/helloActParse.vhd".
     Found 10-bit register for signal <curr_time>.
     Found 32-bit register for signal <old_neighbor>.
     Found 32-bit register for signal <router_id>.
@@ -522,13 +522,13 @@ clk            |    2.846|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 32.00 secs
-Total CPU time to Xst completion: 28.15 secs
+Total REAL time to Xst completion: 38.00 secs
+Total CPU time to Xst completion: 31.17 secs
  
 --> 
 
 
-Total memory usage is 862396 kilobytes
+Total memory usage is 863036 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :   13 (   0 filtered)
