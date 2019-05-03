@@ -63,11 +63,23 @@
     <file xil_pn:fileType="FILE_HTML" xil_pn:name="Dijkstra_envsettings.html"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="Dijkstra_isim_beh.exe"/>
     <file xil_pn:fileType="FILE_HTML" xil_pn:name="Dijkstra_summary.html"/>
-    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="Dijkstra_tb_beh.prj"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="Dijkstra_tb_isim_beh.exe"/>
     <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="Dijkstra_tb_isim_beh.wdb"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="Dijkstra_tb_stx_beh.prj"/>
     <file xil_pn:fileType="FILE_XRPT" xil_pn:name="Dijkstra_xst.xrpt"/>
+    <file xil_pn:fileType="FILE_CMD_LOG" xil_pn:name="LSAFetcher.cmd_log"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_LSO" xil_pn:name="LSAFetcher.lso"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGC" xil_pn:name="LSAFetcher.ngc"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGR" xil_pn:name="LSAFetcher.ngr"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="LSAFetcher.prj"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_STX" xil_pn:name="LSAFetcher.stx"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_REPORT" xil_pn:name="LSAFetcher.syr"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST" xil_pn:name="LSAFetcher.xst"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="LSAFetcherTb_isim_beh.exe"/>
+    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="LSAFetcherTb_isim_beh.wdb"/>
+    <file xil_pn:fileType="FILE_HTML" xil_pn:name="LSAFetcher_envsettings.html"/>
+    <file xil_pn:fileType="FILE_HTML" xil_pn:name="LSAFetcher_summary.html"/>
+    <file xil_pn:fileType="FILE_XRPT" xil_pn:name="LSAFetcher_xst.xrpt"/>
     <file xil_pn:fileType="FILE_CMD_LOG" xil_pn:name="LSAFilter.cmd_log"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_LSO" xil_pn:name="LSAFilter.lso"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGC" xil_pn:name="LSAFilter.ngc"/>
@@ -131,7 +143,6 @@
     <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/par.xmsgs"/>
     <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/trce.xmsgs"/>
     <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/xst.xmsgs"/>
-    <file xil_pn:fileType="FILE_LOG" xil_pn:name="fuse.log"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGDBUILD_LOG" xil_pn:name="helloActParse.bld"/>
     <file xil_pn:fileType="FILE_CMD_LOG" xil_pn:name="helloActParse.cmd_log"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_LSO" xil_pn:name="helloActParse.lso"/>
@@ -172,9 +183,7 @@
     <file xil_pn:fileType="FILE_XST" xil_pn:name="helloalive.xst"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="hellodead_isim_beh.exe"/>
     <file xil_pn:fileType="FILE_LOG" xil_pn:name="ipcore_dir/coregen.log"/>
-    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="isim"/>
     <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_CMD" xil_pn:name="isim.cmd"/>
-    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_LOG" xil_pn:name="isim.log"/>
     <file xil_pn:fileType="FILE_CMD_LOG" xil_pn:name="main.cmd_log"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_LSO" xil_pn:name="main.lso"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="main.prj"/>
@@ -207,44 +216,37 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1556810154" xil_pn:in_ck="2702904091630829838" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1556810154">
+    <transform xil_pn:end_ts="1556916958" xil_pn:in_ck="-73363109159194917" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1556916958">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForInputs"/>
-      <status xil_pn:value="OutOfDateForOutputs"/>
-      <status xil_pn:value="InputAdded"/>
-      <status xil_pn:value="InputChanged"/>
-      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="Comparator.vhd"/>
       <outfile xil_pn:name="Comparator_Simple.vhd"/>
       <outfile xil_pn:name="Comparator_Single.vhd"/>
       <outfile xil_pn:name="Comparator_tb.vhd"/>
       <outfile xil_pn:name="Dijkstra.vhd"/>
       <outfile xil_pn:name="Dijkstra_tb.vhd"/>
+      <outfile xil_pn:name="LSAFetcher.vhd"/>
+      <outfile xil_pn:name="LSAFetcherTb.vhd"/>
       <outfile xil_pn:name="LSUM_tb.vhd"/>
       <outfile xil_pn:name="LinkStateUpdateMachine.vhd"/>
       <outfile xil_pn:name="Parser.vhd"/>
       <outfile xil_pn:name="helloActParse.vhd"/>
       <outfile xil_pn:name="helloalive.vhd"/>
       <outfile xil_pn:name="hellodead.vhd"/>
+      <outfile xil_pn:name="main.vhd"/>
       <outfile xil_pn:name="tb_helloalive.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1556809346" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="-3217310000195509625" xil_pn:start_ts="1556809346">
+    <transform xil_pn:end_ts="1556915095" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="4494686721269677101" xil_pn:start_ts="1556915095">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1556809346" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="8408745127980719582" xil_pn:start_ts="1556809346">
+    <transform xil_pn:end_ts="1556915095" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="-3671000084539533479" xil_pn:start_ts="1556915095">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1556809347" xil_pn:in_ck="-9038895818204829777" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="8058251566148758318" xil_pn:start_ts="1556809346">
+    <transform xil_pn:end_ts="1556915512" xil_pn:in_ck="-9038895818204829777" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="3692913366504294101" xil_pn:start_ts="1556915512">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForInputs"/>
-      <status xil_pn:value="OutOfDateForProperties"/>
-      <status xil_pn:value="OutOfDateForOutputs"/>
-      <status xil_pn:value="InputChanged"/>
-      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="ipcore_dir/FIFOLSU.ngc"/>
       <outfile xil_pn:name="ipcore_dir/FIFOLSU.vhd"/>
       <outfile xil_pn:name="ipcore_dir/RAMDB.ngc"/>
@@ -252,57 +254,43 @@
       <outfile xil_pn:name="ipcore_dir/RAMDijkstra.ngc"/>
       <outfile xil_pn:name="ipcore_dir/RAMDijkstra.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1556810155" xil_pn:in_ck="-6896277616843233718" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1556810154">
+    <transform xil_pn:end_ts="1556916958" xil_pn:in_ck="-73363109159194917" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1556916958">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForInputs"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
-      <status xil_pn:value="OutOfDateForOutputs"/>
-      <status xil_pn:value="InputChanged"/>
-      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="Comparator.vhd"/>
       <outfile xil_pn:name="Comparator_Simple.vhd"/>
       <outfile xil_pn:name="Comparator_Single.vhd"/>
       <outfile xil_pn:name="Comparator_tb.vhd"/>
       <outfile xil_pn:name="Dijkstra.vhd"/>
       <outfile xil_pn:name="Dijkstra_tb.vhd"/>
+      <outfile xil_pn:name="LSAFetcher.vhd"/>
+      <outfile xil_pn:name="LSAFetcherTb.vhd"/>
       <outfile xil_pn:name="LSUM_tb.vhd"/>
       <outfile xil_pn:name="LinkStateUpdateMachine.vhd"/>
       <outfile xil_pn:name="Parser.vhd"/>
       <outfile xil_pn:name="helloActParse.vhd"/>
       <outfile xil_pn:name="helloalive.vhd"/>
       <outfile xil_pn:name="hellodead.vhd"/>
-      <outfile xil_pn:name="ipcore_dir/FIFOLSU.vhd"/>
-      <outfile xil_pn:name="ipcore_dir/RAMDB.vhd"/>
+      <outfile xil_pn:name="main.vhd"/>
       <outfile xil_pn:name="tb_helloalive.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1556810160" xil_pn:in_ck="-6896277616843233718" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="5924187886118210335" xil_pn:start_ts="1556810155">
-      <status xil_pn:value="SuccessfullyRun"/>
+    <transform xil_pn:end_ts="1556916961" xil_pn:in_ck="9190907782967470258" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-7234846007748514069" xil_pn:start_ts="1556916958">
+      <status xil_pn:value="FailedRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForInputs"/>
-      <status xil_pn:value="OutOfDateForProperties"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
-      <status xil_pn:value="OutOfDateForOutputs"/>
-      <status xil_pn:value="InputChanged"/>
-      <status xil_pn:value="OutputChanged"/>
-      <outfile xil_pn:name="Dijkstra_tb_beh.prj"/>
-      <outfile xil_pn:name="Dijkstra_tb_isim_beh.exe"/>
-      <outfile xil_pn:name="fuse.log"/>
-      <outfile xil_pn:name="isim"/>
-      <outfile xil_pn:name="isim.log"/>
-      <outfile xil_pn:name="xilinxsim.ini"/>
     </transform>
-    <transform xil_pn:end_ts="1556810161" xil_pn:in_ck="-3579592664574628215" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-3002858632307471348" xil_pn:start_ts="1556810160">
-      <status xil_pn:value="SuccessfullyRun"/>
+    <transform xil_pn:end_ts="1556916777" xil_pn:in_ck="-3753951053890281041" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-1854232853610404360" xil_pn:start_ts="1556916776">
+      <status xil_pn:value="AbortedRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForProperties"/>
       <status xil_pn:value="OutOfDateForPredecessor"/>
-      <status xil_pn:value="OutOfDateForOutputs"/>
-      <status xil_pn:value="OutputRemoved"/>
+      <status xil_pn:value="OutOfDateForced"/>
+      <outfile xil_pn:name="LSAFetcherTb_isim_beh.wdb"/>
       <outfile xil_pn:name="isim.cmd"/>
-      <outfile xil_pn:name="isim.log"/>
     </transform>
     <transform xil_pn:end_ts="1556646737" xil_pn:name="TRAN_copyInitialToXSTAbstractSynthesis" xil_pn:start_ts="1556646737">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:name="TRAN_SubProjectAbstractToPreProxy">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>

@@ -1,0 +1,3 @@
+vhdl work "ipcore_dir/RAMDB.vhd"
+vhdl work "LSAFetcher.vhd"
+vhdl work "LSAFetcherTb.vhd"

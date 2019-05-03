@@ -1,0 +1,31 @@
+Command line:
+   LSAFetcherTb_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  33859
+
+Sat May  4 02:26:26 2019
+
+
+ Elaboration Time: 0.02 sec
+
+ Current Memory Usage: 212.5 Meg
+
+ Total Signals          : 256
+ Total Nets             : 21593
+ Total Signal Drivers   : 85
+ Total Blocks           : 19
+ Total Primitive Blocks : 11
+ Total Processes        : 46
+ Total Traceable Variables  : 229
+ Total Scalar Nets and Variables : 22932
+Total Line Count : 539
+Total Line Count : 539
+Total Line Count : 539
+
+ Total Simulation Time: 0.15 sec
+
+ Current Memory Usage: 288.002 Meg
+
+Sat May  4 02:32:50 2019
+

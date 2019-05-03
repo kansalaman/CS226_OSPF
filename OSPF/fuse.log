@@ -1,31 +1,20 @@
-Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -relaunch -intstyle "ise" -incremental -lib "secureip" -o "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra_tb_isim_beh.exe" -prj "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra_tb_beh.prj" "work.Dijkstra_tb" 
-ISim P.20160913 (signature 0xfbc00daa)
+Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/yash20/isefiles/CS226_OSPF/OSPF/LSAFetcherTb_isim_beh.exe -prj /home/yash20/isefiles/CS226_OSPF/OSPF/LSAFetcherTb_beh.prj work.LSAFetcherTb 
+ISim P.20131013 (signature 0xfbc00daa)
 Number of CPUs detected in this system: 1
 Turning on mult-threading, number of parallel sub-compilation jobs: 0 
 Determining compilation order of HDL files
-Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/ipcore_dir/RAMDijkstra.vhd" into library work
-Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.vhd" into library work
-Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Single.vhd" into library work
-Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator.vhd" into library work
-Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.vhd" into library work
-Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra_tb.vhd" into library work
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/ipcore_dir/RAMDB.vhd" into library work
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/LSAFetcher.vhd" into library work
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/LSAFetcherTb.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 103120 KB
-Fuse CPU Usage: 1240 ms
+Fuse Memory Usage: 103620 KB
+Fuse CPU Usage: 990 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
 Compiling package std_logic_unsigned
-Compiling package numeric_std
-Compiling architecture behavioral of entity Comparator_Simple [\Comparator_Simple(6,6)\]
-Compiling architecture behavioral of entity Comparator_Single [\Comparator_Single(6,6,5)\]
-Compiling architecture behavioral of entity Comparator_Single [\Comparator_Single(6,6,4)\]
-Compiling architecture behavioral of entity Comparator_Single [\Comparator_Single(6,6,3)\]
-Compiling architecture behavioral of entity Comparator_Single [\Comparator_Single(6,6,2)\]
-Compiling architecture behavioral of entity Comparator_Single [\Comparator_Single(6,6,1)\]
-Compiling architecture behavioral of entity Comparator [\Comparator(6,6)\]
-Compiling architecture behavioral of entity Dijkstra [\Dijkstra(8,6,6)\]
+Compiling architecture behavioral of entity LSAFetcher [\LSAFetcher(12)\]
 Compiling package textio
 Compiling package std_logic_textio
 Compiling architecture output_stage_behavioral of entity BLK_MEM_GEN_V7_3_output_stage [\BLK_MEM_GEN_V7_3_output_stage("...]
@@ -33,11 +22,11 @@ Compiling architecture output_stage_behavioral of entity BLK_MEM_GEN_V7_3_output
 Compiling architecture softecc_output_reg_stage_behavioral of entity BLK_MEM_GEN_V7_3_softecc_output_reg_stage [\BLK_MEM_GEN_V7_3_softecc_output...]
 Compiling architecture mem_module_behavioral of entity BLK_MEM_GEN_V7_3_mem_module [\BLK_MEM_GEN_V7_3_mem_module("bl...]
 Compiling architecture behavioral of entity BLK_MEM_GEN_V7_3 [\BLK_MEM_GEN_V7_3("blk_mem_gen_v...]
-Compiling architecture ramdijkstra_a of entity RAMDijkstra [ramdijkstra_default]
-Compiling architecture behavior of entity dijkstra_tb
+Compiling architecture ramdb_a of entity RAMDB [ramdb_default]
+Compiling architecture behavior of entity lsafetchertb
 Time Resolution for simulation is 1ps.
-Compiled 36 VHDL Units
-Built simulation executable /home/ise/ISE/CS226_OSPF/OSPF/Dijkstra_tb_isim_beh.exe
-Fuse Memory Usage: 126680 KB
-Fuse CPU Usage: 1700 ms
-GCC CPU Usage: 380 ms
+Compiled 21 VHDL Units
+Built simulation executable /home/yash20/isefiles/CS226_OSPF/OSPF/LSAFetcherTb_isim_beh.exe
+Fuse Memory Usage: 122780 KB
+Fuse CPU Usage: 1110 ms
+GCC CPU Usage: 2170 ms

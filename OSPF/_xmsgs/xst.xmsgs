@@ -5,39 +5,6 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="HDLCompiler" num="871" delta="old" >"/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 82: Using initial value <arg fmt="%s" index="1">&quot;11&quot;</arg> for <arg fmt="%s" index="2">numlsa</arg> since it is never assigned
-</msg>
-
-<msg type="warning" file="HDLCompiler" num="871" delta="old" >"/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 96: Using initial value <arg fmt="%s" index="1">&quot;0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&quot;</arg> for <arg fmt="%s" index="2">lsa_packet1</arg> since it is never assigned
-</msg>
-
-<msg type="warning" file="HDLCompiler" num="871" delta="old" >"/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 97: Using initial value <arg fmt="%s" index="1">&quot;0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&quot;</arg> for <arg fmt="%s" index="2">lsa_packet2</arg> since it is never assigned
-</msg>
-
-<msg type="warning" file="HDLCompiler" num="871" delta="old" >"/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 98: Using initial value <arg fmt="%s" index="1">&quot;0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&quot;</arg> for <arg fmt="%s" index="2">lsa_packet3</arg> since it is never assigned
-</msg>
-
-<msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">request_list_din</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-</msg>
-
-<msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">database_din</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-</msg>
-
-<msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">request_list_empty</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-</msg>
-
-<msg type="warning" file="Xst" num="2935" delta="old" >Signal &apos;<arg fmt="%s" index="1">request_list_rd_en</arg>&apos;, unconnected in block &apos;<arg fmt="%s" index="2">helloActParse</arg>&apos;, is tied to its initial value (<arg fmt="%s" index="3">0</arg>).
-</msg>
-
-<msg type="warning" file="Xst" num="2935" delta="old" >Signal &apos;<arg fmt="%s" index="1">database_rd_en</arg>&apos;, unconnected in block &apos;<arg fmt="%s" index="2">helloActParse</arg>&apos;, is tied to its initial value (<arg fmt="%s" index="3">0</arg>).
-</msg>
-
-<msg type="info" file="Xst" num="1799" delta="old" >State <arg fmt="%s" index="1">loading</arg> is never reached in FSM &lt;<arg fmt="%s" index="2">p_state</arg>&gt;.
-</msg>
-
-<msg type="info" file="Xst" num="1799" delta="old" >State <arg fmt="%s" index="1">full</arg> is never reached in FSM &lt;<arg fmt="%s" index="2">p_state</arg>&gt;.
-</msg>
-
 <msg type="warning" file="Xst" num="0" delta="new" >The specified part-type was not generated at build time. XST is loading the full part-type and will therefore consume more CPU and memory.
 </msg>
 

@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -lib "secureip" -o "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra_tb_isim_beh.exe" -prj "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra_tb_beh.prj" "work.Dijkstra_tb" 
+-intstyle "ise" -incremental -lib "secureip" -o "/home/yash20/isefiles/CS226_OSPF/OSPF/LSAFetcherTb_isim_beh.exe" -prj "/home/yash20/isefiles/CS226_OSPF/OSPF/LSAFetcherTb_beh.prj" "work.LSAFetcherTb" 

@@ -79,7 +79,7 @@ END COMPONENT;
       c_disable_warn_bhv_coll => 0,
       c_disable_warn_bhv_range => 0,
       c_enable_32bit_address => 0,
-      c_family => "spartan6",
+      c_family => "artix7",
       c_has_axi_id => 0,
       c_has_ena => 1,
       c_has_enb => 0,
@@ -95,11 +95,11 @@ END COMPONENT;
       c_has_softecc_input_regs_a => 0,
       c_has_softecc_output_regs_b => 0,
       c_init_file => "BlankString",
-      c_init_file_name => "no_coe_file_loaded",
+      c_init_file_name => "RAMDB.mif",
       c_inita_val => "0",
       c_initb_val => "0",
       c_interface_type => 0,
-      c_load_init_file => 0,
+      c_load_init_file => 1,
       c_mem_type => 0,
       c_mux_pipeline_stages => 0,
       c_prim_type => 1,
@@ -127,7 +127,7 @@ END COMPONENT;
       c_write_mode_b => "WRITE_FIRST",
       c_write_width_a => 8,
       c_write_width_b => 8,
-      c_xdevicefamily => "qspartan6"
+      c_xdevicefamily => "aartix7"
     );
 -- synthesis translate_on
 BEGIN

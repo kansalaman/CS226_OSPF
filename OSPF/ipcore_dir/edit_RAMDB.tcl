@@ -22,7 +22,7 @@ proc findRtfPath { relativePath } {
 
 source [ findRtfPath "data/projnav/scripts/dpm_cgUtils.tcl" ]
 
-set result [ run_cg_edit "RAMDB" xq6slx150t-2fgg676 VHDL ]
+set result [ run_cg_edit "RAMDB" xa7a100t-2Icsg324 VHDL ]
 
 if { $result == 0 } {
    puts "Core Generator edit command completed successfully."

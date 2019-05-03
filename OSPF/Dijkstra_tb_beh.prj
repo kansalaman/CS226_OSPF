@@ -1,6 +1,0 @@
-vhdl work "ipcore_dir/RAMDijkstra.vhd"
-vhdl work "Comparator_Simple.vhd"
-vhdl work "Comparator_Single.vhd"
-vhdl work "Comparator.vhd"
-vhdl work "Dijkstra.vhd"
-vhdl work "Dijkstra_tb.vhd"
