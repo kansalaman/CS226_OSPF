@@ -1,0 +1,2 @@
+vhdl work "ipcore_dir/FIFOLSU.vhd"
+vhdl work "LSAFilter.vhd"
