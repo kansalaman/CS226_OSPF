@@ -12,10 +12,10 @@ Parameter xsthdpdir set to /home/ise/ISE/CS226_OSPF/OSPF/xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
-Reading design: Dijkstra.prj
+Reading design: DBtoDijkstra.prj
 
 TABLE OF CONTENTS
   1) Synthesis Options Summary
@@ -42,29 +42,18 @@ TABLE OF CONTENTS
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
-Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.vhd" into library work
-Parsing entity <Comparator_Simple>.
-Parsing architecture <Behavioral> of entity <comparator_simple>.
-Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Single.vhd" into library work
-Parsing entity <Comparator_Single>.
-Parsing architecture <Behavioral> of entity <comparator_single>.
-Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator.vhd" into library work
-Parsing entity <Comparator>.
-Parsing architecture <Behavioral> of entity <comparator>.
-Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.vhd" into library work
-Parsing entity <Dijkstra>.
-Parsing architecture <Behavioral> of entity <dijkstra>.
-
-
-Total REAL time to Xst completion: 9.00 secs
-Total CPU time to Xst completion: 8.29 secs
- 
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/DBtoDijkstra.vhd" into library work
+Parsing entity <DBtoDijkstra>.
+Parsing architecture <Behavioral> of entity <dbtodijkstra>.
+ERROR:HDLCompiler:69 - "/home/ise/ISE/CS226_OSPF/OSPF/DBtoDijkstra.vhd" Line 168: <to_i> is not declared.
+ERROR:HDLCompiler:854 - "/home/ise/ISE/CS226_OSPF/OSPF/DBtoDijkstra.vhd" Line 47: Unit <behavioral> ignored due to previous errors.
+VHDL file /home/ise/ISE/CS226_OSPF/OSPF/DBtoDijkstra.vhd ignored due to errors
 --> 
 
 
-Total memory usage is 301016 kilobytes
+Total memory usage is 299700 kilobytes
 
-Number of errors   :    0 (   0 filtered)
+Number of errors   :    2 (   0 filtered)
 Number of warnings :    0 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 
