@@ -37,3 +37,7 @@ xst -intstyle ise -ifn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/C
 ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -i -bm tb_numones.bmm -p xa7a100t-csg324-2I "helloActParse.ngc" helloActParse.ngd  
 map -intstyle ise -p xa7a100t-csg324-2I -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -mt off -ir off -pr off -lc off -power off -o helloActParse_map.ncd helloActParse.ngd helloActParse.pcf 
 par -w -intstyle ise -ol high -mt off helloActParse_map.ncd helloActParse.ncd helloActParse.pcf 
+xst -intstyle ise -ifn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/helloActParse.xst" -ofn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/helloActParse.syr" 
+ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -i -bm tb_numones.bmm -p xa7a100t-csg324-2I "helloActParse.ngc" helloActParse.ngd  
+map -intstyle ise -p xa7a100t-csg324-2I -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -mt off -ir off -pr off -lc off -power off -o helloActParse_map.ncd helloActParse.ngd helloActParse.pcf 
+par -w -intstyle ise -ol high -mt off helloActParse_map.ncd helloActParse.ncd helloActParse.pcf 

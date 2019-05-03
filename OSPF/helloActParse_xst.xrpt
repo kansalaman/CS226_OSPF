@@ -5,7 +5,7 @@
     The structure and the elements are likely to change over the next few releases.
     This means code written to parse this file will need to be revisited each subsequent release.-->
 
-  <application stringID="Xst" timeStamp="Fri May  3 15:57:25 2019">
+  <application stringID="Xst" timeStamp="Fri May  3 23:40:13 2019">
     <section stringID="User_Env">
       <table stringID="User_EnvVar">
         <column stringID="variable"/>
@@ -45,7 +45,7 @@
         <column stringID="speed"/>
         <row stringID="row" value="0">
           <item stringID="arch" value="Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz"/>
-          <item stringID="speed" value="3092.776 MHz"/>
+          <item stringID="speed" value="3100.000 MHz"/>
         </row>
       </table>
     </section>

@@ -1,0 +1,15 @@
+xst -intstyle ise -ifn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.xst" -ofn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.syr" 
+xst -intstyle ise -ifn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.xst" -ofn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.syr" 
+xst -intstyle ise -ifn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.xst" -ofn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.syr" 
+xst -intstyle ise -ifn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.xst" -ofn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.syr" 
+xst -intstyle ise -ifn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.xst" -ofn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.syr" 
+xst -intstyle ise -ifn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.xst" -ofn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.syr" 
+xst -intstyle ise -ifn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.xst" -ofn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.syr" 
+ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -i -bm tb_numones.bmm -p xa7a100t-csg324-2I "lsugen.ngc" lsugen.ngd  
+map -intstyle ise -p xa7a100t-csg324-2I -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -mt off -ir off -pr off -lc off -power off -o lsugen_map.ncd lsugen.ngd lsugen.pcf 
+par -w -intstyle ise -ol high -mt off lsugen_map.ncd lsugen.ncd lsugen.pcf 
+trce -intstyle ise -v 3 -s 2I -n 3 -fastpaths -xml lsugen.twx lsugen.ncd -o lsugen.twr lsugen.pcf 
+xst -intstyle ise -ifn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.xst" -ofn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.syr" 
+xst -intstyle ise -ifn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.xst" -ofn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.syr" 
+ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -i -bm tb_numones.bmm -p xa7a100t-csg324-2I "lsugen.ngc" lsugen.ngd  
+map -intstyle ise -p xa7a100t-csg324-2I -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -mt off -ir off -pr off -lc off -power off -o lsugen_map.ncd lsugen.ngd lsugen.pcf 

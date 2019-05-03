@@ -5,3 +5,7 @@ for i in range(256):
     res = (4 - len(temp))*"0" + temp
     print('when ' + '"'+ stdx + '"' + " =>")
     print('out1 <= "' + res + '";')
+
+
+
+    

@@ -84,15 +84,6 @@ ARCHITECTURE behavior OF LSUGEN_TB IS
   );
 END COMPONENT;
 
-	-- RAM Inputs
-	 signal ena :  STD_LOGIC;
-    signal wea :  STD_LOGIC_VECTOR(0 DOWNTO 0);
-    signal addra : STD_LOGIC_VECTOR(11 DOWNTO 0);
-    signal dina :  STD_LOGIC_VECTOR(7 DOWNTO 0);
-
-	-- RAM Outputs
-	signal douta : STD_LOGIC_VECTOR(7 DOWNTO 0);
-
 
    --Inputs
    signal n1state : std_logic_vector(2 downto 0) := (others => '0');
@@ -131,15 +122,22 @@ END COMPONENT;
    constant clk_period : time := 10 ns;
  
 BEGIN
- 
+	neigh1 <= "11111111000000001111111100000000";
+	neigh2 <= "11111111000000001111111100000000";
+	neigh3 <= "11111111000000001111111100000000";
+	neigh4 <= "11111111000000001111111100000000";
+	neigh5 <= "11111111000000001111111100000000";
+	neigh6 <= "11111111000000001111111100000000";
+	neigh7 <= "11111111000000001111111100000000";
+	neigh8 <= "11111111000000001111111100000000";
 	-- Instantiate the Unit Under Test (UUT)
    comp: RAMDB PORT MAP (
 	 clka => clk, 
-    ena => ena,
-    wea => wea,
-    addra => addra,
-    dina => dina,
-    douta => douta);
+    ena => '1',
+    wea => "0",
+    addra => db_addr,
+    dina => db_dout,
+    douta => db_din);
 	 
 	 
 	uut: lsugen PORT MAP (
@@ -190,13 +188,25 @@ BEGIN
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
-      	
 
       wait for clk_period*10;
-
-      -- insert stimulus here 
-
-      wait;
+		n1state<="000";
+		n2state<="000";
+		n3state<="000";
+		n4state<="000";
+      n5state<="000";
+		n6state<="000";
+		n7state<="000";
+		n8state<="000";
+		-- insert stimulus here 
+		wait for clk_period*50;
+      n1state <= "111";
+		wait for clk_period *150;
+		n2state <= "111";
+		wait for clk_period*150;
+		n1state <= "000";
+		n2state <= "000";
+		wait;
    end process;
 
 END;

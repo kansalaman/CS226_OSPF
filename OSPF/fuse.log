@@ -1,4 +1,4 @@
-Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB_isim_beh.exe -prj /home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB_beh.prj work.LSUGEN_TB 
+Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -relaunch -intstyle "ise" -incremental -lib "secureip" -o "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB_isim_beh.exe" -prj "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB_beh.prj" "work.LSUGEN_TB" 
 ISim P.20131013 (signature 0xfbc00daa)
 Number of CPUs detected in this system: 4
 Turning on mult-threading, number of parallel sub-compilation jobs: 8 
@@ -8,17 +8,9 @@ Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_
 Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" into library work
 Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB.vhd" into library work
 Starting static elaboration
-WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1064: Index 8 is out of array constraint 7 downto 0 for target served
-WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1090: Index 8 is out of array constraint 7 downto 0 for target served
-WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1116: Index 8 is out of array constraint 7 downto 0 for target served
-WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1142: Index 8 is out of array constraint 7 downto 0 for target served
-WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1168: Index 8 is out of array constraint 7 downto 0 for target served
-WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1194: Index 8 is out of array constraint 7 downto 0 for target served
-WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1220: Index 8 is out of array constraint 7 downto 0 for target served
-WARNING:HDLCompiler:533 - "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" Line 1246: Index 8 is out of array constraint 7 downto 0 for target served
 Completed static elaboration
-Fuse Memory Usage: 104060 KB
-Fuse CPU Usage: 1180 ms
+Fuse Memory Usage: 104068 KB
+Fuse CPU Usage: 1370 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
@@ -35,8 +27,9 @@ Compiling architecture behavioral of entity numones [numones_default]
 Compiling architecture behavioral of entity lsugen [\lsugen(12,8)\]
 Compiling architecture behavior of entity lsugen_tb
 Time Resolution for simulation is 1ps.
+Waiting for 1 sub-compilation(s) to finish...
 Compiled 23 VHDL Units
 Built simulation executable /home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB_isim_beh.exe
-Fuse Memory Usage: 680816 KB
-Fuse CPU Usage: 1390 ms
-GCC CPU Usage: 1790 ms
+Fuse Memory Usage: 681240 KB
+Fuse CPU Usage: 1540 ms
+GCC CPU Usage: 220 ms
