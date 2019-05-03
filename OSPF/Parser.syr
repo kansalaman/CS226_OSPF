@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
 Reading design: Parser.prj
@@ -102,13 +102,16 @@ DSP48 Utilization Ratio            : 100
 Auto BRAM Packing                  : NO
 Slice Utilization Ratio Delta      : 5
 
+---- Other Options
+Cores Search Directories           : {"ipcore_dir"  }
+
 =========================================================================
 
 
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
-Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/Parser.vhd" into library work
+Parsing VHDL file "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/message_parser.vhd" into library work
 Parsing entity <Parser>.
 Parsing architecture <Behavioral> of entity <parser>.
 
@@ -123,37 +126,41 @@ Elaborating entity <Parser> (architecture <Behavioral>) from library <work>.
 =========================================================================
 
 Synthesizing Unit <Parser>.
-    Related source file is "/home/yash20/isefiles/CS226_OSPF/OSPF/Parser.vhd".
+    Related source file is "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/message_parser.vhd".
     Found 32-bit register for signal <p_counter>.
+    Found 3-bit register for signal <p_state>.
+    Found 32-bit register for signal <processed_bytes>.
+    Found 1-bit register for signal <telling_neighbour>.
+    Found 1-bit register for signal <telling_rid>.
     Found 8-bit register for signal <typePacket>.
     Found 16-bit register for signal <packet_length>.
     Found 1-bit register for signal <hello_out>.
     Found 1-bit register for signal <ls_out>.
-    Found 3-bit register for signal <p_state>.
+    Found 8-bit register for signal <out1>.
     Found finite state machine <FSM_0> for signal <p_state>.
     -----------------------------------------------------------------------
     | States             | 5                                              |
-    | Transitions        | 16                                             |
-    | Inputs             | 7                                              |
-    | Outputs            | 6                                              |
+    | Transitions        | 11                                             |
+    | Inputs             | 5                                              |
+    | Outputs            | 8                                              |
     | Clock              | clk (rising_edge)                              |
     | Power Up State     | idle                                           |
     | Encoding           | auto                                           |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-    Found 32-bit adder for signal <n_counter[31]_GND_5_o_add_5_OUT> created at line 60.
-    Found 32-bit adder for signal <n0059[31:0]> created at line 151.
-    Found 32-bit 5-to-1 multiplexer for signal <n_counter> created at line 81.
-    Found 32-bit comparator greater for signal <n_counter[31]_GND_5_o_LessThan_5_o> created at line 60
-    Found 32-bit comparator greater for signal <GND_5_o_n_counter[31]_LessThan_7_o> created at line 60
-    Found 32-bit comparator greater for signal <GND_5_o_p_counter[31]_LessThan_23_o> created at line 102
-    Found 32-bit comparator greater for signal <p_counter[31]_GND_5_o_LessThan_25_o> created at line 104
-    Found 17-bit comparator greater for signal <p_counter[31]_GND_5_o_LessThan_43_o> created at line 151
+    Found 32-bit adder for signal <processed_bytes[31]_GND_6_o_add_3_OUT> created at line 44.
+    Found 32-bit adder for signal <p_counter[31]_GND_6_o_add_44_OUT> created at line 140.
+    Found 32-bit 5-to-1 multiplexer for signal <n_counter> created at line 89.
+    Found 32-bit comparator lessequal for signal <n0006> created at line 47
+    Found 32-bit comparator lessequal for signal <n0008> created at line 47
+    Found 32-bit comparator lessequal for signal <n0013> created at line 53
+    Found 32-bit comparator lessequal for signal <n0015> created at line 53
+    Found 32-bit comparator equal for signal <packet_length_int[31]_processed_bytes[31]_equal_43_o> created at line 132
     Summary:
 	inferred   2 Adder/Subtractor(s).
-	inferred  58 D-type flip-flop(s).
+	inferred 100 D-type flip-flop(s).
 	inferred   5 Comparator(s).
-	inferred   4 Multiplexer(s).
+	inferred  15 Multiplexer(s).
 	inferred   1 Finite State Machine(s).
 Unit <Parser> synthesized.
 
@@ -163,16 +170,18 @@ HDL Synthesis Report
 Macro Statistics
 # Adders/Subtractors                                   : 2
  32-bit adder                                          : 2
-# Registers                                            : 5
- 1-bit register                                        : 2
+# Registers                                            : 9
+ 1-bit register                                        : 4
  16-bit register                                       : 1
- 32-bit register                                       : 1
- 8-bit register                                        : 1
+ 32-bit register                                       : 2
+ 8-bit register                                        : 2
 # Comparators                                          : 5
- 17-bit comparator greater                             : 1
- 32-bit comparator greater                             : 4
-# Multiplexers                                         : 4
- 32-bit 2-to-1 multiplexer                             : 3
+ 32-bit comparator equal                               : 1
+ 32-bit comparator lessequal                           : 4
+# Multiplexers                                         : 15
+ 1-bit 2-to-1 multiplexer                              : 8
+ 16-bit 2-to-1 multiplexer                             : 1
+ 32-bit 2-to-1 multiplexer                             : 5
  32-bit 5-to-1 multiplexer                             : 1
 # FSMs                                                 : 1
 
@@ -183,19 +192,26 @@ Macro Statistics
 =========================================================================
 
 
+Synthesizing (advanced) Unit <Parser>.
+The following registers are absorbed into counter <processed_bytes>: 1 register on signal <processed_bytes>.
+Unit <Parser> synthesized (advanced).
+
 =========================================================================
 Advanced HDL Synthesis Report
 
 Macro Statistics
-# Adders/Subtractors                                   : 2
- 32-bit adder                                          : 2
-# Registers                                            : 58
- Flip-Flops                                            : 58
+# Adders/Subtractors                                   : 1
+ 32-bit adder                                          : 1
+# Counters                                             : 1
+ 32-bit up counter                                     : 1
+# Registers                                            : 68
+ Flip-Flops                                            : 68
 # Comparators                                          : 5
- 17-bit comparator greater                             : 1
- 32-bit comparator greater                             : 4
-# Multiplexers                                         : 4
- 32-bit 2-to-1 multiplexer                             : 3
+ 32-bit comparator equal                               : 1
+ 32-bit comparator lessequal                           : 4
+# Multiplexers                                         : 30
+ 1-bit 2-to-1 multiplexer                              : 24
+ 32-bit 2-to-1 multiplexer                             : 5
  32-bit 5-to-1 multiplexer                             : 1
 # FSMs                                                 : 1
 
@@ -221,7 +237,8 @@ Optimizing unit <Parser> ...
 
 Mapping all equations...
 Building and optimizing final netlist ...
-Found area constraint ratio of 100 (+ 5) on block Parser, actual ratio is 0.
+Found area constraint ratio of 100 (+ 5) on block Parser, actual ratio is 1.
+FlipFlop p_counter_2 has been replicated 1 time(s)
 
 Final Macro Processing ...
 
@@ -229,8 +246,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 60
- Flip-Flops                                            : 60
+# Registers                                            : 103
+ Flip-Flops                                            : 103
 
 =========================================================================
 
@@ -253,26 +270,28 @@ Top Level Output File Name         : Parser.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 384
+# BELS                             : 437
 #      GND                         : 1
-#      INV                         : 1
-#      LUT1                        : 31
-#      LUT2                        : 7
-#      LUT3                        : 28
-#      LUT4                        : 23
-#      LUT5                        : 43
-#      LUT6                        : 85
-#      MUXCY                       : 100
+#      INV                         : 2
+#      LUT1                        : 62
+#      LUT2                        : 15
+#      LUT3                        : 17
+#      LUT4                        : 25
+#      LUT5                        : 63
+#      LUT6                        : 84
+#      MUXCY                       : 98
+#      MUXF7                       : 5
 #      VCC                         : 1
 #      XORCY                       : 64
-# FlipFlops/Latches                : 60
-#      FD                          : 52
+# FlipFlops/Latches                : 103
+#      FD                          : 63
 #      FDE                         : 8
+#      FDR                         : 32
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
-# IO Buffers                       : 11
+# IO Buffers                       : 21
 #      IBUF                        : 9
-#      OBUF                        : 2
+#      OBUF                        : 12
 
 Device utilization summary:
 ---------------------------
@@ -281,20 +300,21 @@ Selected Device : 6slx45tcsg324-2
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:              60  out of  54576     0%  
- Number of Slice LUTs:                  218  out of  27288     0%  
-    Number used as Logic:               218  out of  27288     0%  
+ Number of Slice Registers:              95  out of  54576     0%  
+ Number of Slice LUTs:                  268  out of  27288     0%  
+    Number used as Logic:               268  out of  27288     0%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    247
-   Number with an unused Flip Flop:     187  out of    247    75%  
-   Number with an unused LUT:            29  out of    247    11%  
-   Number of fully used LUT-FF pairs:    31  out of    247    12%  
-   Number of unique control sets:         2
+ Number of LUT Flip Flop pairs used:    301
+   Number with an unused Flip Flop:     206  out of    301    68%  
+   Number with an unused LUT:            33  out of    301    10%  
+   Number of fully used LUT-FF pairs:    62  out of    301    20%  
+   Number of unique control sets:         3
 
 IO Utilization: 
- Number of IOs:                          21
- Number of bonded IOBs:                  12  out of    190     6%  
+ Number of IOs:                          22
+ Number of bonded IOBs:                  22  out of    190    11%  
+    IOB Flip Flops/Latches:               8
 
 Specific Feature Utilization:
  Number of BUFG/BUFGCTRLs:                1  out of     16     6%  
@@ -320,7 +340,7 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-clk                                | BUFGP                  | 60    |
+clk                                | BUFGP                  | 103   |
 -----------------------------------+------------------------+-------+
 
 Asynchronous Control Signals Information:
@@ -331,9 +351,9 @@ Timing Summary:
 ---------------
 Speed Grade: -2
 
-   Minimum period: 11.230ns (Maximum Frequency: 89.049MHz)
-   Minimum input arrival time before clock: 8.558ns
-   Maximum output required time after clock: 5.451ns
+   Minimum period: 9.660ns (Maximum Frequency: 103.520MHz)
+   Minimum input arrival time before clock: 9.891ns
+   Maximum output required time after clock: 5.544ns
    Maximum combinational path delay: No path found
 
 Timing Details:
@@ -342,10 +362,10 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk'
-  Clock period: 11.230ns (frequency: 89.049MHz)
-  Total number of paths / destination ports: 6849856 / 68
+  Clock period: 9.660ns (frequency: 103.520MHz)
+  Total number of paths / destination ports: 82671 / 135
 -------------------------------------------------------------------------
-Delay:               11.230ns (Levels of Logic = 30)
+Delay:               9.660ns (Levels of Logic = 7)
   Source:            p_counter_0 (FF)
   Destination:       packet_length_0 (FF)
   Source Clock:      clk rising
@@ -355,47 +375,24 @@ Delay:               11.230ns (Levels of Logic = 30)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q               2   0.525   0.725  p_counter_0 (p_counter_0)
-     INV:I->O              1   0.255   0.000  Madd_n0059[31:0]_lut<0>_INV_0 (Madd_n0059[31:0]_lut<0>)
-     MUXCY:S->O            1   0.215   0.000  Madd_n0059[31:0]_cy<0> (Madd_n0059[31:0]_cy<0>)
-     MUXCY:CI->O           1   0.023   0.000  Madd_n0059[31:0]_cy<1> (Madd_n0059[31:0]_cy<1>)
-     MUXCY:CI->O           1   0.023   0.000  Madd_n0059[31:0]_cy<2> (Madd_n0059[31:0]_cy<2>)
-     MUXCY:CI->O           1   0.023   0.000  Madd_n0059[31:0]_cy<3> (Madd_n0059[31:0]_cy<3>)
-     MUXCY:CI->O           1   0.023   0.000  Madd_n0059[31:0]_cy<4> (Madd_n0059[31:0]_cy<4>)
-     MUXCY:CI->O           1   0.023   0.000  Madd_n0059[31:0]_cy<5> (Madd_n0059[31:0]_cy<5>)
-     MUXCY:CI->O           1   0.023   0.000  Madd_n0059[31:0]_cy<6> (Madd_n0059[31:0]_cy<6>)
-     MUXCY:CI->O           1   0.023   0.000  Madd_n0059[31:0]_cy<7> (Madd_n0059[31:0]_cy<7>)
-     MUXCY:CI->O           1   0.023   0.000  Madd_n0059[31:0]_cy<8> (Madd_n0059[31:0]_cy<8>)
-     MUXCY:CI->O           1   0.023   0.000  Madd_n0059[31:0]_cy<9> (Madd_n0059[31:0]_cy<9>)
-     MUXCY:CI->O           1   0.023   0.000  Madd_n0059[31:0]_cy<10> (Madd_n0059[31:0]_cy<10>)
-     MUXCY:CI->O           1   0.023   0.000  Madd_n0059[31:0]_cy<11> (Madd_n0059[31:0]_cy<11>)
-     MUXCY:CI->O           1   0.023   0.000  Madd_n0059[31:0]_cy<12> (Madd_n0059[31:0]_cy<12>)
-     MUXCY:CI->O           1   0.023   0.000  Madd_n0059[31:0]_cy<13> (Madd_n0059[31:0]_cy<13>)
-     XORCY:CI->O           8   0.206   1.374  Madd_n0059[31:0]_xor<14> (n0059[31:0]<14>)
-     LUT5:I0->O            1   0.254   0.000  Mcompar_p_counter[31]_GND_5_o_LessThan_43_o_lut<7> (Mcompar_p_counter[31]_GND_5_o_LessThan_43_o_lut<7>)
-     MUXCY:S->O           75   0.215   2.015  Mcompar_p_counter[31]_GND_5_o_LessThan_43_o_cy<7> (Mcompar_p_counter[31]_GND_5_o_LessThan_43_o_cy<7>)
-     LUT6:I5->O            3   0.254   1.196  Mmux_n_counter11 (n_counter<0>)
-     LUT5:I0->O            1   0.254   0.000  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_lut<0> (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_lut<0>)
-     MUXCY:S->O            1   0.215   0.000  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<0> (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<0>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<1> (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<1>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<2> (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<2>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<3> (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<3>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<4> (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<4>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<5> (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<5>)
-     MUXCY:CI->O           1   0.235   0.682  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<6> (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<6>)
-     LUT5:I4->O            1   0.254   0.000  GND_5_o_GND_5_o_AND_3_o1_lut (GND_5_o_GND_5_o_AND_3_o1_lut)
-     MUXCY:S->O           16   0.427   1.182  GND_5_o_GND_5_o_AND_3_o1_cy (GND_5_o_GND_5_o_AND_3_o)
-     LUT3:I2->O            1   0.254   0.000  packet_length_0_rstpot (packet_length_0_rstpot)
-     FD:D                      0.074          packet_length_0
+     FD:C->Q               2   0.525   1.181  p_counter_0 (p_counter_0)
+     LUT6:I0->O            5   0.254   1.271  GND_6_o_p_counter[31]_equal_29_o<31>11 (GND_6_o_p_counter[31]_equal_29_o<31>11)
+     LUT5:I0->O            1   0.254   0.682  GND_6_o_p_counter[31]_equal_29_o<31>16_1 (GND_6_o_p_counter[31]_equal_29_o<31>16)
+     LUT5:I4->O           19   0.254   1.369  Mmux_n_counter1121_SW33 (N102)
+     LUT5:I3->O            6   0.250   0.876  Mmux_n_counter501 (n_counter<31>)
+     LUT6:I5->O            2   0.254   0.726  GND_6_o_GND_6_o_AND_5_o17_SW0 (N8)
+     LUT6:I5->O           16   0.254   1.182  GND_6_o_GND_6_o_AND_5_o17 (GND_6_o_GND_6_o_AND_5_o1)
+     LUT6:I5->O            1   0.254   0.000  mux1111 (packet_length[15]_in1[7]_mux_18_OUT<5>)
+     FD:D                      0.074          packet_length_5
     ----------------------------------------
-    Total                     11.230ns (4.056ns logic, 7.174ns route)
-                                       (36.1% logic, 63.9% route)
+    Total                      9.660ns (2.373ns logic, 7.287ns route)
+                                       (24.6% logic, 75.4% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
-  Total number of paths / destination ports: 2160 / 37
+  Total number of paths / destination ports: 955 / 110
 -------------------------------------------------------------------------
-Offset:              8.558ns (Levels of Logic = 14)
+Offset:              9.891ns (Levels of Logic = 7)
   Source:            validity (PAD)
   Destination:       packet_length_0 (FF)
   Destination Clock: clk rising
@@ -404,30 +401,23 @@ Offset:              8.558ns (Levels of Logic = 14)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             6   1.328   1.152  validity_IBUF (validity_IBUF)
-     LUT4:I0->O            2   0.254   0.834  Mmux_n_counter1211_SW2 (N9)
-     LUT6:I4->O            4   0.250   1.080  Mmux_n_counter121 (n_counter<1>)
-     LUT4:I0->O            0   0.254   0.000  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_lutdi (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_lutdi)
-     MUXCY:DI->O           1   0.181   0.000  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<0> (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<0>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<1> (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<1>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<2> (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<2>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<3> (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<3>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<4> (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<4>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<5> (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<5>)
-     MUXCY:CI->O           1   0.235   0.682  Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<6> (Mcompar_n_counter[31]_GND_5_o_LessThan_5_o_cy<6>)
-     LUT5:I4->O            1   0.254   0.000  GND_5_o_GND_5_o_AND_3_o1_lut (GND_5_o_GND_5_o_AND_3_o1_lut)
-     MUXCY:S->O           16   0.427   1.182  GND_5_o_GND_5_o_AND_3_o1_cy (GND_5_o_GND_5_o_AND_3_o)
-     LUT3:I2->O            1   0.254   0.000  packet_length_0_rstpot (packet_length_0_rstpot)
-     FD:D                      0.074          packet_length_0
+     IBUF:I->O            22   1.328   1.764  validity_IBUF (validity_IBUF)
+     LUT5:I0->O           12   0.254   1.069  Mmux_n_counter1121_SW1 (N49)
+     LUT3:I2->O            1   0.254   0.790  Mmux_n_counter1121_SW5 (N67)
+     LUT6:I4->O           10   0.250   1.438  Mmux_n_counter521 (n_counter<3>)
+     LUT6:I1->O            2   0.254   0.726  GND_6_o_GND_6_o_AND_5_o17_SW0 (N8)
+     LUT6:I5->O           16   0.254   1.182  GND_6_o_GND_6_o_AND_5_o17 (GND_6_o_GND_6_o_AND_5_o1)
+     LUT6:I5->O            1   0.254   0.000  mux1111 (packet_length[15]_in1[7]_mux_18_OUT<5>)
+     FD:D                      0.074          packet_length_5
     ----------------------------------------
-    Total                      8.558ns (3.628ns logic, 4.930ns route)
-                                       (42.4% logic, 57.6% route)
+    Total                      9.891ns (2.922ns logic, 6.969ns route)
+                                       (29.5% logic, 70.5% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
-  Total number of paths / destination ports: 2 / 2
+  Total number of paths / destination ports: 12 / 12
 -------------------------------------------------------------------------
-Offset:              5.451ns (Levels of Logic = 1)
+Offset:              5.544ns (Levels of Logic = 1)
   Source:            p_state_FSM_FFd1 (FF)
   Destination:       ls_out (PAD)
   Source Clock:      clk rising
@@ -436,11 +426,11 @@ Offset:              5.451ns (Levels of Logic = 1)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q              75   0.525   2.014  p_state_FSM_FFd1 (p_state_FSM_FFd1)
+     FD:C->Q              87   0.525   2.107  p_state_FSM_FFd1 (p_state_FSM_FFd1)
      OBUF:I->O                 2.912          ls_out_OBUF (ls_out)
     ----------------------------------------
-    Total                      5.451ns (3.437ns logic, 2.014ns route)
-                                       (63.1% logic, 36.9% route)
+    Total                      5.544ns (3.437ns logic, 2.107ns route)
+                                       (62.0% logic, 38.0% route)
 
 =========================================================================
 
@@ -452,19 +442,19 @@ Clock to Setup on destination clock clk
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-clk            |   11.230|         |         |         |
+clk            |    9.660|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
 Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 4.15 secs
+Total CPU time to Xst completion: 4.52 secs
  
 --> 
 
 
-Total memory usage is 397016 kilobytes
+Total memory usage is 399132 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    0 (   0 filtered)

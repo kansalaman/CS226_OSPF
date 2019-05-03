@@ -1,1 +1,1 @@
-vhdl work "Parser.vhd"
+vhdl work "message_parser.vhd"

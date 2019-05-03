@@ -8,7 +8,7 @@ Parsing VHDL file "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/pa
 Starting static elaboration
 Completed static elaboration
 Fuse Memory Usage: 98952 KB
-Fuse CPU Usage: 1090 ms
+Fuse CPU Usage: 1080 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
@@ -17,9 +17,8 @@ Compiling package numeric_std
 Compiling architecture behavioral of entity Parser [parser_default]
 Compiling architecture behavior of entity parser_tb
 Time Resolution for simulation is 1ps.
-Waiting for 1 sub-compilation(s) to finish...
 Compiled 8 VHDL Units
 Built simulation executable /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/parser_tb_isim_beh.exe
 Fuse Memory Usage: 674804 KB
 Fuse CPU Usage: 1220 ms
-GCC CPU Usage: 300 ms
+GCC CPU Usage: 2830 ms

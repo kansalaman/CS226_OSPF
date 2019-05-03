@@ -28,3 +28,4 @@ ngdbuild -intstyle ise -dd _ngo -nt timestamp -i -p xc6slx45t-csg324-2 Parser.ng
 map -intstyle ise -p xc6slx45t-csg324-2 -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr off -lc off -power off -o Parser_map.ncd Parser.ngd Parser.pcf 
 par -w -intstyle ise -ol high -mt off Parser_map.ncd Parser.ncd Parser.pcf 
 trce -intstyle ise -v 3 -s 2 -n 3 -fastpaths -xml Parser.twx Parser.ncd -o Parser.twr Parser.pcf 
+xst -intstyle ise -ifn "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/Parser.xst" -ofn "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/Parser.syr" 
