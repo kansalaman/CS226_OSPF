@@ -18,3 +18,6 @@ xst -intstyle ise -ifn "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OS
 xst -intstyle ise -ifn "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/LSU_Parser.xst" -ofn "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/LSU_Parser.syr" 
 xst -intstyle ise -ifn "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/LSU_Parser.xst" -ofn "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/LSU_Parser.syr" 
 xst -intstyle ise -ifn "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/LSU_Parser.xst" -ofn "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/LSU_Parser.syr" 
+xst -intstyle ise -ifn "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/LSU_Parser.xst" -ofn "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/LSU_Parser.syr" 
+xst -intstyle ise -ifn "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/LSU_Parser.xst" -ofn "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/LSU_Parser.syr" 
+xst -intstyle ise -ifn "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/LSU_Parser.xst" -ofn "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/LSU_Parser.syr" 

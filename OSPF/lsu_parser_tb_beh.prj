@@ -1,0 +1,2 @@
+vhdl work "LSU_Parser.vhd"
+vhdl work "lsu_parser_tb.vhd"

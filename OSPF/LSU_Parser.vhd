@@ -181,7 +181,7 @@ begin
         end if;
 
         when dumpLSA =>
-            if(processed_bytes = packet_length_int) then
+            if(processed_bytes = packet_length_int or data_valid='0') then
                 if(data_valid = '1' and state_in_int>=5 and state_in_int<=8) then
                     n_state <= LSU_strip;
                     n_counter <= 1;
@@ -209,7 +209,7 @@ begin
                 n_counter <= p_counter+1;
             end if;
         when sendLSA =>
-            if(processed_bytes = packet_length_int) then
+            if(processed_bytes = packet_length_int or data_valid='0') then
                 if(data_valid = '1' and state_in_int>=5 and state_in_int<=8) then
                     n_state <= LSU_strip;
                     n_counter <= 1;

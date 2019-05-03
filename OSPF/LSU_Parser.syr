@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.03 secs
+Total CPU time to Xst completion: 0.04 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.03 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
 Reading design: LSU_Parser.prj
@@ -157,8 +157,8 @@ Synthesizing Unit <LSU_Parser>.
     Found 32-bit comparator lessequal for signal <n0011> created at line 98
     Found 32-bit comparator lessequal for signal <n0013> created at line 98
     Found 32-bit comparator equal for signal <packet_length_int[31]_processed_bytes[31]_equal_54_o> created at line 184
-    Found 32-bit comparator greater for signal <n0075> created at line 185
     Found 32-bit comparator greater for signal <n0077> created at line 185
+    Found 32-bit comparator greater for signal <n0079> created at line 185
     Found 32-bit comparator equal for signal <lsa_length_int[31]_p_counter[31]_equal_71_o> created at line 223
     Summary:
 	inferred   2 Adder/Subtractor(s).
@@ -272,17 +272,17 @@ Top Level Output File Name         : LSU_Parser.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 529
+# BELS                             : 502
 #      GND                         : 1
 #      INV                         : 2
 #      LUT1                        : 62
-#      LUT2                        : 27
-#      LUT3                        : 24
-#      LUT4                        : 14
-#      LUT5                        : 33
-#      LUT6                        : 192
+#      LUT2                        : 10
+#      LUT3                        : 27
+#      LUT4                        : 15
+#      LUT5                        : 40
+#      LUT6                        : 169
 #      MUXCY                       : 108
-#      MUXF7                       : 1
+#      MUXF7                       : 3
 #      VCC                         : 1
 #      XORCY                       : 64
 # FlipFlops/Latches                : 117
@@ -301,14 +301,14 @@ Selected Device : 6slx45tcsg324-2
 
 Slice Logic Utilization: 
  Number of Slice Registers:             117  out of  54576     0%  
- Number of Slice LUTs:                  354  out of  27288     1%  
-    Number used as Logic:               354  out of  27288     1%  
+ Number of Slice LUTs:                  325  out of  27288     1%  
+    Number used as Logic:               325  out of  27288     1%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    383
-   Number with an unused Flip Flop:     266  out of    383    69%  
-   Number with an unused LUT:            29  out of    383     7%  
-   Number of fully used LUT-FF pairs:    88  out of    383    22%  
+ Number of LUT Flip Flop pairs used:    356
+   Number with an unused Flip Flop:     239  out of    356    67%  
+   Number with an unused LUT:            31  out of    356     8%  
+   Number of fully used LUT-FF pairs:    86  out of    356    24%  
    Number of unique control sets:         1
 
 IO Utilization: 
@@ -350,8 +350,8 @@ Timing Summary:
 ---------------
 Speed Grade: -2
 
-   Minimum period: 10.757ns (Maximum Frequency: 92.963MHz)
-   Minimum input arrival time before clock: 8.261ns
+   Minimum period: 10.330ns (Maximum Frequency: 96.807MHz)
+   Minimum input arrival time before clock: 9.358ns
    Maximum output required time after clock: 4.118ns
    Maximum combinational path delay: No path found
 
@@ -361,38 +361,45 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk'
-  Clock period: 10.757ns (frequency: 92.963MHz)
-  Total number of paths / destination ports: 433357 / 117
+  Clock period: 10.330ns (frequency: 96.807MHz)
+  Total number of paths / destination ports: 537801 / 117
 -------------------------------------------------------------------------
-Delay:               10.757ns (Levels of Logic = 8)
-  Source:            p_counter_25 (FF)
-  Destination:       packet_length_7 (FF)
+Delay:               10.330ns (Levels of Logic = 15)
+  Source:            processed_bytes_2 (FF)
+  Destination:       lsa_length_0 (FF)
   Source Clock:      clk rising
   Destination Clock: clk rising
 
-  Data Path: p_counter_25 to packet_length_7
+  Data Path: processed_bytes_2 to lsa_length_0
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q               3   0.525   1.221  p_counter_25 (p_counter_25)
-     LUT6:I0->O            1   0.254   1.112  GND_6_o_p_counter[31]_equal_50_o<31>5 (GND_6_o_p_counter[31]_equal_50_o<31>4)
-     LUT6:I1->O           18   0.254   1.235  GND_6_o_p_counter[31]_equal_50_o<31>7 (GND_6_o_p_counter[31]_equal_50_o)
-     LUT6:I5->O           12   0.254   1.069  Mmux_n_counter1011 (Mmux_n_counter101)
-     LUT6:I5->O           18   0.254   1.343  GND_6_o_GND_6_o_AND_11_o13 (GND_6_o_GND_6_o_AND_11_o13)
-     LUT6:I4->O            1   0.250   0.682  mux2911_SW0_SW0_G (N312)
-     LUT3:I2->O            1   0.254   0.682  mux2911_SW0_SW01 (N295)
-     LUT6:I5->O            1   0.254   0.790  mux2911_F (N329)
-     LUT3:I1->O            1   0.250   0.000  mux29111 (packet_length[15]_data_in[7]_mux_35_OUT<7>)
-     FD:D                      0.074          packet_length_7
+     FD:C->Q               2   0.525   1.181  processed_bytes_2 (processed_bytes_2)
+     LUT6:I0->O            1   0.254   0.000  Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_lut<0> (Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_lut<0>)
+     MUXCY:S->O            1   0.215   0.000  Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_cy<0> (Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_cy<0>)
+     MUXCY:CI->O           1   0.023   0.000  Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_cy<1> (Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_cy<1>)
+     MUXCY:CI->O           1   0.023   0.000  Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_cy<2> (Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_cy<2>)
+     MUXCY:CI->O           1   0.023   0.000  Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_cy<3> (Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_cy<3>)
+     MUXCY:CI->O           1   0.023   0.000  Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_cy<4> (Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_cy<4>)
+     MUXCY:CI->O           1   0.023   0.000  Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_cy<5> (Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_cy<5>)
+     MUXCY:CI->O           1   0.023   0.000  Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_cy<6> (Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_cy<6>)
+     MUXCY:CI->O          46   0.023   2.209  Mcompar_packet_length_int[31]_processed_bytes[31]_equal_54_o_cy<7> (packet_length_int[31]_processed_bytes[31]_equal_54_o)
+     LUT6:I0->O            1   0.254   0.000  Mmux_n_counter101_1_G (N345)
+     MUXF7:I1->O           6   0.175   0.876  Mmux_n_counter101_1 (Mmux_n_counter1011)
+     LUT5:I4->O           12   0.254   1.524  GND_6_o_GND_6_o_AND_11_o15 (GND_6_o_GND_6_o_AND_11_o15)
+     LUT6:I0->O            1   0.254   0.682  GND_6_o_GND_6_o_AND_7_o11_1 (GND_6_o_GND_6_o_AND_7_o11)
+     LUT6:I5->O           16   0.254   1.182  GND_6_o_GND_6_o_AND_7_o1 (GND_6_o_GND_6_o_AND_7_o)
+     LUT3:I2->O            1   0.254   0.000  mux2112 (lsa_length[15]_data_in[7]_mux_21_OUT<11>)
+     FD:D                      0.074          lsa_length_11
     ----------------------------------------
-    Total                     10.757ns (2.623ns logic, 8.134ns route)
-                                       (24.4% logic, 75.6% route)
+    Total                     10.330ns (2.676ns logic, 7.654ns route)
+                                       (25.9% logic, 74.1% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
-  Total number of paths / destination ports: 839 / 85
+  Total number of paths / destination ports: 4988 / 117
 -------------------------------------------------------------------------
-Offset:              8.261ns (Levels of Logic = 6)
+Offset:              9.358ns (Levels of Logic = 7)
   Source:            data_valid (PAD)
   Destination:       lsa_length_0 (FF)
   Destination Clock: clk rising
@@ -401,16 +408,17 @@ Offset:              8.261ns (Levels of Logic = 6)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             5   1.328   1.069  data_valid_IBUF (data_valid_IBUF)
+     IBUF:I->O            24   1.328   1.608  data_valid_IBUF (data_valid_IBUF)
      LUT3:I0->O            1   0.235   0.000  p_state_FSM_FFd3-In1_lut (p_state_FSM_FFd3-In1_lut)
-     MUXCY:S->O            1   0.427   0.790  p_state_FSM_FFd3-In1_cy (packet_length_int[31]_processed_bytes[31]_equal_54_o_l1)
-     LUT5:I3->O           69   0.250   2.398  p_state_FSM_FFd3-In1_cy1_cy (p_state_FSM_FFd3-In)
-     LUT6:I1->O           16   0.254   1.182  GND_6_o_GND_6_o_AND_7_o11_SW0 (N179)
-     LUT6:I5->O            1   0.254   0.000  mux1211 (lsa_length[15]_data_in[7]_mux_21_OUT<6>)
+     MUXCY:S->O            9   0.427   1.084  p_state_FSM_FFd3-In1_cy (packet_length_int[31]_processed_bytes[31]_equal_54_o_l1)
+     LUT5:I3->O           55   0.250   1.860  p_state_FSM_FFd3-In1_cy1_cy_cy (p_state_FSM_FFd3-In)
+     LUT6:I5->O            1   0.254   0.682  GND_6_o_GND_6_o_AND_11_o16_SW2 (N269)
+     LUT6:I5->O            8   0.254   1.052  GND_6_o_GND_6_o_AND_8_o (GND_6_o_GND_6_o_AND_8_o)
+     LUT4:I2->O            1   0.250   0.000  mux1211 (lsa_length[15]_data_in[7]_mux_21_OUT<6>)
      FD:D                      0.074          lsa_length_6
     ----------------------------------------
-    Total                      8.261ns (2.822ns logic, 5.439ns route)
-                                       (34.2% logic, 65.8% route)
+    Total                      9.358ns (3.072ns logic, 6.286ns route)
+                                       (32.8% logic, 67.2% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
@@ -441,19 +449,19 @@ Clock to Setup on destination clock clk
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-clk            |   10.757|         |         |         |
+clk            |   10.330|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
 Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 5.03 secs
+Total CPU time to Xst completion: 5.18 secs
  
 --> 
 
 
-Total memory usage is 399408 kilobytes
+Total memory usage is 399412 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    0 (   0 filtered)

@@ -1,0 +1,10 @@
+Command line:
+   lsu_parser_tb_isim_beh.exe
+     -simmode  gui
+     -simrunnum  1
+     -socket  60425
+
+Fri May  3 14:58:11 2019
+
+
+ Elaboration Time: 0.01 sec
