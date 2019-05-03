@@ -4,15 +4,15 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 Parameter TMPDIR set to xst/projnav.tmp
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.02 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.04 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.02 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.04 secs
  
 --> 
 Reading design: helloActParse.prj
@@ -120,8 +120,10 @@ Parsing architecture <Behavioral> of entity <helloactparse>.
 =========================================================================
 
 Elaborating entity <helloActParse> (architecture <Behavioral>) from library <work>.
-WARNING:HDLCompiler:871 - "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 66: Using initial value "00" for numlsa since it is never assigned
-WARNING:HDLCompiler:871 - "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 75: Using initial value "0000000000000000000000000000011100000000000000001111111111111111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" for dbd_packet since it is never assigned
+WARNING:HDLCompiler:871 - "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 72: Using initial value "11" for numlsa since it is never assigned
+WARNING:HDLCompiler:871 - "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 106: Using initial value '1' for more_sig since it is never assigned
+WARNING:HDLCompiler:1127 - "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 155: Assignment to send ignored, since the identifier is never used
+WARNING:HDLCompiler:634 - "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 81: Net <dbd_packet[479]> does not have a driver.
 
 =========================================================================
 *                           HDL Synthesis                               *
@@ -129,41 +131,59 @@ WARNING:HDLCompiler:871 - "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.v
 
 Synthesizing Unit <helloActParse>.
     Related source file is "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd".
+WARNING:Xst:653 - Signal <dbd_packet<479:0>> is used but never assigned. This sourceless signal will be automatically connected to value GND.
     Found 10-bit register for signal <curr_time>.
     Found 32-bit register for signal <old_neighbor>.
     Found 32-bit register for signal <router_id>.
-    Found 3-bit register for signal <p_dbd>.
-    Found 1-bit register for signal <outval>.
-    Found 8-bit register for signal <out1>.
-    Found 7-bit register for signal <sending_length>.
     Found 32-bit register for signal <active_neighbor>.
     Found 2-bit register for signal <in_index>.
     Found 2-bit register for signal <ID_part>.
     Found 32-bit register for signal <neighbor_id>.
+    Found 32-bit register for signal <temp_dbd_received>.
+    Found 2-bit register for signal <p_dbd>.
+    Found 1-bit register for signal <outval>.
+    Found 8-bit register for signal <out1>.
+    Found 7-bit register for signal <sending_length>.
+    Found 3-bit register for signal <p_read>.
+    Found 1-bit register for signal <init_sig>.
+    Found 1-bit register for signal <master>.
     Found 3-bit register for signal <p_state>.
+    Found finite state machine <FSM_0> for signal <p_dbd>.
+    -----------------------------------------------------------------------
+    | States             | 4                                              |
+    | Transitions        | 8                                              |
+    | Inputs             | 2                                              |
+    | Outputs            | 3                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Power Up State     | idle                                           |
+    | Encoding           | auto                                           |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
     Found finite state machine <FSM_2> for signal <ID_part>.
     -----------------------------------------------------------------------
     | States             | 4                                              |
     | Transitions        | 4                                              |
-    | Inputs             | 1                                              |
-    | Outputs            | 3                                              |
+    | Inputs             | 2                                              |
+    | Outputs            | 4                                              |
     | Clock              | clk (rising_edge)                              |
-    | Reset              | _n0288 (positive)                              |
+    | Reset              | _n0535 (positive)                              |
     | Reset type         | synchronous                                    |
     | Reset State        | 00                                             |
     | Power Up State     | 00                                             |
     | Encoding           | auto                                           |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-INFO:Xst:1799 - State sending_lsahead is never reached in FSM <p_dbd>.
-    Found finite state machine <FSM_0> for signal <p_dbd>.
+    Found finite state machine <FSM_3> for signal <p_read>.
     -----------------------------------------------------------------------
-    | States             | 5                                              |
-    | Transitions        | 8                                              |
+    | States             | 8                                              |
+    | Transitions        | 24                                             |
     | Inputs             | 2                                              |
     | Outputs            | 3                                              |
     | Clock              | clk (rising_edge)                              |
-    | Power Up State     | idle                                           |
+    | Reset              | _n0537 (positive)                              |
+    | Reset type         | synchronous                                    |
+    | Reset State        | idle_r                                         |
+    | Power Up State     | idle_r                                         |
     | Encoding           | auto                                           |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
@@ -175,24 +195,27 @@ INFO:Xst:1799 - State full is never reached in FSM <p_state>.
     | States             | 7                                              |
     | Transitions        | 11                                             |
     | Inputs             | 4                                              |
-    | Outputs            | 5                                              |
+    | Outputs            | 6                                              |
     | Clock              | clk (rising_edge)                              |
     | Power Up State     | down                                           |
     | Encoding           | auto                                           |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-    Found 11-bit adder for signal <n0254> created at line 238.
-    Found 6-bit adder for signal <n0262> created at line 290.
-    Found 10-bit subtractor for signal <GND_5_o_GND_5_o_sub_27_OUT<9:0>> created at line 195.
-    Found 7-bit subtractor for signal <GND_5_o_GND_5_o_sub_311_OUT<6:0>> created at line 276.
-    Found 2-bit subtractor for signal <GND_5_o_GND_5_o_sub_583_OUT<1:0>> created at line 324.
-    Found 32-bit comparator equal for signal <old_neighbor[31]_self[31]_equal_20_o> created at line 176
+    Found 6-bit adder for signal <n0409> created at line 244.
+    Found 11-bit adder for signal <n0429> created at line 353.
+    Found 10-bit subtractor for signal <GND_5_o_GND_5_o_sub_40_OUT<9:0>> created at line 231.
+    Found 2-bit subtractor for signal <GND_5_o_GND_5_o_sub_461_OUT<1:0>> created at line 299.
+    Found 7-bit subtractor for signal <GND_5_o_GND_5_o_sub_794_OUT<6:0>> created at line 391.
+    Found 8-bit 3-to-1 multiplexer for signal <n_dbd[1]_GND_5_o_wide_mux_797_OUT> created at line 356.
+    Found 7-bit 4-to-1 multiplexer for signal <n_dbd[1]_GND_5_o_wide_mux_798_OUT> created at line 356.
+    Found 32-bit comparator equal for signal <old_neighbor[31]_self[31]_equal_28_o> created at line 201
+    Found 32-bit comparator lessequal for signal <self[31]_router_id_sig[31]_LessThan_809_o> created at line 442
     Summary:
 	inferred   5 Adder/Subtractor(s).
-	inferred 156 D-type flip-flop(s).
-	inferred   1 Comparator(s).
-	inferred  81 Multiplexer(s).
-	inferred   3 Finite State Machine(s).
+	inferred 190 D-type flip-flop(s).
+	inferred   2 Comparator(s).
+	inferred 112 Multiplexer(s).
+	inferred   4 Finite State Machine(s).
 Unit <helloActParse> synthesized.
 
 =========================================================================
@@ -205,22 +228,24 @@ Macro Statistics
  2-bit subtractor                                      : 1
  6-bit adder                                           : 1
  7-bit subtractor                                      : 1
-# Registers                                            : 9
- 1-bit register                                        : 1
+# Registers                                            : 12
+ 1-bit register                                        : 3
  10-bit register                                       : 1
  2-bit register                                        : 1
- 32-bit register                                       : 4
+ 32-bit register                                       : 5
  7-bit register                                        : 1
  8-bit register                                        : 1
-# Comparators                                          : 1
+# Comparators                                          : 2
  32-bit comparator equal                               : 1
-# Multiplexers                                         : 81
- 1-bit 2-to-1 multiplexer                              : 64
+ 32-bit comparator lessequal                           : 1
+# Multiplexers                                         : 112
+ 1-bit 2-to-1 multiplexer                              : 96
  10-bit 2-to-1 multiplexer                             : 9
  2-bit 2-to-1 multiplexer                              : 1
- 7-bit 2-to-1 multiplexer                              : 5
- 8-bit 2-to-1 multiplexer                              : 2
-# FSMs                                                 : 3
+ 7-bit 2-to-1 multiplexer                              : 4
+ 7-bit 4-to-1 multiplexer                              : 1
+ 8-bit 3-to-1 multiplexer                              : 1
+# FSMs                                                 : 4
 
 =========================================================================
 
@@ -235,6 +260,37 @@ Loading device for application Rf_Device from file '7a100t.nph' in environment /
 Synthesizing (advanced) Unit <helloActParse>.
 The following registers are absorbed into counter <in_index>: 1 register on signal <in_index>.
 Unit <helloActParse> synthesized (advanced).
+WARNING:Xst:2677 - Node <temp_dbd_received_0> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_1> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_3> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_4> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_5> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_6> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_7> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_8> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_9> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_10> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_11> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_12> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_13> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_14> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_15> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_16> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_17> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_18> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_19> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_20> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_21> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_22> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_23> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_24> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_25> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_26> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_27> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_28> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_29> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_30> of sequential type is unconnected in block <helloActParse>.
+WARNING:Xst:2677 - Node <temp_dbd_received_31> of sequential type is unconnected in block <helloActParse>.
 
 =========================================================================
 Advanced HDL Synthesis Report
@@ -247,16 +303,18 @@ Macro Statistics
  7-bit subtractor                                      : 1
 # Counters                                             : 1
  2-bit down counter                                    : 1
-# Registers                                            : 154
- Flip-Flops                                            : 154
-# Comparators                                          : 1
+# Registers                                            : 157
+ Flip-Flops                                            : 157
+# Comparators                                          : 2
  32-bit comparator equal                               : 1
+ 32-bit comparator lessequal                           : 1
 # Multiplexers                                         : 80
- 1-bit 2-to-1 multiplexer                              : 64
+ 1-bit 2-to-1 multiplexer                              : 65
  10-bit 2-to-1 multiplexer                             : 9
- 7-bit 2-to-1 multiplexer                              : 5
- 8-bit 2-to-1 multiplexer                              : 2
-# FSMs                                                 : 3
+ 7-bit 2-to-1 multiplexer                              : 4
+ 7-bit 4-to-1 multiplexer                              : 1
+ 8-bit 3-to-1 multiplexer                              : 1
+# FSMs                                                 : 4
 
 =========================================================================
 
@@ -287,7 +345,21 @@ Optimizing FSM <FSM_1> on signal <p_state[1:2]> with gray encoding.
  full     | unreached
 ----------------------
 Analyzing FSM <MFsm> for best encoding.
-Optimizing FSM <FSM_0> on signal <p_dbd[1:2]> with sequential encoding.
+Optimizing FSM <FSM_3> on signal <p_read[1:3]> with user encoding.
+---------------------
+ State   | Encoding
+---------------------
+ idle_r  | 000
+ options | 001
+ seqnum  | 010
+ lsa1    | 011
+ lsa2    | 100
+ lsa3    | 101
+ lsa4    | 110
+ lsa5    | 111
+---------------------
+Analyzing FSM <MFsm> for best encoding.
+Optimizing FSM <FSM_0> on signal <p_dbd[1:2]> with user encoding.
 ------------------------------
  State            | Encoding
 ------------------------------
@@ -295,20 +367,9 @@ Optimizing FSM <FSM_0> on signal <p_dbd[1:2]> with sequential encoding.
  sending_ip       | 01
  sending_ospfhead | 10
  sending_dbd      | 11
- sending_lsahead  | unreached
 ------------------------------
 
 Optimizing unit <helloActParse> ...
-WARNING:Xst:1293 - FF/Latch <sending_length_5> has a constant value of 0 in block <helloActParse>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <sending_length_6> has a constant value of 0 in block <helloActParse>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1293 - FF/Latch <out1_0> has a constant value of 0 in block <helloActParse>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <out1_1> has a constant value of 0 in block <helloActParse>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <out1_2> has a constant value of 0 in block <helloActParse>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <out1_3> has a constant value of 0 in block <helloActParse>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <out1_4> has a constant value of 0 in block <helloActParse>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <out1_5> has a constant value of 0 in block <helloActParse>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <out1_6> has a constant value of 0 in block <helloActParse>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <out1_7> has a constant value of 0 in block <helloActParse>. This FF/Latch will be trimmed during the optimization process.
 
 Mapping all equations...
 Building and optimizing final netlist ...
@@ -320,8 +381,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 154
- Flip-Flops                                            : 154
+# Registers                                            : 170
+ Flip-Flops                                            : 170
 
 =========================================================================
 
@@ -344,24 +405,26 @@ Top Level Output File Name         : helloActParse.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 143
+# BELS                             : 282
 #      GND                         : 1
-#      LUT2                        : 7
-#      LUT3                        : 5
-#      LUT4                        : 71
-#      LUT5                        : 15
-#      LUT6                        : 29
-#      MUXCY                       : 14
+#      INV                         : 1
+#      LUT2                        : 12
+#      LUT3                        : 7
+#      LUT4                        : 109
+#      LUT5                        : 31
+#      LUT6                        : 86
+#      MUXCY                       : 32
+#      MUXF7                       : 2
 #      VCC                         : 1
-# FlipFlops/Latches                : 154
-#      FD                          : 15
-#      FDE                         : 133
-#      FDR                         : 3
+# FlipFlops/Latches                : 170
+#      FD                          : 33
+#      FDE                         : 128
+#      FDR                         : 6
 #      FDS                         : 3
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
-# IO Buffers                       : 86
-#      IBUF                        : 43
+# IO Buffers                       : 87
+#      IBUF                        : 44
 #      OBUF                        : 43
 
 Device utilization summary:
@@ -371,20 +434,20 @@ Selected Device : xa7a100tcsg324-2i
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:             154  out of  126800     0%  
- Number of Slice LUTs:                  127  out of  63400     0%  
-    Number used as Logic:               127  out of  63400     0%  
+ Number of Slice Registers:             170  out of  126800     0%  
+ Number of Slice LUTs:                  246  out of  63400     0%  
+    Number used as Logic:               246  out of  63400     0%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    193
-   Number with an unused Flip Flop:      39  out of    193    20%  
-   Number with an unused LUT:            66  out of    193    34%  
-   Number of fully used LUT-FF pairs:    88  out of    193    45%  
+ Number of LUT Flip Flop pairs used:    312
+   Number with an unused Flip Flop:     142  out of    312    45%  
+   Number with an unused LUT:            66  out of    312    21%  
+   Number of fully used LUT-FF pairs:   104  out of    312    33%  
    Number of unique control sets:         7
 
 IO Utilization: 
- Number of IOs:                          87
- Number of bonded IOBs:                  87  out of    210    41%  
+ Number of IOs:                          88
+ Number of bonded IOBs:                  88  out of    210    41%  
 
 Specific Feature Utilization:
  Number of BUFG/BUFGCTRLs:                1  out of     32     3%  
@@ -410,7 +473,7 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-clk                                | BUFGP                  | 154   |
+clk                                | BUFGP                  | 170   |
 -----------------------------------+------------------------+-------+
 
 Asynchronous Control Signals Information:
@@ -421,9 +484,9 @@ Timing Summary:
 ---------------
 Speed Grade: -2
 
-   Minimum period: 2.846ns (Maximum Frequency: 351.426MHz)
-   Minimum input arrival time before clock: 2.194ns
-   Maximum output required time after clock: 0.816ns
+   Minimum period: 3.401ns (Maximum Frequency: 294.010MHz)
+   Minimum input arrival time before clock: 2.535ns
+   Maximum output required time after clock: 0.833ns
    Maximum combinational path delay: No path found
 
 Timing Details:
@@ -432,66 +495,68 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk'
-  Clock period: 2.846ns (frequency: 351.426MHz)
-  Total number of paths / destination ports: 1133 / 223
+  Clock period: 3.401ns (frequency: 294.010MHz)
+  Total number of paths / destination ports: 2429 / 234
 -------------------------------------------------------------------------
-Delay:               2.846ns (Levels of Logic = 4)
-  Source:            curr_time_4 (FF)
-  Destination:       curr_time_9 (FF)
+Delay:               3.401ns (Levels of Logic = 5)
+  Source:            sending_length_5 (FF)
+  Destination:       sending_length_5 (FF)
   Source Clock:      clk rising
   Destination Clock: clk rising
 
-  Data Path: curr_time_4 to curr_time_9
+  Data Path: sending_length_5 to sending_length_5
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q               2   0.361   0.748  curr_time_4 (curr_time_4)
-     LUT5:I0->O            8   0.097   0.394  Mmux_next_time631 (Mmux_next_time63)
-     LUT4:I3->O            3   0.097   0.451  Msub_GND_5_o_GND_5_o_sub_27_OUT<9:0>_cy<7>11 (Msub_GND_5_o_GND_5_o_sub_27_OUT<9:0>_cy<7>)
-     LUT6:I4->O            1   0.097   0.000  Mmux_next_time101_lut (Mmux_next_time101_lut)
-     MUXCY:S->O            1   0.592   0.000  Mmux_next_time101_cy (next_time<9>)
-     FD:D                      0.008          curr_time_9
+     FD:C->Q              16   0.361   0.826  sending_length_5 (sending_length_5)
+     LUT5:I0->O           15   0.097   0.433  GND_5_o_dbd_packet[0]_Select_792_o11 (GND_5_o_dbd_packet[0]_Select_792_o1)
+     LUT3:I2->O            1   0.097   0.339  sending_length[6]_GND_5_o_equal_524_o<6>1_1 (sending_length[6]_GND_5_o_equal_524_o<6>1)
+     MUXF7:S->O            1   0.335   0.355  Mmux_n_dbd[1]_GND_5_o_wide_mux_798_OUT711_SW1 (N29)
+     LUT6:I5->O            1   0.097   0.355  p_state_GND_5_o_n_state[2]_equal_528_o1_SW2 (N92)
+     LUT6:I5->O            1   0.097   0.000  Mmux_n_dbd[1]_GND_5_o_wide_mux_798_OUT61 (n_dbd[1]_GND_5_o_wide_mux_798_OUT<5>)
+     FD:D                      0.008          sending_length_5
     ----------------------------------------
-    Total                      2.846ns (1.252ns logic, 1.594ns route)
-                                       (44.0% logic, 56.0% route)
+    Total                      3.401ns (1.092ns logic, 2.309ns route)
+                                       (32.1% logic, 67.9% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
-  Total number of paths / destination ports: 636 / 210
+  Total number of paths / destination ports: 1007 / 234
 -------------------------------------------------------------------------
-Offset:              2.194ns (Levels of Logic = 14)
+Offset:              2.535ns (Levels of Logic = 15)
   Source:            self<2> (PAD)
-  Destination:       curr_time_5 (FF)
+  Destination:       sending_length_6 (FF)
   Destination Clock: clk rising
 
-  Data Path: self<2> to curr_time_5
+  Data Path: self<2> to sending_length_6
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             1   0.001   0.753  self_2_IBUF (self_2_IBUF)
-     LUT6:I0->O            1   0.097   0.000  Mcompar_old_neighbor[31]_self[31]_equal_20_o_lut<0> (Mcompar_old_neighbor[31]_self[31]_equal_20_o_lut<0>)
-     MUXCY:S->O            1   0.353   0.000  Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<0> (Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<0>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<1> (Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<1>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<2> (Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<2>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<3> (Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<3>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<4> (Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<4>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<5> (Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<5>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<6> (Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<6>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<7> (Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<7>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<8> (Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<8>)
-     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<9> (Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<9>)
-     MUXCY:CI->O           8   0.023   0.655  Mcompar_old_neighbor[31]_self[31]_equal_20_o_cy<10> (old_neighbor[31]_self[31]_equal_20_o)
-     LUT5:I1->O            1   0.097   0.000  Mmux_next_time61 (next_time<5>)
-     FD:D                      0.008          curr_time_5
+     IBUF:I->O             4   0.001   0.770  self_2_IBUF (self_2_IBUF)
+     LUT6:I0->O            1   0.097   0.000  Mcompar_old_neighbor[31]_self[31]_equal_28_o_lut<0> (Mcompar_old_neighbor[31]_self[31]_equal_28_o_lut<0>)
+     MUXCY:S->O            1   0.353   0.000  Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<0> (Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<0>)
+     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<1> (Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<1>)
+     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<2> (Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<2>)
+     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<3> (Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<3>)
+     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<4> (Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<4>)
+     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<5> (Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<5>)
+     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<6> (Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<6>)
+     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<7> (Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<7>)
+     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<8> (Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<8>)
+     MUXCY:CI->O           1   0.023   0.000  Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<9> (Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<9>)
+     MUXCY:CI->O          16   0.023   0.699  Mcompar_old_neighbor[31]_self[31]_equal_28_o_cy<10> (old_neighbor[31]_self[31]_equal_28_o)
+     LUT6:I2->O            1   0.097   0.000  Mmux_n_dbd[1]_GND_5_o_wide_mux_798_OUT7_G (N136)
+     MUXF7:I1->O           1   0.279   0.000  Mmux_n_dbd[1]_GND_5_o_wide_mux_798_OUT7 (n_dbd[1]_GND_5_o_wide_mux_798_OUT<6>)
+     FD:D                      0.008          sending_length_6
     ----------------------------------------
-    Total                      2.194ns (0.786ns logic, 1.408ns route)
-                                       (35.8% logic, 64.2% route)
+    Total                      2.535ns (1.065ns logic, 1.470ns route)
+                                       (42.0% logic, 58.0% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
-  Total number of paths / destination ports: 35 / 35
+  Total number of paths / destination ports: 43 / 43
 -------------------------------------------------------------------------
-Offset:              0.816ns (Levels of Logic = 1)
+Offset:              0.833ns (Levels of Logic = 1)
   Source:            p_state_FSM_FFd2 (FF)
   Destination:       stateout<1> (PAD)
   Source Clock:      clk rising
@@ -500,11 +565,11 @@ Offset:              0.816ns (Levels of Logic = 1)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q              22   0.361   0.455  p_state_FSM_FFd2 (p_state_FSM_FFd2)
+     FD:C->Q              47   0.361   0.472  p_state_FSM_FFd2 (p_state_FSM_FFd2)
      OBUF:I->O                 0.000          stateout_1_OBUF (stateout<1>)
     ----------------------------------------
-    Total                      0.816ns (0.361ns logic, 0.455ns route)
-                                       (44.3% logic, 55.7% route)
+    Total                      0.833ns (0.361ns logic, 0.472ns route)
+                                       (43.4% logic, 56.6% route)
 
 =========================================================================
 
@@ -516,21 +581,21 @@ Clock to Setup on destination clock clk
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-clk            |    2.846|         |         |         |
+clk            |    3.401|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
-Total REAL time to Xst completion: 32.00 secs
-Total CPU time to Xst completion: 28.15 secs
+Total REAL time to Xst completion: 37.00 secs
+Total CPU time to Xst completion: 30.25 secs
  
 --> 
 
 
-Total memory usage is 862396 kilobytes
+Total memory usage is 862756 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :   13 (   0 filtered)
-Number of infos    :    4 (   0 filtered)
+Number of warnings :   37 (   0 filtered)
+Number of infos    :    3 (   0 filtered)
 

@@ -5,13 +5,19 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="HDLCompiler" num="871" delta="old" >"/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 66: Using initial value <arg fmt="%s" index="1">&quot;00&quot;</arg> for <arg fmt="%s" index="2">numlsa</arg> since it is never assigned
+<msg type="warning" file="HDLCompiler" num="871" delta="old" >"/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 72: Using initial value <arg fmt="%s" index="1">&quot;11&quot;</arg> for <arg fmt="%s" index="2">numlsa</arg> since it is never assigned
 </msg>
 
-<msg type="warning" file="HDLCompiler" num="871" delta="old" >"/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 75: Using initial value <arg fmt="%s" index="1">&quot;0000000000000000000000000000011100000000000000001111111111111111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&quot;</arg> for <arg fmt="%s" index="2">dbd_packet</arg> since it is never assigned
+<msg type="warning" file="HDLCompiler" num="871" delta="old" >"/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 106: Using initial value <arg fmt="%s" index="1">&apos;1&apos;</arg> for <arg fmt="%s" index="2">more_sig</arg> since it is never assigned
 </msg>
 
-<msg type="info" file="Xst" num="1799" delta="old" >State <arg fmt="%s" index="1">sending_lsahead</arg> is never reached in FSM &lt;<arg fmt="%s" index="2">p_dbd</arg>&gt;.
+<msg type="warning" file="HDLCompiler" num="1127" delta="new" >"/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 155: Assignment to <arg fmt="%s" index="1">send</arg> ignored, since the identifier is never used
+</msg>
+
+<msg type="warning" file="HDLCompiler" num="634" delta="old" >"/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" Line 81: Net &lt;<arg fmt="%s" index="1">dbd_packet[479]</arg>&gt; does not have a driver.
+</msg>
+
+<msg type="warning" file="Xst" num="653" delta="old" >Signal &lt;<arg fmt="%s" index="1">dbd_packet&lt;479:0&gt;</arg>&gt; is used but never assigned. This sourceless signal will be automatically connected to value <arg fmt="%s" index="2">GND</arg>.
 </msg>
 
 <msg type="info" file="Xst" num="1799" delta="old" >State <arg fmt="%s" index="1">exchange</arg> is never reached in FSM &lt;<arg fmt="%s" index="2">p_state</arg>&gt;.
@@ -26,34 +32,97 @@
 <msg type="warning" file="Xst" num="0" delta="new" >The specified part-type was not generated at build time. XST is loading the full part-type and will therefore consume more CPU and memory.
 </msg>
 
-<msg type="warning" file="Xst" num="1293" delta="new" >FF/Latch &lt;<arg fmt="%s" index="1">sending_length_5</arg>&gt; has a constant value of <arg fmt="%d" index="2">0</arg> in block &lt;<arg fmt="%s" index="3">helloActParse</arg>&gt;. This FF/Latch will be trimmed during the optimization process.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_0</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="1896" delta="new" >Due to other FF/Latch trimming, FF/Latch &lt;<arg fmt="%s" index="1">sending_length_6</arg>&gt; has a constant value of <arg fmt="%d" index="2">0</arg> in block &lt;<arg fmt="%s" index="3">helloActParse</arg>&gt;. This FF/Latch will be trimmed during the optimization process.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_1</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="1293" delta="old" >FF/Latch &lt;<arg fmt="%s" index="1">out1_0</arg>&gt; has a constant value of <arg fmt="%d" index="2">0</arg> in block &lt;<arg fmt="%s" index="3">helloActParse</arg>&gt;. This FF/Latch will be trimmed during the optimization process.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_3</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="1896" delta="old" >Due to other FF/Latch trimming, FF/Latch &lt;<arg fmt="%s" index="1">out1_1</arg>&gt; has a constant value of <arg fmt="%d" index="2">0</arg> in block &lt;<arg fmt="%s" index="3">helloActParse</arg>&gt;. This FF/Latch will be trimmed during the optimization process.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_4</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="1896" delta="new" >Due to other FF/Latch trimming, FF/Latch &lt;<arg fmt="%s" index="1">out1_2</arg>&gt; has a constant value of <arg fmt="%d" index="2">0</arg> in block &lt;<arg fmt="%s" index="3">helloActParse</arg>&gt;. This FF/Latch will be trimmed during the optimization process.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_5</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="1896" delta="new" >Due to other FF/Latch trimming, FF/Latch &lt;<arg fmt="%s" index="1">out1_3</arg>&gt; has a constant value of <arg fmt="%d" index="2">0</arg> in block &lt;<arg fmt="%s" index="3">helloActParse</arg>&gt;. This FF/Latch will be trimmed during the optimization process.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_6</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="1896" delta="new" >Due to other FF/Latch trimming, FF/Latch &lt;<arg fmt="%s" index="1">out1_4</arg>&gt; has a constant value of <arg fmt="%d" index="2">0</arg> in block &lt;<arg fmt="%s" index="3">helloActParse</arg>&gt;. This FF/Latch will be trimmed during the optimization process.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_7</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="1896" delta="new" >Due to other FF/Latch trimming, FF/Latch &lt;<arg fmt="%s" index="1">out1_5</arg>&gt; has a constant value of <arg fmt="%d" index="2">0</arg> in block &lt;<arg fmt="%s" index="3">helloActParse</arg>&gt;. This FF/Latch will be trimmed during the optimization process.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_8</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="1896" delta="new" >Due to other FF/Latch trimming, FF/Latch &lt;<arg fmt="%s" index="1">out1_6</arg>&gt; has a constant value of <arg fmt="%d" index="2">0</arg> in block &lt;<arg fmt="%s" index="3">helloActParse</arg>&gt;. This FF/Latch will be trimmed during the optimization process.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_9</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="1896" delta="new" >Due to other FF/Latch trimming, FF/Latch &lt;<arg fmt="%s" index="1">out1_7</arg>&gt; has a constant value of <arg fmt="%d" index="2">0</arg> in block &lt;<arg fmt="%s" index="3">helloActParse</arg>&gt;. This FF/Latch will be trimmed during the optimization process.
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_10</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_11</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_12</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_13</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_14</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_15</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_16</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_17</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_18</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_19</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_20</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_21</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_22</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_23</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_24</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_25</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_26</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_27</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_28</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_29</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_30</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">temp_dbd_received_31</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">helloActParse</arg>&gt;.
 </msg>
 
 </messages>

@@ -9,3 +9,4 @@ xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.xst" -ofn "/home/
 xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.syr" 
 xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.syr" 
 xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/Dijkstra.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/Dijkstra.syr" 

@@ -1,18 +1,18 @@
-Release 14.7 - xst P.20160913 (lin64)
+Release 14.7 - xst P.20131013 (lin64)
 Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 --> 
 Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
 Reading design: Dijkstra.prj
@@ -49,7 +49,7 @@ Ignore Synthesis Constraint File   : NO
 ---- Target Parameters
 Output File Name                   : "Dijkstra"
 Output Format                      : NGC
-Target Device                      : xq6slx150t-2-fgg676
+Target Device                      : xa7a100t-2I-csg324
 
 ---- Source Options
 Top Module Name                    : Dijkstra
@@ -111,16 +111,16 @@ Cores Search Directories           : {"ipcore_dir"  }
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
-Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.vhd" into library work
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/Comparator_Simple.vhd" into library work
 Parsing entity <Comparator_Simple>.
 Parsing architecture <Behavioral> of entity <comparator_simple>.
-Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Single.vhd" into library work
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/Comparator_Single.vhd" into library work
 Parsing entity <Comparator_Single>.
 Parsing architecture <Behavioral> of entity <comparator_single>.
-Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator.vhd" into library work
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/Comparator.vhd" into library work
 Parsing entity <Comparator>.
 Parsing architecture <Behavioral> of entity <comparator>.
-Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.vhd" into library work
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/Dijkstra.vhd" into library work
 Parsing entity <Dijkstra>.
 Parsing architecture <Behavioral> of entity <dijkstra>.
 
@@ -143,8 +143,16 @@ Elaborating entity <Comparator_Single> (architecture <Behavioral>) with generics
 Elaborating entity <Comparator_Single> (architecture <Behavioral>) with generics from library <work>.
 
 Elaborating entity <Comparator_Single> (architecture <Behavioral>) with generics from library <work>.
-WARNING:HDLCompiler:92 - "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.vhd" Line 143: p_newnodes should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.vhd" Line 145: p_newnodes should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.vhd" Line 146: p_newnodes should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.vhd" Line 152: p_costs should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.vhd" Line 158: p_costs should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/yash20/isefiles/CS226_OSPF/OSPF/Dijkstra.vhd" Line 151: p_costs should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/home/yash20/isefiles/CS226_OSPF/OSPF/Dijkstra.vhd" Line 157: p_costs should be on the sensitivity list of the process
+
+User Interruption
+--> 
+
+
+Total memory usage is 583360 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    2 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+
