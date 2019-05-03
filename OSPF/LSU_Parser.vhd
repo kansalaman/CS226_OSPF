@@ -95,6 +95,8 @@ begin
         --     ack_data_out <= data_
 
         --code here writes to LSAq
+
+        --just remove an or here
         if((current_state=sendLSA and current_byte_no>=1 and current_byte_no<=20) or (current_state=LSU_strip and current_byte_no>= 25 and current_byte_no<=28)) then
             write_ack <= '1';
             ack_data_out <= data_in;

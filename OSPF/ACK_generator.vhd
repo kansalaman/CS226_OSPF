@@ -19,6 +19,9 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+USE ieee.numeric_std.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -30,7 +33,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity ACK_generator is
-    Port ( qwrite : in  STD_LOGIC;
+    Port ( 
+           clk : in std_logic;
+           qwrite : in  STD_LOGIC;
            qdata : in  STD_LOGIC_VECTOR (7 downto 0);
            ackvalid : out  STD_LOGIC;
            ackout : out  STD_LOGIC_VECTOR (7 downto 0));
@@ -50,10 +55,36 @@ PORT (
     empty : OUT STD_LOGIC;
     data_count : OUT STD_LOGIC_VECTOR(10 DOWNTO 0)
     );
-    END COMPONENT;
+END COMPONENT;
 
+type states is (idle,getLSAcount,sendHeader,sendLSA);
+signal p_state,n_state : states := idle;
+signal p_counter,n_counter : integer := 0;
+signal empty : std_logic;
+signal rd_en,srst,full : std_logic;
+signal data_count : STD_LOGIC_VECTOR(10 downto 0);
 
 begin
+qu1 : FIFOACK
+    PORT MAP (
+      clk => clk,
+      srst => srst,
+      din => qdata,
+      wr_en => qwrite,
+      rd_en => rd_en,
+      dout => ackout,
+      full => full,
+      empty => empty,
+      data_count => data_count
+    );
+
+process(clk)
+begin
+    if(clk='1' and clk'event) then
+        p_state <= n_state;
+        p_counter <= n_counter;
+        
+
         
 
 
