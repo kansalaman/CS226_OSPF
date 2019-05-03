@@ -42,8 +42,8 @@ entity interfaceOut is
            clk : in std_logic;
            qin1 : in std_logic_vector(7 downto 0);
            qin2 : in std_logic_vector(7 downto 0);
-           readq1 : out std_logic_vector(7 downto 0);
-           readq2 : out std_logic_vector(7 downto 0);
+           readq1 : out std_logic;
+           readq2 : out std_logic;
            empq1 : in std_logic;
            empq2 : in std_logic;
            dout: out std_logic_vector(7 downto 0);
@@ -51,7 +51,7 @@ entity interfaceOut is
            dout_val: out std_logic);
 end interfaceOut;
 
-architecture Behavioral of ACK_generator is
+architecture Behavioral of interfaceOut is
 
 -- COMPONENT FIFOACK
 -- PORT (
@@ -77,10 +77,10 @@ architecture Behavioral of ACK_generator is
 signal typeq1 : std_logic_vector(7 downto 0) := "00000100";
 signal typeq2 : std_logic_vector(7 downto 0) := "00000101";
 type states is (idle,serve1,serve2,makeHead,packetout);
-type data_arr is array(0 to 360) of std_logic_vector(7 downto 0);
-signal packetarr : dataarr;
-signal packet_count : integer := 0;
-signal makeLSUhead : integer := 1;
+type arr1 is array(0 to 360) of std_logic_vector(7 downto 0);
+signal data_arr : arr1;
+signal packet_count : integer range 0 to 3 := 0;
+signal makeLSUhead : integer range 0 to 3 := 1;
 signal p_index,n_index : integer := 0;
 signal max_index : integer := 0;
 signal p_state,n_state : states := idle;
@@ -89,10 +89,14 @@ signal lsa_length : std_logic_vector(15 downto 0) := (others => '1');
 signal lsa_length_int : integer := 0;
 signal dataout : std_logic_vector(7 downto 0);
 signal dataobtained_p : integer := 0;
-signal dataobtained_n : integer := 1;
+--signal dataobtained_n : integer := 1;
 signal dataobtained : integer := 0;
+signal plen_vec1,plen_vec2 : std_logic_vector(31 downto 0);
+signal state_temp : integer range 0 to 3;
 begin
 lsa_length_int <= conv_integer(lsa_length);
+plen_vec1 <= std_logic_vector(to_unsigned(max_index+24,32));
+plen_vec2 <= std_logic_vector(to_unsigned(max_index+28,32));
 process(clk)
     variable current_byte_no : integer;
     variable current_state : states;
@@ -101,10 +105,16 @@ begin
     if(clk='1' and clk'event) then
         current_byte_no := n_counter;
         current_state := n_state;
-        dataread := dataobtained_n;
+      --  dataread := dataobtained_n;
 
         p_state <= n_state;
         p_counter <= n_counter;
+
+        if(current_state=serve1) then
+            state_temp <= 1;
+        elsif(current_state=serve2) then
+            state_temp <=2;
+        end if;
 
         if(current_state=serve1) then
             makeLSUhead <= 1;
@@ -132,7 +142,7 @@ begin
         end if;
 
         if(current_state=serve1 or current_state=serve2) then
-            max_index=max_index+1;
+            max_index <= max_index+1;
         elsif(current_state=idle) then
             max_index <= 0;
         else
@@ -141,47 +151,47 @@ begin
 
 
         if(current_state=makeHead and current_byte_no=1) then
-            dout_val <= 1;
+            dout_val <= '1';
             dout <= "00000010";
         elsif (current_state=makeHead and current_byte_no=2) then
-            dout_val <= 1;
+            dout_val <= '1';
             dout <= "00000100";
         elsif(current_state=makeHead and current_byte_no=3 and makeLSUhead=1) then
-            dout_val <= 1;
-            dout <= std_logic_vector(to_unsigned(max_index+24,32))(15 downto 8);
+            dout_val <= '1';
+            dout <= plen_vec1(15 downto 8);
         elsif(current_state=makeHead and current_byte_no=4 and makeLSUhead=1) then
-            dout_val <= 1;
-            dout <= std_logic_vector(to_unsigned(max_index+24,32))(7 downto 0);
+            dout_val <= '1';
+            dout <= plen_vec1(7 downto 0);
         elsif(current_state=makeHead and current_byte_no=3 and makeLSUhead=2) then
-            dout_val <= 1;
-            dout <= std_logic_vector(to_unsigned(max_index+28,32))(15 downto 8);
+            dout_val <= '1';
+            dout <= plen_vec2(15 downto 8);
         elsif(current_state=makeHead and current_byte_no=4 and makeLSUhead=2) then
-            dout_val <= 1;
-            dout <= std_logic_vector(to_unsigned(max_index+28,32))(7 downto 0);
+            dout_val <= '1';
+            dout <= plen_vec2(7 downto 0);
         elsif(current_state=makeHead and current_byte_no=5) then
-            dout_val <= 1;
+            dout_val <= '1';
             dout <= router_id(31 downto 24);
         elsif(current_state=makeHead and current_byte_no=6) then
-            dout_val <= 1;
+            dout_val <= '1';
             dout <= router_id(23 downto 16);
         elsif(current_state=makeHead and current_byte_no=7) then
-            dout_val <= 1;
+            dout_val <= '1';
             dout <= router_id(15 downto 8);
         elsif(current_state=makeHead and current_byte_no=8) then
-            dout_val <= 1;
+            dout_val <= '1';
             dout <= router_id(7 downto 0);
         elsif(current_state=makeHead and current_byte_no>=9 and current_byte_no<=24) then
-            dout_val <= 1;
+            dout_val <= '1';
             dout <= "00000000";
         elsif(current_state=makeHead and current_byte_no/=28) then
-            dout_val <= 1;
+            dout_val <= '1';
             dout <= "00000000";
-        elsif(current_state-makeHead and current_byte_no=28) then
-            dout_val <= 1;
-            dout <= std_logic_vector(to_unsigned(packetcount,8));
+        elsif(current_state=makeHead and current_byte_no=28) then
+            dout_val <= '1';
+            dout <= std_logic_vector(to_unsigned(packet_count,8));
         
         elsif(current_state=packetout) then
-            data_cal <= 1;
+            dout_val <= '1';
             dout <= data_arr(current_byte_no);
         end if;
         
@@ -226,34 +236,39 @@ begin
         else
             dataobtained_p <= dataobtained_p+1;
         end if;
+end if;
 
 end process;
 
-comb2 : process(qin1,max_index,dataobtained_p)
+comb2 : process(qin1,max_index,dataobtained_p,qin2,state_temp)
 begin
 if(dataobtained_p < max_index) then
-    -- dataobtained_n <= dataobtained_p+1;
-    data_arr(dataobtained_p+1) <= qin1;
+    if(state_temp = 1) then
+        data_arr(dataobtained_p+1) <= qin1;
+    elsif (state_temp=2) then
+        data_arr(dataobtained_p+1) <= qin2;
+    end if;
+        
 end if;
 end process;
 
-comb3 : process(qin2,max_index,dataobtained_p)
-begin
-    if(dataobtained_p < max_index) then
-        -- dataobtained_n <= dataobtained_p+1;
-        data_arr(dataobtained_p+1) <= qin2;
-    end if;
-end process;
+-- comb3 : process(qin2,max_index,dataobtained_p)
+-- begin
+--     if(dataobtained_p < max_index) then
+--         -- dataobtained_n <= dataobtained_p+1;
+--         data_arr(dataobtained_p+1) <= qin2;
+--     end if;
+-- end process;
 
 
-comb1 : process(p_state,p_counter)
+comb1 : process(p_state,p_counter,empq1,empq2,packet_count,lsa_length_int,makeLSUhead,max_index)
 begin
     case p_state is
         when idle =>
-            if(empq1=0) then
+            if(empq1='0') then
                 n_state <= serve1;
                 n_counter <= 1;
-            elsif (empq2=0) then
+            elsif (empq2='0') then
                 n_state <= serve2;
                 n_counter <= 1;
             else
@@ -265,10 +280,10 @@ begin
             if(packet_count = 3) then
                 n_state <= makeHead;
                 n_counter <= 1;
-            elsif(empq1=1) then
+            elsif(empq1='1') then
                 n_state <= makeHead;
                 n_counter <= 1;
-            elsif(p_counter=lsa_length_int)
+            elsif(p_counter=lsa_length_int) then
                 n_state <= p_state;
                 n_counter <= 1;
             else
@@ -279,10 +294,10 @@ begin
             if(packet_count = 3) then
                 n_state <= makeHead;
                 n_counter <= 1;
-            elsif(p_counter=) then
+            elsif(empq2='1') then
                 n_state <= makeHead;
                 n_counter <= 1;
-            elsif(p_counter=lsa_length_int)
+            elsif(p_counter=lsa_length_int) then
                 n_state <= p_state;
                 n_counter <= 1;
             else
@@ -308,9 +323,9 @@ begin
                 n_state <= p_state;
                 n_counter <= p_counter+1;
             end if;
-        when others =>
-            null;
+
         end case;
+		  end process;
 
         
 
