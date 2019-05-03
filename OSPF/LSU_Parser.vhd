@@ -29,7 +29,7 @@ entity LSU_Parser is
 end LSU_Parser;
 
 architecture Behavioral of LSU_Parser is
-type states is (IDLE,LSU_strip,LSU_strip_ending,sendLSA);
+type states is (IDLE,LSU_strip,sendLSA,dumpLSU,dumpLSA);
 signal state_in_int : integer:=0;
 signal p_state,n_state : states := IDLE;
 signal p_counter,n_counter : integer:= 0;
@@ -67,20 +67,43 @@ begin
         p_counter <= n_counter;
         p_state <= n_state;
 
+        
 
-        if(current_state=LSU_strip and current_byte_no=25) then
-            ack_packet_length(31 downto 24) <= data_in;
-        elsif(current_state=LSU_strip and current_byte_no=26) then
-            ack_packet_length(23 downto 16) <= data_in;
-        elsif(current_state=LSU_strip and current_byte_no=27) then
-            ack_packet_length(15 downto 8) <= data_in;
-        elsif(current_state=LSU_strip and current_byte_no=28) then
-            ack_packet_length(7 downto 0) <= data_in;
-        end if;
+        -- if(current_state=LSU_strip and current_byte_no=25) then
+        --     ack_packet_length(31 downto 24) <= data_in;
+        --     write_ack <= '1';
+        --     ack_data_out <= data_in;
+        -- elsif(current_state=LSU_strip and current_byte_no=26) then
+        --     ack_packet_length(23 downto 16) <= data_in;
+        --     write_ack <= '1';
+        --     ack_data_out <=data_in;
+        -- elsif(current_state=LSU_strip and current_byte_no=27) then
+        --     ack_packet_length(15 downto 8) <= data_in;
+        --     write_ack <= '1';
+        --     ack_data_out <= data_in;
+        -- elsif(current_state=LSU_strip and current_byte_no=28) then
+        --     ack_data_out <= data_in;
+        --     write_ack <= '1';
+        --     ack_packet_length(7 downto 0) <= data_in;
+        -- else
+        --     write_ack<='0';
+        --     ack_data_out <= "00000000"
+        -- end if;
             
+        -- if(current_state=sendLSA and current_byte_no>=1 and current_byte_no<=20) then
+        --     ack_data_out <= data_
+
+        --code here writes to LSAq
+        if((current_state=sendLSA and current_byte_no>=1 and current_byte_no<=20) or (current_state=LSU_strip and current_byte_no>= 25 and current_byte_no<=28)) then
+            write_ack <= '1';
+            ack_data_out <= data_in;
+        else
+            write_ack<='0';
+            ack_data_out <= "00000000";
+        end if;
 
 
-
+        --code here sends out LSA in a q
         if(current_state=sendLSA and current_byte_no/=3) then
             data_to_LSAq <= data_in;
             write_to_LSAq <= '1';
@@ -92,6 +115,7 @@ begin
             write_to_LSAq <= '0';
         end if;
         
+        --code here judges lsa_length
         if(current_state=sendLSA and current_byte_no=19) then
             lsa_length(15 downto 8) <= data_in;
         elsif(current_state=sendLSA and current_byte_no=20) then
@@ -99,23 +123,33 @@ begin
         
         end if;
 
+        --calculating processed bytes
         if(current_state=IDLE) then
             processed_bytes <= 0;
-        elsif(current_state=LSU_strip and current_byte_no=1) then
+        elsif((current_state=LSU_strip or current_state=dumpLSU) and current_byte_no=1) then
             processed_bytes <= 1;
         else
             processed_bytes <= processed_bytes+1;
         end if;
 
-        if(current_state=LSU_strip and current_byte_no=3) then
+        --calculating complete ospf packet length
+        if((current_state=LSU_strip or current_state=dumpLSU) and current_byte_no=3) then
             packet_length(15 downto 8) <= in1;
-        elsif(current_state=LSU_strip and current_byte_no=4) then
+        elsif((current_state=LSU_strip or current_state=dumpLSU) and current_byte_no=4) then
             packet_length(7 downto 0) <= in1;
         end if;
     end if;
 end process;
 
-COMB1:process()
+
+COMB2: process(write_ack,ack_data_out)
+begin
+    ack_q_out <= ack_data_out;
+    ack_q_val <= write_ack;
+end process;
+
+
+COMB1:process(write_to_LSAq,data_to_LSAq)
 begin
     write_to_q <= write_to_LSAq;
     qout <= data_to_LSAq;
@@ -129,31 +163,58 @@ begin
             if(data_valid = '1' and state_in_int>=5 and state_in_int<=8) then
                 n_state <= LSU_strip;
                 n_counter <= 1;
-                
+            elsif (data_valid = '1') then
+                n_state <= dump;
+                n_counter <= 1;
             else
                 n_state <= IDLE;
                 n_counter <= 0;
             end if;
+        
+        when dumpLSU =>
+        if(p_counter=28) then
+            n_state <= dumpLSA;
+            n_counter <= 1;
+        else
+            n_state <= p_state;
+            n_counter <= p_counter+1;
+        end if;
+
+        when dumpLSA =>
+            if(processed_bytes = packet_length_int) then
+                if(data_valid = '1' and state_in_int>=5 and state_in_int<=8) then
+                    n_state <= LSU_strip;
+                    n_counter <= 1;
+                elsif(data_valid = '1') then
+                    n_state <= dumpLSU;
+                    n_counter <= 1;
+                else
+                    n_state <= IDLE;
+                    n_counter <= 0;
+                end if;
+            -- elsif(p_counter=lsa_length_int) then
+            --     n_state <= p_state;
+            --     n_counter <= 1;
+            else
+                n_state <= p_state;
+                n_counter <= p_counter+1;
+            end if;
+            
         when LSU_strip =>
-            if(p_counter=27) then
-                n_state <= LSU_strip_ending;
+            if(p_counter=28) then
+                n_state <= sendLSA;
                 n_counter <= 1;
             else
                 n_state <= p_state;
                 n_counter <= p_counter+1;
             end if;
-        when LSU_strip_ending =>
-            if(p_counter=1) then
-                n_state <= sendLSA;
-                n_counter <= 1;
-            else
-                n_state <= p_state;
-                n_counter <= p_counter;
-            end if;
         when sendLSA =>
             if(processed_bytes = packet_length_int) then
                 if(data_valid = '1' and state_in_int>=5 and state_in_int<=8) then
                     n_state <= LSU_strip;
+                    n_counter <= 1;
+                elsif(data_valid='1') then
+                    n_state <= dumpLSU;
                     n_counter <= 1;
                 else
                     n_state <= IDLE;
@@ -166,6 +227,7 @@ begin
                 n_state <= p_state;
                 n_counter <= p_counter+1;
             end if;
+
         when others =>
                 null;
         end case;
