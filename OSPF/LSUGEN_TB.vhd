@@ -57,8 +57,8 @@ ARCHITECTURE behavior OF LSUGEN_TB IS
          neigh6 : IN  std_logic_vector(31 downto 0);
          neigh7 : IN  std_logic_vector(31 downto 0);
          neigh8 : IN  std_logic_vector(31 downto 0);
-         out_val : OUT  std_logic;
-         out1 : OUT  std_logic_vector(7 downto 0);
+         out_val : INOUT  std_logic;
+         out1 : INOUT  std_logic_vector(7 downto 0);
          negIface : OUT  std_logic_vector(7 downto 0);
          clk : IN  std_logic;
          empty : IN  std_logic;
@@ -203,9 +203,9 @@ BEGIN
       n1state <= "111";
 		wait for clk_period *150;
 		n2state <= "111";
-		wait for clk_period*150;
-		n1state <= "000";
-		n2state <= "000";
+--		wait for clk_period*150;
+--		n1state <= "000";
+--		n2state <= "000";
 		wait;
    end process;
 

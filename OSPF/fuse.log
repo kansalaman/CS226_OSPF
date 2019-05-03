@@ -9,8 +9,8 @@ Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_
 Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 104068 KB
-Fuse CPU Usage: 1370 ms
+Fuse Memory Usage: 104072 KB
+Fuse CPU Usage: 1260 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
@@ -30,6 +30,6 @@ Time Resolution for simulation is 1ps.
 Waiting for 1 sub-compilation(s) to finish...
 Compiled 23 VHDL Units
 Built simulation executable /home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB_isim_beh.exe
-Fuse Memory Usage: 681240 KB
-Fuse CPU Usage: 1540 ms
+Fuse Memory Usage: 681268 KB
+Fuse CPU Usage: 1440 ms
 GCC CPU Usage: 220 ms

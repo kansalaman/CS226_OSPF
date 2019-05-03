@@ -40,8 +40,8 @@ entity lsugen is
 	 neigh8: in std_logic_vector(31 downto 0);
 	 
 	 -- Flooding related controls
-	 out_val: out std_logic := '0';
-	 out1: out std_logic_vector(7 downto 0):= (others => '0');
+	 out_val: inout std_logic := '0';
+	 out1: inout std_logic_vector(7 downto 0):= (others => '0');
 	 negIface: out std_logic_vector(7 downto 0) := (others => '0');
 	 
 	 -- Memory related controls
@@ -166,6 +166,7 @@ signal g8: std_logic := '0';
 
 begin
 db_write <= out_val;
+db_dout <= out1;
 --lsdbheader(175 downto 168) <= zero8;
 --lsdbheader(167 downto 160) <= "00000001";
 -- MAP
@@ -194,11 +195,12 @@ SEQ: process(clk)
 			g8 <= act_on(7) and not served(7);
 			p_adj <= in_adj;
 			p_seqnum <= n_seqnum;
-			if( out_val = '1')
-				if (p_readtimer = "10110" or p_readtimer ="10101" or p_readtimer ="00111" or p_readtimer ="01000" or p_readtimer ="00100" or p_readtimer ="00011" )
+			if( out_val = '1') then
+				if (p_headtimer = "10110" or p_headtimer ="10101" or p_headtimer ="00111" or p_headtimer ="01000" or p_headtimer ="00100" or p_headtimer ="00011" ) then
 				write_loc <= write_loc;
 				else
 				write_loc<= write_loc+1;
+				end if;
 			end if;
 			p_readtimer <= n_readtimer;
 			p_loc <= n_loc;
@@ -211,16 +213,17 @@ SEQ: process(clk)
 		end if;
 	end process;
 
-COMB: process(write_loc, out_val)
-if (out_val = '1') then
-	if
-end if;
-
-end process;
-
+--COMB: process(write_loc, out_val)
+--begin
+--if (out_val = '1') then
+--	db_addr <= write_loc;
+--end if;
+--
+--end process;
+--
 
 COMBSTATE: process(p_state, p_readtimer, p_adstimer, p_uptimer, p_headtimer,
-					p_adj, p_loc, db_din, p_seqnum, lsdbheader, newlen)
+					p_adj, p_loc, db_din, p_seqnum, lsdbheader, newlen, write_loc)
 variable msb, lsb: integer;
 begin
 case p_state is
@@ -283,6 +286,7 @@ case p_state is
 	when SEND_HEADER => -- SENDING_HEADER
 		msb:= conv_integer(p_headtimer) * 8 -1;
 		lsb:= msb-7;
+		db_addr <= write_loc;
 		if (p_headtimer = "00001") then
 			n_state <= SENDING_ADS;
 			n_headtimer <= "11000";
@@ -318,6 +322,7 @@ case p_state is
 			out_val <= '0';
 			out1 <= (others => '0');
 		else
+			db_addr <= write_loc;
 			out_val <='1';
 			n_adstimer <= p_adstimer +1;
      if (p_adstimer = "00000001") then
