@@ -47,7 +47,7 @@ end helloActParse;
 architecture Behavioral of helloActParse is
 	type FSM is (ONE_WAY, DOWN, INIT, EXSTART, EXCHANGE_SENDING, EXCHANGE_LISTENING, LOADING, FULL);
 	type DBD is (IDLE, FETCHING_LSA, SENDING_IP, SENDING_OSPFHEAD, SENDING_DBD);
-	type DBD_READ is (IDLE_R, OPTIONS, SEQNUM, LSA1, LSA2, LSA3, LSA4, LSA5);
+	type DBD_READ is (IDLE_R, OPTIONS, SEQNUM, LSA_PART1, LSA_PART2, LSA_PART3, LSA_PART4, LSA_PART5);
 	constant zero8 : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
 	constant zero7 : STD_LOGIC_VECTOR(6 downto 0) := (others => '0');
 
@@ -83,7 +83,12 @@ architecture Behavioral of helloActParse is
 	signal dbd_packet : STD_LOGIC_VECTOR(543 downto 0) ;
 		-- first 32 : last three bits options
 		-- next 32 : DD sequence number
-		-- each of the next 160 bits (set of 3) are LSAs
+		-- each of the next 160 bits (set of 3) are LSA_PARTs
+
+	signal lsa_packet1 : STD_LOGIC_VECTOR(159 downto 0) := (others => '0');
+	signal lsa_packet2 : STD_LOGIC_VECTOR(159 downto 0) := (others => '0');
+	signal lsa_packet3 : STD_LOGIC_VECTOR(159 downto 0) := (others => '0');
+
 
 	constant empty_dbd_length : STD_LOGIC_VECTOR(6 downto 0) := "0000111";
 	signal dbd_length : STD_LOGIC_VECTOR(6 downto 0);
@@ -94,6 +99,8 @@ architecture Behavioral of helloActParse is
 	signal more_sig : STD_LOGIC := '1';
 	signal init_sig : STD_LOGIC := '1';
 	signal neighbor_more : STD_LOGIC := '1';
+	signal seqnum_error : STD_LOGIC := '0';
+	signal lsa_left : STD_LOGIC_VECTOR(9 downto 0) := (others => '0');
 
 	   -- 0                   1                   2                   3
        -- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -139,7 +146,9 @@ dbd_packet(514) <= init_sig;
 dbd_packet(513) <= more_sig;
 dbd_packet(512) <= master;
 dbd_packet(511 downto 480) <= defaultseq;
-
+dbd_packet(479 downto 320) <= lsa_packet1;
+dbd_packet(319 downto 160) <= lsa_packet2;
+dbd_packet(159 downto 0) <= lsa_packet3;
 
 SEQ1 : process(clk)
 	variable msb : integer;
@@ -149,6 +158,13 @@ begin
 	if (clk = '1' and clk'event) then
 		p_state <= n_state;
 		curr_time <= next_time;
+		if (n_state = DOWN) then
+			master <= '1';
+			init_sig <= '1';
+			more_sig <= '1';
+			seqnum_error <= '0';
+			curr_seqnum <= defaultseq;
+		end if ;
 
 		p_dbd <= n_dbd;
 		sending_length <= sending_len_next;
@@ -180,33 +196,40 @@ begin
 				outval <= '1';
 		end case ;
 
-		--if (ID_part = "00" and dbd_val = '1') then
-		--	case( p_read ) is
-		--		when OPTIONS =>
-		--			if (temp_dbd_received(2) = '1') then --INIT from their end
-		--				init_sig <= '0';
-		--				if (router_id_sig > self) then
-		--					master <= '0';
-		--				else
-		--					master <= '1';
-		--				end if ;
-		--			else
-		--				if(master = '0') then
-		--					--slave actions
-		--				else
-		--					--master actions
-		--				end if;
-		--			end if ;
-		--		when SEQNUM =>
-		--			if (master = '1') then
-						
-		--			else
-						
-		--			end if ;
-		--		when others =>
+		if (ID_part = "00" and dbd_val = '1') then
+			case( p_read ) is
+				when OPTIONS =>
+					if (temp_dbd_received(2) = '1') then --INIT from their end
+						init_sig <= '0';
+						if (router_id_sig > self) then
+							master <= '0';
+						else
+							master <= '1';
+						end if ;
+					else
+						neighbor_more <= temp_dbd_received(1);						
+					end if ;
+				when SEQNUM =>
+					if (master = '1') then
+						if (curr_seqnum /= temp_dbd_received) then
+							seqnum_error <= '1';
+						end if ;
+					else
+						curr_seqnum <= temp_dbd_received;
+					end if ;
+					--TODO :here on, store each LSA part
+				when LSA_PART1 =>
 
-		--	end case ;
-		--end if ;
+				when LSA_PART2 =>
+
+				when LSA_PART3 =>
+
+				when LSA_PART4 =>
+
+				when others => --LSA_PART5
+
+			end case ;
+		end if ;
 		if (n_dbd = IDLE and (n_state = EXSTART or n_state = EXCHANGE_SENDING)) then
 			sending_complete <= not(sending_complete);
 		end if ;
@@ -214,7 +237,11 @@ begin
 end process;
 
 -------- ORIGINAL STATE MACHINE --------
-COMBSTATE : process(p_state, ID_part, old_neighbor, routerid_val, curr_time, hellogenin, self, dbd_val, p_read, master, temp_dbd_received, dbd_length)
+COMBSTATE : process(p_state, ID_part, old_neighbor, routerid_val,
+							curr_time, hellogenin, self, dbd_val, p_read,
+							master, temp_dbd_received, dbd_length, curr_seqnum,
+							curr_seqnum, dbd_length, sending_complete, 
+							seqnum_error, neighbor_more, more_sig)
 begin
 	case( p_state ) is
 	
@@ -280,15 +307,15 @@ begin
 							else
 								n_state <= p_state;
 							end if ;
-						when LSA1 =>
+						when LSA_PART1 =>
 							n_state <= p_state;
-						when LSA2 =>
+						when LSA_PART2 =>
 							n_state <= p_state;
-						when LSA3 =>
+						when LSA_PART3 =>
 							n_state <= p_state;
-						when LSA4 =>
+						when LSA_PART4 =>
 							n_state <= p_state;
-						when others => --LSA5
+						when others => --LSA_PART5
 							n_state <= p_state;
 					end case ;
 				else
@@ -309,8 +336,10 @@ begin
 			else
 				if (neighbor_more = '0' and more_sig = '0' and sending_complete = '1') then
 					n_state <= LOADING;
+					next_time <= max_time;
 				elsif (sending_complete = '1') then
 					n_state <= EXCHANGE_LISTENING;
+					next_time <= curr_time - 1;
 				else
 					n_state <= p_state;
 					next_time <= curr_time - 1;
@@ -319,6 +348,9 @@ begin
 
 		when EXCHANGE_LISTENING =>
 			if (curr_time = zero_time) then
+				n_state <= DOWN;
+				next_time <= zero_time;
+			elsif (seqnum_error = '1') then
 				n_state <= DOWN;
 				next_time <= zero_time;
 			elsif (master = '1') then
@@ -419,17 +451,23 @@ end process;
 --------------------------------
 
 -------- SENDING DBD STATE MACHINE --------
-COMBDBD : process(p_state, p_dbd, sending_length)
+COMBDBD : process(p_state, p_dbd, sending_length, dbd_length)
 begin
 	case( p_dbd ) is
 		when IDLE =>
-			if (p_state = EXSTART or p_state = EXCHANGE_SENDING) then
+			if (p_state = EXSTART) then
 				n_dbd <= SENDING_IP;
 				sending_len_next <= IPlength;
+			elsif (p_state = EXCHANGE_SENDING) then
+				n_dbd <= FETCHING_LSA;
+				sending_len_next <= zero7;
 			else
 				n_dbd <= p_dbd;
 				sending_len_next <= zero7;
 			end if ;
+		when FETCHING_LSA =>
+			n_dbd <= SENDING_IP;
+			sending_len_next <= IPlength;
 		when SENDING_IP =>
 			if (sending_length = zero7) then
 				n_dbd <= SENDING_OSPFHEAD;
@@ -523,17 +561,17 @@ begin
 				when OPTIONS =>
 					p_read <= SEQNUM;
 				when SEQNUM =>
-					p_read <= LSA1;
-				when LSA1 =>
-					p_read <= LSA2;
-				when LSA2 =>
-					p_read <= LSA3;
-				when LSA3 =>
-					p_read <= LSA4;
-				when LSA4 =>
-					p_read <= LSA5;
+					p_read <= LSA_PART1;
+				when LSA_PART1 =>
+					p_read <= LSA_PART2;
+				when LSA_PART2 =>
+					p_read <= LSA_PART3;
+				when LSA_PART3 =>
+					p_read <= LSA_PART4;
+				when LSA_PART4 =>
+					p_read <= LSA_PART5;
 				when others =>
-					p_read <= LSA1;
+					p_read <= LSA_PART1;
 			end case ;
 		elsif (dbd_val = '0') then
 			-- LET THE STATE MACHINE KNOW READING IS COMPLETE
@@ -541,9 +579,7 @@ begin
 		end if ;
 	end if ;
 end process;
-
 ----------------------------------------
-
 
 stateout <= "00" when p_state = DOWN else
 				"01" when p_state = INIT else
