@@ -17,11 +17,12 @@ entity LSU_Parser is
     Generic
     (
         PORT_NO : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
-        router_id : std_logic_vector(7 downto 0) := "11110011"
+        router_id : std_logic_vector(31 downto 0) := "11110011000000000000000000000000"
     );
     Port ( state_in : in  STD_LOGIC_VECTOR (3 downto 0);
            data_in : in  STD_LOGIC_VECTOR (7 downto 0);
            data_valid : in  STD_LOGIC;
+			  clk : in std_logic;
            write_to_q : out  STD_LOGIC;
            qout : out  STD_LOGIC_VECTOR (7 downto 0);
            ack_q_out : out STD_LOGIC_VECTOR(7 downto 0);
@@ -42,24 +43,24 @@ signal write_ack : std_logic := '0';
 signal lsa_length : std_logic_vector(15 downto 0) := (others => '1');
 signal ospf_header : std_logic_vector(191 downto 0);
 signal lsa_length_int : integer := 0;
-signal ack_packet_length : std_logic_vector(15 downto 0) := (others => '0');
-signal ack_packet_length_int : integer;
+--signal ack_packet_length : std_logic_vector(15 downto 0) := (others => '0');
+--signal ack_packet_length_int : integer;
 signal packet_length : STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
 begin
-ospf_header(191 downto 184) <= '0';
+--ospf_header(191 downto 184) <= '0';
 ospf_header(183 downto 176) <= "00000101";
-ospf_header(175 downto 160) <= conv_std_logic_vector(ack_packet_length_int*20+24,16);
+--ospf_header(175 downto 160) <= conv_std_logic_vector(ack_packet_length_int*20+24,16);
 ospf_header(159 downto 128) <= router_id;
-ospf_header(127 downto 0) <= '0';
+--ospf_header(127 downto 0) <= '0';
 
 
-ack_packet_length_int <= to_integer(unsigned(ack_packet_length));
-present_state <= to_integer(unsigned(state_in));
-packet_length_int <= to_integer(unsigned(packet_length));
-lsa_length_int <= to_integer(unsigned(lsa_length));
+--ack_packet_length_int <= conv_integer(ack_packet_length);
+state_in_int <= conv_integer(state_in);
+packet_length_int <= conv_integer(packet_length);
+lsa_length_int <= conv_integer(lsa_length);
 process(clk)
     variable current_byte_no : integer;
-    variable current_states : states;
+    variable current_state : states;
 begin
     if(clk'event and clk='1') then
         current_byte_no := n_counter;
@@ -134,9 +135,9 @@ begin
 
         --calculating complete ospf packet length
         if((current_state=LSU_strip or current_state=dumpLSU) and current_byte_no=3) then
-            packet_length(15 downto 8) <= in1;
+            packet_length(15 downto 8) <= data_in;
         elsif((current_state=LSU_strip or current_state=dumpLSU) and current_byte_no=4) then
-            packet_length(7 downto 0) <= in1;
+            packet_length(7 downto 0) <= data_in;
         end if;
     end if;
 end process;
@@ -155,8 +156,7 @@ begin
     qout <= data_to_LSAq;
 end process;
 
-COMB:process()
-
+COMB:process(data_valid,p_state,state_in_int,p_counter,processed_bytes,packet_length_int,lsa_length_int)
 begin
     case p_state is
         when IDLE =>
@@ -164,7 +164,7 @@ begin
                 n_state <= LSU_strip;
                 n_counter <= 1;
             elsif (data_valid = '1') then
-                n_state <= dump;
+                n_state <= dumpLSU;
                 n_counter <= 1;
             else
                 n_state <= IDLE;
