@@ -1,0 +1,5 @@
+vhdl work "ipcore_dir/FIFOLSU.vhd"
+vhdl work "ipcore_dir/RAMDB.vhd"
+vhdl work "LinkStateUpdateMachine.vhd"
+vhdl work "DBtoDijkstra.vhd"
+vhdl work "LSUM_tb.vhd"
