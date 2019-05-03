@@ -1,5 +1,5 @@
 ISim log file
-Running: /home/ise/ISE/CS226_OSPF/OSPF/LSUM_tb_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/ise/ISE/CS226_OSPF/OSPF/LSUM_tb_isim_beh.wdb 
+Running: /home/ise/ISE/CS226_OSPF/OSPF/Dijkstra_tb_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/ise/ISE/CS226_OSPF/OSPF/Dijkstra_tb_isim_beh.wdb 
 ISim P.20160913 (signature 0xfbc00daa)
 ----------------------------------------------------------------------
 WARNING:Security:42 - Your software subscription period has lapsed. Your current version of Xilinx tools will continue to function, but you no longer qualify for Xilinx software updates or new releases.
@@ -13,7 +13,6 @@ Time resolution is 1 ps
 # run 1000 ns
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
 ISim P.20160913 (signature 0xfbc00daa)
 ----------------------------------------------------------------------
 WARNING:Security:42 - Your software subscription period has lapsed. Your current version of Xilinx tools will continue to function, but you no longer qualify for Xilinx software updates or new releases.
@@ -24,42 +23,10 @@ This is a Full version of ISim.
 # run 1000 ns
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
 # restart
-# run 5.00us
+# run 1.00us
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
-# restart
-# run 5.00us
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
-# restart
-# run 5.00us
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
-# restart
-# run 7.00us
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
-# restart
-# run 7.00us
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
-# restart
-# run 7.00us
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
-# restart
-# run 7.00us
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
 ISim P.20160913 (signature 0xfbc00daa)
 ----------------------------------------------------------------------
 WARNING:Security:42 - Your software subscription period has lapsed. Your current version of Xilinx tools will continue to function, but you no longer qualify for Xilinx software updates or new releases.
@@ -70,19 +37,6 @@ This is a Full version of ISim.
 # run 1000 ns
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
-# restart
-# run 7.00us
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
-INFO: Simulator is stopped.
-# restart
-# run 7.00us
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
-INFO: Simulator is stopped.
 ISim P.20160913 (signature 0xfbc00daa)
 ----------------------------------------------------------------------
 WARNING:Security:42 - Your software subscription period has lapsed. Your current version of Xilinx tools will continue to function, but you no longer qualify for Xilinx software updates or new releases.
@@ -93,27 +47,3 @@ This is a Full version of ISim.
 # run 1000 ns
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
-# restart
-# run 7.00us
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
-INFO: Simulator is stopped.
-ISim P.20160913 (signature 0xfbc00daa)
-----------------------------------------------------------------------
-WARNING:Security:42 - Your software subscription period has lapsed. Your current version of Xilinx tools will continue to function, but you no longer qualify for Xilinx software updates or new releases.
-
-
-----------------------------------------------------------------------
-This is a Full version of ISim.
-# run 1000 ns
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
-# restart
-# run 7.00us
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-at 435 ns(1): Note: Block Memory Generator CORE Generator module is using a behavioral model FOR simulation which will not precisely model memory collision behavior. (/lsum_tb/RAM/U0/native_mem_module/mem_module/).
-# exit 0

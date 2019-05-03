@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
--- Company: 
--- Engineer:
+-- Company: 		AC/DC
+-- Engineer:		Saksham Goel
 --
 -- Create Date:   18:46:45 04/30/2019
 -- Design Name:   
@@ -42,40 +42,43 @@ ARCHITECTURE behavior OF Dijkstra_tb IS
     COMPONENT Dijkstra
     PORT(
          din : IN  std_logic_vector(95 downto 0);
+			ip_in : IN std_logic_vector(31 downto 0);
          addr_read : OUT  std_logic_vector(5 downto 0);
          read : OUT  std_logic;
          write : OUT  std_logic;
          addr_write : OUT  std_logic_vector(5 downto 0);
-         dout : OUT  std_logic_vector(5 downto 0);
+         dout : OUT  std_logic_vector(63 downto 0);
          enable : IN  std_logic;
          done : OUT  std_logic;
 			help : OUT STD_LOGIC_VECTOR(7 downto 0);
+			router_ip : in std_logic_vector(31 downto 0);
          clk : IN  std_logic
         );
     END COMPONENT;
     
 	 COMPONENT RAMDijkstra
-  PORT (
+	PORT (
     clka : IN STD_LOGIC;
     ena : IN STD_LOGIC;
     wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
     addra : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
-    dina : IN STD_LOGIC_VECTOR(95 DOWNTO 0);
-    douta : OUT STD_LOGIC_VECTOR(95 DOWNTO 0)
+    dina : IN STD_LOGIC_VECTOR(127 DOWNTO 0);
+    douta : OUT STD_LOGIC_VECTOR(127 DOWNTO 0)
   );
 END COMPONENT;
 
    --Inputs
-   signal din, dina : std_logic_vector(95 downto 0) := (others => '0');
+   signal din, dina : std_logic_vector(127 downto 0) := (others => '0');
    signal enable : std_logic := '0';
    signal clk : std_logic := '0';
 	signal wea : std_logic_vector(0 downto 0) := "0";
+	signal router_ip : std_logic_vector(31 downto 0) := "00000001000000010000000100000001";
  	--Outputs
    signal addr_read : std_logic_vector(5 downto 0);
    signal read : std_logic;
    signal write : std_logic;
    signal addr_write : std_logic_vector(5 downto 0);
-   signal dout : std_logic_vector(5 downto 0);
+   signal dout : std_logic_vector(63 downto 0);
    signal done : std_logic;
 	signal help : std_logic_vector(7 downto 0);
 
@@ -86,7 +89,8 @@ BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: Dijkstra PORT MAP (
-          din => din,
+          din => din(95 downto 0),
+			 ip_in => din(127 downto 96),
           addr_read => addr_read,
           read => read,
           write => write,
@@ -95,6 +99,7 @@ BEGIN
           enable => enable,
           done => done,
 			 help => help,
+			 router_ip => router_ip,
           clk => clk
         );
 	RAM: RAMDijkstra PORT MAP(

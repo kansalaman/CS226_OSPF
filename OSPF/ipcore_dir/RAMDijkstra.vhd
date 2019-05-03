@@ -46,8 +46,8 @@ ENTITY RAMDijkstra IS
     ena : IN STD_LOGIC;
     wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
     addra : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
-    dina : IN STD_LOGIC_VECTOR(95 DOWNTO 0);
-    douta : OUT STD_LOGIC_VECTOR(95 DOWNTO 0)
+    dina : IN STD_LOGIC_VECTOR(127 DOWNTO 0);
+    douta : OUT STD_LOGIC_VECTOR(127 DOWNTO 0)
   );
 END RAMDijkstra;
 
@@ -59,8 +59,8 @@ COMPONENT wrapped_RAMDijkstra
     ena : IN STD_LOGIC;
     wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
     addra : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
-    dina : IN STD_LOGIC_VECTOR(95 DOWNTO 0);
-    douta : OUT STD_LOGIC_VECTOR(95 DOWNTO 0)
+    dina : IN STD_LOGIC_VECTOR(127 DOWNTO 0);
+    douta : OUT STD_LOGIC_VECTOR(127 DOWNTO 0)
   );
 END COMPONENT;
 
@@ -75,7 +75,7 @@ END COMPONENT;
       c_axi_type => 1,
       c_byte_size => 9,
       c_common_clk => 0,
-      c_default_data => "F",
+      c_default_data => "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
       c_disable_warn_bhv_coll => 0,
       c_disable_warn_bhv_range => 0,
       c_enable_32bit_address => 0,
@@ -105,8 +105,8 @@ END COMPONENT;
       c_prim_type => 1,
       c_read_depth_a => 64,
       c_read_depth_b => 64,
-      c_read_width_a => 96,
-      c_read_width_b => 96,
+      c_read_width_a => 128,
+      c_read_width_b => 128,
       c_rst_priority_a => "CE",
       c_rst_priority_b => "CE",
       c_rst_type => "SYNC",
@@ -125,8 +125,8 @@ END COMPONENT;
       c_write_depth_b => 64,
       c_write_mode_a => "WRITE_FIRST",
       c_write_mode_b => "WRITE_FIRST",
-      c_write_width_a => 96,
-      c_write_width_b => 96,
+      c_write_width_a => 128,
+      c_write_width_b => 128,
       c_xdevicefamily => "qspartan6"
     );
 -- synthesis translate_on

@@ -51,8 +51,8 @@ COMPONENT RAMDijkstra
     ena : IN STD_LOGIC;
     wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
     addra : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
-    dina : IN STD_LOGIC_VECTOR(95 DOWNTO 0);
-    douta : OUT STD_LOGIC_VECTOR(95 DOWNTO 0)
+    dina : IN STD_LOGIC_VECTOR(127 DOWNTO 0);
+    douta : OUT STD_LOGIC_VECTOR(127 DOWNTO 0)
   );
 END COMPONENT;
 -- COMP_TAG_END ------ End COMPONENT Declaration ------------

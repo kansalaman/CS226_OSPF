@@ -1,6 +1,9 @@
-set -tmpdir "/home/ise/ISE/CS226_OSPF/OSPF/xst/projnav.tmp"
-set -xsthdpdir "/home/ise/ISE/CS226_OSPF/OSPF/xst"
-run -compileonly yes
+set -tmpdir "xst/projnav.tmp"
+set -xsthdpdir "xst"
+run
+-ifn Dijkstra.prj
+-ofn Dijkstra
+-ofmt NGC
 -p xq6slx150t-2-fgg676
 -top Dijkstra
 -opt_mode Speed
@@ -48,4 +51,3 @@ run -compileonly yes
 -iob Auto
 -equivalent_register_removal YES
 -slice_utilization_ratio_maxmargin 5
--ifn Dijkstra.prj

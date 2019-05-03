@@ -11,7 +11,7 @@ Total CPU time to Xst completion: 0.04 secs
 Parameter xsthdpdir set to xst
 
 
-Total REAL time to Xst completion: 0.00 secs
+Total REAL time to Xst completion: 1.00 secs
 Total CPU time to Xst completion: 0.04 secs
  
 --> 
@@ -143,8 +143,3 @@ Elaborating entity <Comparator_Single> (architecture <Behavioral>) with generics
 Elaborating entity <Comparator_Single> (architecture <Behavioral>) with generics from library <work>.
 
 Elaborating entity <Comparator_Single> (architecture <Behavioral>) with generics from library <work>.
-WARNING:HDLCompiler:92 - "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.vhd" Line 143: p_newnodes should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.vhd" Line 145: p_newnodes should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.vhd" Line 146: p_newnodes should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.vhd" Line 152: p_costs should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.vhd" Line 158: p_costs should be on the sensitivity list of the process

@@ -100,6 +100,17 @@ ARCHITECTURE behavior OF LSUM_tb IS
 		 dina : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
 		 douta : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
 	  );
+	 END component;
+
+	 COMPONENT RAMDijkstra
+		PORT (
+		 clka : IN STD_LOGIC;
+		 ena : IN STD_LOGIC;
+		 wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+		 addra : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+		 dina : IN STD_LOGIC_VECTOR(127 DOWNTO 0);
+		 douta : OUT STD_LOGIC_VECTOR(127 DOWNTO 0)
+	  );
 	END COMPONENT;
     
 
@@ -114,7 +125,7 @@ ARCHITECTURE behavior OF LSUM_tb IS
    signal db_read, db_read1, db_read2 : std_logic := '0';
    signal db_addr, db_addr1, db_addr2 : std_logic_vector(11 downto 0) := (others => '0');
    signal db_write, db_write1, db_write2 : std_logic := '0';
-	signal wea : std_logic_vector(0 downto 0);
+	signal wea, wea_d : std_logic_vector(0 downto 0);
    signal db_dout, db_dout1, db_dout2 : std_logic_vector(7 downto 0) := (others => '0');
    signal fl_val : std_logic;
    signal fl_out : std_logic_vector(7 downto 0);
@@ -132,7 +143,7 @@ ARCHITECTURE behavior OF LSUM_tb IS
 	--Outputs DBtoDijkstra
 	signal write_dij, read_dij : STD_LOGIC := '0';
 	signal addr_dij : std_logic_vector(5 downto 0) := (others => '0');
-	signal dout_dij : std_logic_vector((8*(6+6)+2**5 - 1) downto 0) := (others => '0');
+	signal dout_dij, dout_d : std_logic_vector(127 downto 0) := (others => '0');
 	
  
 BEGIN
@@ -141,6 +152,7 @@ db_read <= db_read1 or db_read2;
 db_addr <= db_addr1 or db_addr2;
 db_dout <= db_dout1 or db_dout2;
 wea(0) <= db_write; 
+wea_d(0) <= write_dij;
 	-- Instantiate the Unit Under Test (UUT)
    uut: LinkStateUpdateMachine PORT MAP (
           clk => clk,
@@ -192,6 +204,16 @@ wea(0) <= db_write;
 		 dina => db_dout,
 		 douta => db_din
 	  );
+	  
+	RAMD : RAMDijkstra
+  PORT MAP (
+    clka => clk,
+    ena => '1',
+    wea => wea_d,
+    addra => addr_dij,
+    dina => dout_dij,
+    douta => dout_d
+  );
 
    -- Clock process definitions
    clk_process :process
