@@ -45,8 +45,8 @@ entity helloActParse is
 end helloActParse;
 
 architecture Behavioral of helloActParse is
-	type FSM is (ONE_WAY, DOWN, INIT, TWO_WAY, EXCHANGE, LOADING, FULL);
-	type DBD is (IDLE, SENDING_IP, SENDING_OSPFHEAD, SENDING_DBD);
+	type FSM is (ONE_WAY, DOWN, INIT, EXSTART, EXCHANGE_SENDING, EXCHANGE_LISTENING, LOADING, FULL);
+	type DBD is (IDLE, FETCHING_LSA, SENDING_IP, SENDING_OSPFHEAD, SENDING_DBD);
 	type DBD_READ is (IDLE_R, OPTIONS, SEQNUM, LSA1, LSA2, LSA3, LSA4, LSA5);
 	constant zero8 : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
 	constant zero7 : STD_LOGIC_VECTOR(6 downto 0) := (others => '0');
@@ -54,11 +54,12 @@ architecture Behavioral of helloActParse is
 	signal p_state, n_state : FSM := DOWN;
 	signal p_dbd, n_dbd : DBD := IDLE;
 	signal p_read : DBD_READ := IDLE_R;
-	signal send, send_next : STD_LOGIC := '0';
+	--signal send, send_next : STD_LOGIC := '0';
+	signal sending_complete : STD_LOGIC := '1';
 
 
 	signal router_id_sig : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
-	signal sending_length: STD_LOGIC_VECTOR(6 downto 0) := (others => '0');
+	signal sending_length, sending_len_next: STD_LOGIC_VECTOR(6 downto 0) := (others => '0');
 	signal neighbor_id : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
 	signal old_neighbor : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
 	signal active_neighbor : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
@@ -68,6 +69,7 @@ architecture Behavioral of helloActParse is
 	constant zero_time : STD_LOGIC_VECTOR(9 downto 0) := (others => '0');
 	constant max_time : STD_LOGIC_VECTOR(9 downto 0) := (others => '1');
 	constant defaultseq : STD_LOGIC_VECTOR(31 downto 0) := (31 downto 16 => '0', others => '1');
+	signal curr_seqnum : STD_LOGIC_VECTOR(31 downto 0) := defaultseq;
 
 	signal numLSA : STD_LOGIC_VECTOR(1 downto 0) := (others => '1');
 	constant IPheader : STD_LOGIC_VECTOR(159 downto 0) := (others => '0');
@@ -79,23 +81,9 @@ architecture Behavioral of helloActParse is
 	constant ospflength : STD_LOGIC_VECTOR(6 downto 0) := "0010111";
 	
 	signal dbd_packet : STD_LOGIC_VECTOR(543 downto 0) ;
-					--zero8 & zero8 & zero8 & "00000111" &
-					--defaultseq &
-					--zero8 & zero8 & zero8 & zero8 &
-					--zero8 & zero8 & zero8 & zero8 &
-					--zero8 & zero8 & zero8 & zero8 &
-					--zero8 & zero8 & zero8 & zero8 &
-					--zero8 & zero8 & zero8 & zero8 &
-					--zero8 & zero8 & zero8 & zero8 &
-					--zero8 & zero8 & zero8 & zero8 &
-					--zero8 & zero8 & zero8 & zero8 &
-					--zero8 & zero8 & zero8 & zero8 &
-					--zero8 & zero8 & zero8 & zero8 &
-					--zero8 & zero8 & zero8 & zero8 &
-					--zero8 & zero8 & zero8 & zero8 &
-					--zero8 & zero8 & zero8 & zero8 &
-					--zero8 & zero8 & zero8 & zero8 &
-					--zero8 & zero8 & zero8 & zero8;
+		-- first 32 : last three bits options
+		-- next 32 : DD sequence number
+		-- each of the next 160 bits (set of 3) are LSAs
 
 	constant empty_dbd_length : STD_LOGIC_VECTOR(6 downto 0) := "0000111";
 	signal dbd_length : STD_LOGIC_VECTOR(6 downto 0);
@@ -105,6 +93,7 @@ architecture Behavioral of helloActParse is
 	signal master : STD_LOGIC := '1';
 	signal more_sig : STD_LOGIC := '1';
 	signal init_sig : STD_LOGIC := '1';
+	signal neighbor_more : STD_LOGIC := '1';
 
 	   -- 0                   1                   2                   3
        -- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -153,22 +142,79 @@ dbd_packet(511 downto 480) <= defaultseq;
 
 
 SEQ1 : process(clk)
+	variable msb : integer;
+	variable lsb : integer;
+
 begin
 	if (clk = '1' and clk'event) then
 		p_state <= n_state;
 		curr_time <= next_time;
-		send <= send_next;
+
+		p_dbd <= n_dbd;
+		sending_length <= sending_len_next;
+
+		msb := conv_integer(sending_len_next)*8 + 7;
+		lsb := conv_integer(sending_len_next)*8;
+
 		if (ID_part = "00" and neighbor_val = '1') then
 			old_neighbor <= active_neighbor;
 		end if;
+		
+
 		if (ID_part = "00" and routerid_val = '1') then
 			router_id_sig <= neighbor_id;
+		end if ;
+
+		case( n_dbd ) is
+			when IDLE =>
+				out1 <= (others => '0');
+				outval <= '0';
+			when SENDING_IP =>
+				out1 <= IPheader(msb downto lsb);
+				outval <= '1';
+			when SENDING_OSPFHEAD =>
+				out1 <= ospfheader(msb downto lsb);
+				outval <= '1';
+			when others => --SENDING_DBD
+				out1 <= dbd_packet(msb downto lsb);
+				outval <= '1';
+		end case ;
+
+		--if (ID_part = "00" and dbd_val = '1') then
+		--	case( p_read ) is
+		--		when OPTIONS =>
+		--			if (temp_dbd_received(2) = '1') then --INIT from their end
+		--				init_sig <= '0';
+		--				if (router_id_sig > self) then
+		--					master <= '0';
+		--				else
+		--					master <= '1';
+		--				end if ;
+		--			else
+		--				if(master = '0') then
+		--					--slave actions
+		--				else
+		--					--master actions
+		--				end if;
+		--			end if ;
+		--		when SEQNUM =>
+		--			if (master = '1') then
+						
+		--			else
+						
+		--			end if ;
+		--		when others =>
+
+		--	end case ;
+		--end if ;
+		if (n_dbd = IDLE and (n_state = EXSTART or n_state = EXCHANGE_SENDING)) then
+			sending_complete <= not(sending_complete);
 		end if ;
 	end if;
 end process;
 
 -------- ORIGINAL STATE MACHINE --------
-COMBSTATE : process(p_state, ID_part, old_neighbor, routerid_val, curr_time, hellogenin, self)
+COMBSTATE : process(p_state, ID_part, old_neighbor, routerid_val, curr_time, hellogenin, self, dbd_val, p_read, master, temp_dbd_received, dbd_length)
 begin
 	case( p_state ) is
 	
@@ -199,28 +245,89 @@ begin
 				n_state <= DOWN;
 				next_time <= zero_time;
 			elsif (old_neighbor = self) then
-				n_state <= TWO_WAY;
+				n_state <= EXSTART;
 				next_time <= max_time;
 			else
 				n_state <= p_state;
 				next_time <= curr_time - 1;
 			end if ;
-		when TWO_WAY =>
+		when EXSTART =>
 			if (curr_time = zero_time) then
 				n_state <= DOWN;
 				next_time <= zero_time;
 			else
-				if (curr_time = max_time) then
-					send_next <= '1';
+				if (ID_part = "00" and dbd_val = '1') then
+					next_time <= max_time;
+					case( p_read ) is
+						when IDLE_R =>
+							if (master = '1') then
+								n_state <= EXCHANGE_LISTENING;
+							else
+								n_state <= EXCHANGE_SENDING;
+							end if ;
+						when OPTIONS =>
+							if (temp_dbd_received(2) = '0') then
+								n_state <= DOWN;
+							else
+								n_state <= p_state;
+							end if ;
+
+						when SEQNUM =>
+							if (master = '1' and curr_seqnum = temp_dbd_received) then
+								n_state <= p_state;
+							elsif (master = '1') then
+								n_state <= DOWN;
+							else
+								n_state <= p_state;
+							end if ;
+						when LSA1 =>
+							n_state <= p_state;
+						when LSA2 =>
+							n_state <= p_state;
+						when LSA3 =>
+							n_state <= p_state;
+						when LSA4 =>
+							n_state <= p_state;
+						when others => --LSA5
+							n_state <= p_state;
+					end case ;
 				else
-					send_next <= '0';
+					n_state <= p_state;
+					next_time <= curr_time - 1;
 				end if ;
+			end if ;
+
+		when EXCHANGE_SENDING =>
+			if (master = '1') then
+				if (sending_complete = '1') then
+					n_state <= EXCHANGE_LISTENING;
+					next_time <= curr_time - 1;
+				else
+					n_state <= p_state;
+					next_time <= curr_time - 1;
+				end if ;
+			else
+				if (neighbor_more = '0' and more_sig = '0' and sending_complete = '1') then
+					n_state <= LOADING;
+				elsif (sending_complete = '1') then
+					n_state <= EXCHANGE_LISTENING;
+				else
+					n_state <= p_state;
+					next_time <= curr_time - 1;
+				end if ;
+			end if ;
+
+		when EXCHANGE_LISTENING =>
+			if (curr_time = zero_time) then
+				n_state <= DOWN;
+				next_time <= zero_time;
+			elsif (master = '1') then
+				n_state <= p_state;
+				next_time <= curr_time - 1;
+			else
 				n_state <= p_state;
 				next_time <= curr_time - 1;
 			end if ;
-		--when EXCHANGE =>
-
---		when LOADING =>
 
 		when others => --FULL
 			if (curr_time = zero_time) then
@@ -316,87 +423,93 @@ COMBDBD : process(p_state, p_dbd, sending_length)
 begin
 	case( p_dbd ) is
 		when IDLE =>
-			if (p_state = TWO_WAY) then
+			if (p_state = EXSTART or p_state = EXCHANGE_SENDING) then
 				n_dbd <= SENDING_IP;
+				sending_len_next <= IPlength;
 			else
 				n_dbd <= p_dbd;
+				sending_len_next <= zero7;
 			end if ;
 		when SENDING_IP =>
 			if (sending_length = zero7) then
 				n_dbd <= SENDING_OSPFHEAD;
+				sending_len_next <= ospflength;
 			else
 				n_dbd <= p_dbd;
+				sending_len_next <= sending_length - 1;
 			end if ;
 		when SENDING_OSPFHEAD =>
 			if (sending_length = zero7) then
 				n_dbd <= SENDING_DBD;
+				sending_len_next <= dbd_length;
 			else
 				n_dbd <= p_dbd;
+				sending_len_next <= sending_length - 1;
 			end if ;
 		when others => --SENDING_DBD
 			if (sending_length = zero7) then
 				n_dbd <= IDLE;
+				sending_len_next <= zero7;
 			else
 				n_dbd <= p_dbd;
+				sending_len_next <= sending_length - 1;
 			end if;
 	end case ;
 end process;
 --------------------------------
 
--------- SENDING DBD PACKET --------
-SEQOUT : process(clk)
-	variable msb : integer;
-	variable lsb : integer;
-begin
-	if (clk = '1' and  clk'event) then
-		p_dbd <= n_dbd;
-		msb := conv_integer(sending_length)*8 + 7;
-		lsb := conv_integer(sending_length)*8;
+---------- SENDING DBD PACKET --------
+--SEQOUT : process(clk)
+--	variable msb : integer;
+--	variable lsb : integer;
+--begin
+--	if (clk = '1' and  clk'event) then
+--		p_dbd <= n_dbd;
+--		msb := conv_integer(sending_length)*8 + 7;
+--		lsb := conv_integer(sending_length)*8;
 
-		case( n_dbd ) is
-			when IDLE =>
-				outval <= '0';
-				out1 <= (others => '0');
-				if (n_state = TWO_WAY) then
-					sending_length <= IPlength;
-				end if ;
-			when SENDING_IP =>
-				if (sending_length = zero7) then
-					out1 <= IPheader(msb downto lsb);
-					outval <= '1';
-					sending_length <= ospflength;
-				else
-					out1 <= IPheader(msb downto lsb);
-					outval <= '1';
-					sending_length <= sending_length - 1;
-				end if ;
-			when SENDING_OSPFHEAD =>
-				if (sending_length = zero7) then
-					out1 <= ospfheader(msb downto lsb);
-					outval <= '1';
-					sending_length <= dbd_length;
-				else
-					out1 <= ospfheader(msb downto lsb);
-					outval <= '1';
-					sending_length <= sending_length - 1;
-				end if ;
-			when others => --SENDING_DBD
-				if (sending_length = zero7) then
-					out1 <= dbd_packet(msb downto lsb);
-					outval <= '1';
-					sending_length <= zero7;
-				else
-					out1 <= dbd_packet(msb downto lsb);
-					outval <= '1';
-					sending_length <= sending_length - 1;
-				end if ;
+--		case( n_dbd ) is
+--			when IDLE =>
+--				outval <= '0';
+--				out1 <= (others => '0');
+--				if (n_state = EXSTART or n_state = EXCHANGE_SENDING) then
+--					sending_length <= IPlength;
+--				end if;
+--			when SENDING_IP =>
+--				if (sending_length = zero7) then
+--					out1 <= IPheader(msb downto lsb);
+--					outval <= '1';
+--					sending_length <= ospflength;
+--				else
+--					out1 <= IPheader(msb downto lsb);
+--					outval <= '1';
+--					sending_length <= sending_length - 1;
+--				end if ;
+--			when SENDING_OSPFHEAD =>
+--				if (sending_length = zero7) then
+--					out1 <= ospfheader(msb downto lsb);
+--					outval <= '1';
+--					sending_length <= dbd_length;
+--				else
+--					out1 <= ospfheader(msb downto lsb);
+--					outval <= '1';
+--					sending_length <= sending_length - 1;
+--				end if ;
+--			when others => --SENDING_DBD
+--				if (sending_length = zero7) then
+--					out1 <= dbd_packet(msb downto lsb);
+--					outval <= '1';
+--					sending_length <= zero7;
+--				else
+--					out1 <= dbd_packet(msb downto lsb);
+--					outval <= '1';
+--					sending_length <= sending_length - 1;
+--				end if ;
 				
-		end case ;
-	end if;
-end process;
-----------------------------------------
-
-
+--		end case ;
+--	end if;
+--end process;
+------------------------------------------
 
 
 -------- READING DBD STATE MACHINE --------
@@ -423,46 +536,13 @@ begin
 					p_read <= LSA1;
 			end case ;
 		elsif (dbd_val = '0') then
+			-- LET THE STATE MACHINE KNOW READING IS COMPLETE
 			p_read <= IDLE_R;
 		end if ;
 	end if ;
 end process;
 
 ----------------------------------------
-
--------- ACTING ON DBD --------
-SEQUPDATEDBD : process(clk)
-begin
-	if (clk = '1' and clk'event) then
-		if (ID_part = "00" and dbd_val = '1') then
-			case( p_read ) is
-				when OPTIONS =>
-					if (temp_dbd_received(2) = '1') then --INIT from their end
-						init_sig <= '0';
-						if (router_id_sig > self) then
-							master <= '0';
-						else
-							master <= '1';
-						end if ;
-					else
-						if(master = '0') then
-							--slave actions
-						else
-							--master actions
-						end if;
-					end if ;
-				when SEQNUM =>
-					if (master = '1') then
-					
-					end if ;
-				when others =>
-			
-			end case ;
-		end if ;
-	end if ;
-end process;
---------------------------------
-
 
 
 stateout <= "00" when p_state = DOWN else
