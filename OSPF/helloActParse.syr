@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.06 secs
+Total CPU time to Xst completion: 0.02 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.06 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
 Reading design: helloActParse.prj
@@ -106,4 +106,502 @@ Slice Utilization Ratio Delta      : 5
 Cores Search Directories           : {"ipcore_dir"  }
 
 =========================================================================
+
+
+=========================================================================
+*                          HDL Parsing                                  *
+=========================================================================
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" into library work
+Parsing entity <helloActParse>.
+Parsing architecture <Behavioral> of entity <helloactparse>.
+
+=========================================================================
+*                            HDL Elaboration                            *
+=========================================================================
+
+Elaborating entity <helloActParse> (architecture <Behavioral>) from library <work>.
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <helloActParse>.
+    Related source file is "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd".
+WARNING:Xst:647 - Input <lsa_queue_din> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <lsa_queue_empty> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:2935 - Signal 'lsa_queue_rd_en', unconnected in block 'helloActParse', is tied to its initial value (0).
+    Found 10-bit register for signal <curr_time>.
+    Found 1-bit register for signal <master>.
+    Found 1-bit register for signal <init_sig>.
+    Found 1-bit register for signal <seqnum_error>.
+    Found 32-bit register for signal <curr_seqnum>.
+    Found 1-bit register for signal <dbd_rst>.
+    Found 1-bit register for signal <receiving_complete>.
+    Found 32-bit register for signal <old_neighbor>.
+    Found 32-bit register for signal <router_id>.
+    Found 1-bit register for signal <lsa_queue_wr_en>.
+    Found 8-bit register for signal <lsa_queue_dout>.
+    Found 1-bit register for signal <neighbor_more>.
+    Found 32-bit register for signal <active_neighbor>.
+    Found 2-bit register for signal <in_index>.
+    Found 2-bit register for signal <ID_part>.
+    Found 32-bit register for signal <neighbor_id>.
+    Found 32-bit register for signal <temp_dbd_received>.
+    Found 1-bit register for signal <sending_complete>.
+    Found 3-bit register for signal <p_dbd>.
+    Found 1-bit register for signal <outval>.
+    Found 8-bit register for signal <out1>.
+    Found 7-bit register for signal <sending_length>.
+    Found 1-bit register for signal <dbd_rd_en>.
+    Found 160-bit register for signal <lsa_packet1>.
+    Found 160-bit register for signal <lsa_packet2>.
+    Found 160-bit register for signal <lsa_packet3>.
+    Found 3-bit register for signal <p_read>.
+    Found 3-bit register for signal <p_state>.
+    Found finite state machine <FSM_0> for signal <p_dbd>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 19                                             |
+    | Inputs             | 5                                              |
+    | Outputs            | 5                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Power Up State     | idle                                           |
+    | Encoding           | auto                                           |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+INFO:Xst:1799 - State full is never reached in FSM <p_state>.
+    Found finite state machine <FSM_1> for signal <p_state>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 55                                             |
+    | Inputs             | 19                                             |
+    | Outputs            | 12                                             |
+    | Clock              | clk (rising_edge)                              |
+    | Power Up State     | down                                           |
+    | Encoding           | auto                                           |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found finite state machine <FSM_2> for signal <ID_part>.
+    -----------------------------------------------------------------------
+    | States             | 4                                              |
+    | Transitions        | 4                                              |
+    | Inputs             | 2                                              |
+    | Outputs            | 4                                              |
+    | Clock              | clk (rising_edge)                              |
+    | Reset              | _n1460 (positive)                              |
+    | Reset type         | synchronous                                    |
+    | Reset State        | 00                                             |
+    | Power Up State     | 00                                             |
+    | Encoding           | auto                                           |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found finite state machine <FSM_3> for signal <p_read>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 24                                             |
+    | Inputs             | 2                                              |
+    | Outputs            | 10                                             |
+    | Clock              | clk (rising_edge)                              |
+    | Reset              | _n1462 (positive)                              |
+    | Reset type         | synchronous                                    |
+    | Reset State        | idle_r                                         |
+    | Power Up State     | idle_r                                         |
+    | Encoding           | auto                                           |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 8-bit adder for signal <n1432> created at line 160.
+    Found 7-bit adder for signal <dbd_length> created at line 163.
+    Found 6-bit adder for signal <n1264> created at line 529.
+    Found 11-bit adder for signal <n1287> created at line 727.
+    Found 11-bit adder for signal <n1359> created at line 747.
+    Found 10-bit subtractor for signal <GND_5_o_GND_5_o_sub_144_OUT<9:0>> created at line 516.
+    Found 2-bit subtractor for signal <GND_5_o_GND_5_o_sub_562_OUT<1:0>> created at line 584.
+    Found 7-bit subtractor for signal <GND_5_o_GND_5_o_sub_1387_OUT<6:0>> created at line 747.
+    Found 5x2-bit multiplier for signal <n1433> created at line 160.
+    Found 10-bit 7-to-1 multiplexer for signal <next_time> created at line 315.
+    Found 7-bit 7-to-1 multiplexer for signal <p_dbd[2]_GND_5_o_wide_mux_1473_OUT> created at line 605.
+    Found 32-bit comparator lessequal for signal <self[31]_router_id_sig[31]_LessThan_47_o> created at line 281
+    Found 32-bit comparator equal for signal <n0049> created at line 289
+    Found 32-bit comparator equal for signal <old_neighbor[31]_self[31]_equal_77_o> created at line 343
+    Summary:
+	inferred   1 Multiplier(s).
+	inferred   8 Adder/Subtractor(s).
+	inferred 717 D-type flip-flop(s).
+	inferred   3 Comparator(s).
+	inferred 685 Multiplexer(s).
+	inferred   4 Finite State Machine(s).
+Unit <helloActParse> synthesized.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Multipliers                                          : 1
+ 5x2-bit multiplier                                    : 1
+# Adders/Subtractors                                   : 8
+ 10-bit subtractor                                     : 1
+ 11-bit adder                                          : 2
+ 2-bit subtractor                                      : 1
+ 6-bit adder                                           : 1
+ 7-bit adder                                           : 1
+ 7-bit subtractor                                      : 1
+ 8-bit adder                                           : 1
+# Registers                                            : 24
+ 1-bit register                                        : 10
+ 10-bit register                                       : 1
+ 160-bit register                                      : 3
+ 2-bit register                                        : 1
+ 32-bit register                                       : 6
+ 7-bit register                                        : 1
+ 8-bit register                                        : 2
+# Comparators                                          : 3
+ 32-bit comparator equal                               : 2
+ 32-bit comparator lessequal                           : 1
+# Multiplexers                                         : 685
+ 1-bit 2-to-1 multiplexer                              : 642
+ 10-bit 2-to-1 multiplexer                             : 15
+ 10-bit 7-to-1 multiplexer                             : 1
+ 2-bit 2-to-1 multiplexer                              : 1
+ 32-bit 2-to-1 multiplexer                             : 11
+ 7-bit 2-to-1 multiplexer                              : 6
+ 7-bit 7-to-1 multiplexer                              : 1
+ 8-bit 2-to-1 multiplexer                              : 8
+# FSMs                                                 : 4
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+WARNING:Xst - The specified part-type was not generated at build time. XST is loading the full part-type and will therefore consume more CPU and memory.
+Loading device for application Rf_Device from file '7a100t.nph' in environment /opt/Xilinx/14.7/ISE_DS/ISE/.
+Loading device for application Rf_Device from file '7a100t.nph' in environment /opt/Xilinx/14.7/ISE_DS/ISE/.
+
+Synthesizing (advanced) Unit <helloActParse>.
+The following registers are absorbed into counter <in_index>: 1 register on signal <in_index>.
+Unit <helloActParse> synthesized (advanced).
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Multipliers                                          : 1
+ 5x2-bit multiplier                                    : 1
+# Adders/Subtractors                                   : 7
+ 10-bit subtractor                                     : 1
+ 11-bit adder                                          : 2
+ 6-bit adder                                           : 1
+ 7-bit adder                                           : 1
+ 7-bit subtractor                                      : 1
+ 8-bit adder                                           : 1
+# Counters                                             : 1
+ 2-bit down counter                                    : 1
+# Registers                                            : 715
+ Flip-Flops                                            : 715
+# Comparators                                          : 3
+ 32-bit comparator equal                               : 2
+ 32-bit comparator lessequal                           : 1
+# Multiplexers                                         : 684
+ 1-bit 2-to-1 multiplexer                              : 642
+ 10-bit 2-to-1 multiplexer                             : 15
+ 10-bit 7-to-1 multiplexer                             : 1
+ 32-bit 2-to-1 multiplexer                             : 11
+ 7-bit 2-to-1 multiplexer                              : 6
+ 7-bit 7-to-1 multiplexer                              : 1
+ 8-bit 2-to-1 multiplexer                              : 8
+# FSMs                                                 : 4
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+Analyzing FSM <MFsm> for best encoding.
+Optimizing FSM <FSM_2> on signal <ID_part[1:4]> with one-hot encoding.
+-------------------
+ State | Encoding
+-------------------
+ 00    | 0001
+ 01    | 0010
+ 10    | 0100
+ 11    | 1000
+-------------------
+Analyzing FSM <MFsm> for best encoding.
+Optimizing FSM <FSM_3> on signal <p_read[1:3]> with user encoding.
+-----------------------
+ State     | Encoding
+-----------------------
+ idle_r    | 000
+ options   | 001
+ seqnum    | 010
+ lsa_part1 | 011
+ lsa_part2 | 100
+ lsa_part3 | 101
+ lsa_part4 | 110
+ lsa_part5 | 111
+-----------------------
+Analyzing FSM <MFsm> for best encoding.
+Optimizing FSM <FSM_1> on signal <p_state[1:3]> with user encoding.
+--------------------------------
+ State              | Encoding
+--------------------------------
+ one_way            | 000
+ down               | 001
+ init               | 010
+ exstart            | 011
+ exchange_sending   | 100
+ exchange_listening | 101
+ loading            | 110
+ full               | unreached
+--------------------------------
+Analyzing FSM <MFsm> for best encoding.
+Optimizing FSM <FSM_0> on signal <p_dbd[1:3]> with user encoding.
+------------------------------
+ State            | Encoding
+------------------------------
+ idle             | 000
+ lsa_wait         | 001
+ fetching_lsa1    | 010
+ fetching_lsa2    | 011
+ fetching_lsa3    | 100
+ sending_ip       | 101
+ sending_ospfhead | 110
+ sending_dbd      | 111
+------------------------------
+
+Optimizing unit <helloActParse> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block helloActParse, actual ratio is 2.
+FlipFlop p_read_FSM_FFd1 has been replicated 1 time(s)
+FlipFlop p_read_FSM_FFd2 has been replicated 1 time(s)
+FlipFlop p_read_FSM_FFd3 has been replicated 1 time(s)
+FlipFlop p_state_FSM_FFd1 has been replicated 1 time(s)
+FlipFlop sending_length_0 has been replicated 1 time(s)
+FlipFlop sending_length_2 has been replicated 2 time(s)
+FlipFlop sending_length_3 has been replicated 1 time(s)
+FlipFlop sending_length_4 has been replicated 2 time(s)
+FlipFlop sending_length_5 has been replicated 2 time(s)
+FlipFlop sending_length_6 has been replicated 2 time(s)
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 744
+ Flip-Flops                                            : 744
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Design Summary                             *
+=========================================================================
+
+Top Level Output File Name         : helloActParse.ngc
+
+Primitive and Black Box Usage:
+------------------------------
+# BELS                             : 1250
+#      GND                         : 1
+#      INV                         : 1
+#      LUT1                        : 1
+#      LUT2                        : 17
+#      LUT3                        : 38
+#      LUT4                        : 205
+#      LUT5                        : 148
+#      LUT6                        : 765
+#      MUXCY                       : 41
+#      MUXF7                       : 32
+#      VCC                         : 1
+# FlipFlops/Latches                : 744
+#      FD                          : 40
+#      FDE                         : 692
+#      FDR                         : 9
+#      FDS                         : 3
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 112
+#      IBUF                        : 56
+#      OBUF                        : 56
+
+Device utilization summary:
+---------------------------
+
+Selected Device : xa7a100tcsg324-2i 
+
+
+Slice Logic Utilization: 
+ Number of Slice Registers:             744  out of  126800     0%  
+ Number of Slice LUTs:                 1175  out of  63400     1%  
+    Number used as Logic:              1175  out of  63400     1%  
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:   1246
+   Number with an unused Flip Flop:     502  out of   1246    40%  
+   Number with an unused LUT:            71  out of   1246     5%  
+   Number of fully used LUT-FF pairs:   673  out of   1246    54%  
+   Number of unique control sets:        15
+
+IO Utilization: 
+ Number of IOs:                         122
+ Number of bonded IOBs:                 113  out of    210    53%  
+
+Specific Feature Utilization:
+ Number of BUFG/BUFGCTRLs:                1  out of     32     3%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+Timing Report
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | BUFGP                  | 744   |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -2
+
+   Minimum period: 4.013ns (Maximum Frequency: 249.175MHz)
+   Minimum input arrival time before clock: 3.956ns
+   Maximum output required time after clock: 1.497ns
+   Maximum combinational path delay: No path found
+
+Timing Details:
+---------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clk'
+  Clock period: 4.013ns (frequency: 249.175MHz)
+  Total number of paths / destination ports: 49571 / 1340
+-------------------------------------------------------------------------
+Delay:               4.013ns (Levels of Logic = 6)
+  Source:            sending_length_4_1 (FF)
+  Destination:       out1_0 (FF)
+  Source Clock:      clk rising
+  Destination Clock: clk rising
+
+  Data Path: sending_length_4_1 to out1_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q               1   0.361   0.571  sending_length_4_1 (sending_length_4_1)
+     LUT3:I0->O           14   0.097   0.427  GND_5_o_BUS_0013_equal_1410_o<10>11 (GND_5_o_BUS_0013_equal_1410_o<10>1)
+     LUT5:I4->O            8   0.097   0.610  GND_5_o_BUS_0013_equal_1421_o<10>1 (GND_5_o_BUS_0013_equal_1421_o)
+     LUT6:I3->O            1   0.097   0.743  Mmux_p_dbd[2]_GND_5_o_wide_mux_1472_OUT16 (Mmux_p_dbd[2]_GND_5_o_wide_mux_1472_OUT16)
+     LUT6:I1->O            1   0.097   0.355  Mmux_p_dbd[2]_GND_5_o_wide_mux_1472_OUT17 (Mmux_p_dbd[2]_GND_5_o_wide_mux_1472_OUT17)
+     LUT6:I5->O            1   0.097   0.355  Mmux_p_dbd[2]_GND_5_o_wide_mux_1472_OUT111 (Mmux_p_dbd[2]_GND_5_o_wide_mux_1472_OUT112)
+     LUT6:I5->O            1   0.097   0.000  Mmux_p_dbd[2]_GND_5_o_wide_mux_1472_OUT130 (p_dbd[2]_GND_5_o_wide_mux_1472_OUT<0>)
+     FDE:D                     0.008          out1_0
+    ----------------------------------------
+    Total                      4.013ns (0.951ns logic, 3.062ns route)
+                                       (23.7% logic, 76.3% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
+  Total number of paths / destination ports: 10996 / 897
+-------------------------------------------------------------------------
+Offset:              3.956ns (Levels of Logic = 7)
+  Source:            hellogenin (PAD)
+  Destination:       seqnum_error (FF)
+  Destination Clock: clk rising
+
+  Data Path: hellogenin to seqnum_error
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             4   0.001   0.456  hellogenin_IBUF (hellogenin_IBUF)
+     LUT2:I0->O            1   0.097   0.753  p_state_FSM_FFd3-In2 (p_state_FSM_FFd3-In2)
+     LUT6:I0->O            2   0.097   0.360  p_state_FSM_FFd3-In3 (p_state_FSM_FFd3-In3)
+     LUT6:I5->O            1   0.097   0.439  p_state_FSM_FFd3-In5_SW0 (N21)
+     LUT6:I4->O            3   0.097   0.367  p_state_FSM_FFd3-In6 (p_state_FSM_FFd3-In6)
+     LUT6:I5->O           15   0.097   0.433  p_state_FSM_FFd3-In7 (p_state_FSM_FFd3-In)
+     LUT6:I5->O           33   0.097   0.469  _n1634_inv (_n1634_inv)
+     FDE:CE                    0.095          seqnum_error
+    ----------------------------------------
+    Total                      3.956ns (0.678ns logic, 3.278ns route)
+                                       (17.1% logic, 82.9% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+  Total number of paths / destination ports: 59 / 55
+-------------------------------------------------------------------------
+Offset:              1.497ns (Levels of Logic = 2)
+  Source:            p_state_FSM_FFd2 (FF)
+  Destination:       stateout<1> (PAD)
+  Source Clock:      clk rising
+
+  Data Path: p_state_FSM_FFd2 to stateout<1>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q              25   0.361   0.700  p_state_FSM_FFd2 (p_state_FSM_FFd2)
+     LUT3:I0->O            1   0.097   0.339  p_state_stateout<1>1 (stateout_1_OBUF)
+     OBUF:I->O                 0.000          stateout_1_OBUF (stateout<1>)
+    ----------------------------------------
+    Total                      1.497ns (0.458ns logic, 1.039ns route)
+                                       (30.6% logic, 69.4% route)
+
+=========================================================================
+
+Cross Clock Domains Report:
+--------------------------
+
+Clock to Setup on destination clock clk
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+clk            |    4.013|         |         |         |
+---------------+---------+---------+---------+---------+
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 45.00 secs
+Total CPU time to Xst completion: 37.85 secs
+ 
+--> 
+
+
+Total memory usage is 870092 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    4 (   0 filtered)
+Number of infos    :    1 (   0 filtered)
 

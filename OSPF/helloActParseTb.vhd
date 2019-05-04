@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   16:39:36 05/04/2019
+-- Create Date:   16:45:51 05/04/2019
 -- Design Name:   
 -- Module Name:   /home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb.vhd
 -- Project Name:  OSPF
@@ -29,6 +29,7 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
+
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
@@ -60,7 +61,10 @@ ARCHITECTURE behavior OF helloActParseTb IS
          dbd_valid : IN  std_logic;
          dbd_empty : IN  std_logic;
          lsa_queue_wr_en : OUT  std_logic;
-         lsa_queue_dout : OUT  std_logic_vector(7 downto 0)
+         lsa_queue_dout : OUT  std_logic_vector(7 downto 0);
+         lsa_queue_rd_en : OUT  std_logic;
+         lsa_queue_din : IN  std_logic_vector(7 downto 0);
+         lsa_queue_empty : IN  std_logic
         );
     END COMPONENT;
     
@@ -77,6 +81,8 @@ ARCHITECTURE behavior OF helloActParseTb IS
    signal dbd_out : std_logic_vector(7 downto 0) := (others => '0');
    signal dbd_valid : std_logic := '0';
    signal dbd_empty : std_logic := '0';
+   signal lsa_queue_din : std_logic_vector(7 downto 0) := (others => '0');
+   signal lsa_queue_empty : std_logic := '0';
 
  	--Outputs
    signal stateout : std_logic_vector(2 downto 0);
@@ -87,6 +93,7 @@ ARCHITECTURE behavior OF helloActParseTb IS
    signal dbd_rst : std_logic;
    signal lsa_queue_wr_en : std_logic;
    signal lsa_queue_dout : std_logic_vector(7 downto 0);
+   signal lsa_queue_rd_en : std_logic;
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -113,7 +120,10 @@ BEGIN
           dbd_valid => dbd_valid,
           dbd_empty => dbd_empty,
           lsa_queue_wr_en => lsa_queue_wr_en,
-          lsa_queue_dout => lsa_queue_dout
+          lsa_queue_dout => lsa_queue_dout,
+          lsa_queue_rd_en => lsa_queue_rd_en,
+          lsa_queue_din => lsa_queue_din,
+          lsa_queue_empty => lsa_queue_empty
         );
 
    -- Clock process definitions

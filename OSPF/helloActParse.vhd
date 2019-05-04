@@ -49,7 +49,10 @@ entity helloActParse is
            dbd_valid : in STD_LOGIC;
            dbd_empty : in STD_LOGIC;
            lsa_queue_wr_en : out STD_LOGIC := '0';
-		   lsa_queue_dout : out STD_LOGIC_VECTOR(7 downto 0) := (others => '0'));
+		   lsa_queue_dout : out STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
+		   lsa_queue_rd_en : out STD_LOGIC := '0';
+		   lsa_queue_din : in STD_LOGIC_VECTOR(7 downto 0);
+		   lsa_queue_empty : in STD_LOGIC);
            --lsa_queue_dout : out STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
            --lsa_queue_wr_en : out STD_LOGIC := '0';
            --request_list_din : in STD_LOGIC_VECTOR(7 downto 0);
@@ -67,7 +70,7 @@ architecture Behavioral of helloActParse is
 	constant zero7 : STD_LOGIC_VECTOR(6 downto 0) := (others => '0');
 
 	signal p_state, n_state : FSM := DOWN;
-	signal p_dbd, n_dbd : DBD := IDLE;
+	signal p_dbd : DBD := IDLE;
 	signal p_read : DBD_READ := IDLE_R;
 	--signal send, send_next : STD_LOGIC := '0';
 	signal sending_complete : STD_LOGIC := '1';
@@ -103,7 +106,7 @@ architecture Behavioral of helloActParse is
 	signal lsa_packet1 : STD_LOGIC_VECTOR(159 downto 0) := (others => '0');
 	signal lsa_packet2 : STD_LOGIC_VECTOR(159 downto 0) := (others => '0');
 	signal lsa_packet3 : STD_LOGIC_VECTOR(159 downto 0) := (others => '0');
-	signal next_enable : STD_LOGIC := '0';
+	--signal next_enable : STD_LOGIC := '0';
 
 	constant empty_dbd_length : STD_LOGIC_VECTOR(6 downto 0) := "0000111";
 	signal dbd_length : STD_LOGIC_VECTOR(6 downto 0);
