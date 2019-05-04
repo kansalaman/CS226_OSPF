@@ -10,33 +10,40 @@ Target Device  : xc6slx45t
 Target Package : csg324
 Target Speed   : -2
 Mapper Version : spartan6 -- $Revision: 1.55 $
-Mapped Date    : Tue Apr 30 19:19:40 2019
+Mapped Date    : Sat May  4 21:57:27 2019
 
-Interim Summary
----------------
+Design Summary
+--------------
+Number of errors:      0
+Number of warnings:    3
 Slice Logic Utilization:
-  Number of Slice Registers:                    86 out of  54,576    1%
-    Number used as Flip Flops:                  60
+  Number of Slice Registers:                    68 out of  54,576    1%
+    Number used as Flip Flops:                  42
     Number used as Latches:                     26
     Number used as Latch-thrus:                  0
     Number used as AND/OR logics:                0
-  Number of Slice LUTs:                        242 out of  27,288    1%
-    Number used as logic:                      242 out of  27,288    1%
-      Number using O6 output only:             204
+  Number of Slice LUTs:                         85 out of  27,288    1%
+    Number used as logic:                       84 out of  27,288    1%
+      Number using O6 output only:              49
       Number using O5 output only:               2
-      Number using O5 and O6:                   36
+      Number using O5 and O6:                   33
       Number used as ROM:                        0
     Number used as Memory:                       0 out of   6,408    0%
+    Number used exclusively as route-thrus:      1
+      Number with same-slice register load:      1
+      Number with same-slice carry load:         0
+      Number with other load:                    0
 
 Slice Logic Distribution:
+  Number of occupied Slices:                    35 out of   6,822    1%
   Number of MUXCYs used:                        24 out of  13,644    1%
-  Number of LUT Flip Flop pairs used:          303
-    Number with an unused Flip Flop:           217 out of     303   71%
-    Number with an unused LUT:                  61 out of     303   20%
-    Number of fully used LUT-FF pairs:          25 out of     303    8%
-    Number of unique control sets:               6
+  Number of LUT Flip Flop pairs used:          113
+    Number with an unused Flip Flop:            46 out of     113   40%
+    Number with an unused LUT:                  28 out of     113   24%
+    Number of fully used LUT-FF pairs:          39 out of     113   34%
+    Number of unique control sets:               5
     Number of slice register sites lost
-      to control set restrictions:              26 out of  54,576    1%
+      to control set restrictions:              20 out of  54,576    1%
 
   A LUT Flip Flop pair for this architecture represents one LUT paired with
   one Flip Flop within a slice.  A control set is a unique combination of
@@ -45,9 +52,9 @@ Slice Logic Distribution:
   over-mapped for a non-slice resource or if Placement fails.
 
 IO Utilization:
-  Number of bonded IOBs:                       427 out of     190  224% (OVERMAPPED)
+  Number of bonded IOBs:                        43 out of     190   22%
     IOB Flip Flops:                              1
-    IOB Latches:                               416
+    IOB Latches:                                32
 
 Specific Feature Utilization:
   Number of RAMB16BWERs:                         0 out of     116    0%
@@ -58,8 +65,8 @@ Specific Feature Utilization:
     Number used as BUFGs:                        2
     Number used as BUFGMUX:                      0
   Number of DCM/DCM_CLKGENs:                     0 out of       8    0%
-  Number of ILOGIC2/ISERDES2s:                 416 out of     376  110% (OVERMAPPED)
-    Number used as ILOGIC2s:                   416
+  Number of ILOGIC2/ISERDES2s:                  32 out of     376    8%
+    Number used as ILOGIC2s:                    32
     Number used as ISERDES2s:                    0
   Number of IODELAY2/IODRP2/IODRP2_MCBs:         0 out of     376    0%
   Number of OLOGIC2/OSERDES2s:                   1 out of     376    1%
@@ -80,29 +87,48 @@ Specific Feature Utilization:
   Number of STARTUPs:                            0 out of       1    0%
   Number of SUSPEND_SYNCs:                       0 out of       1    0%
 
+Average Fanout of Non-Clock Nets:                2.05
 
-Mapping completed.
-See MAP report file "helloalive_map.mrp" for details.
-Problem encountered during the packing phase.
+Peak Memory Usage:  743 MB
+Total REAL time to MAP completion:  12 secs 
+Total CPU time to MAP completion:   8 secs 
 
-Design Summary
---------------
-Number of errors   :   2
-Number of warnings :   0
+Table of Contents
+-----------------
+Section 1 - Errors
+Section 2 - Warnings
+Section 3 - Informational
+Section 4 - Removed Logic Summary
+Section 5 - Removed Logic
+Section 6 - IOB Properties
+Section 7 - RPMs
+Section 8 - Guide Report
+Section 9 - Area Group and Partition Summary
+Section 10 - Timing Report
+Section 11 - Configuration String Information
+Section 12 - Control Set Information
+Section 13 - Utilization by Hierarchy
 
 Section 1 - Errors
 ------------------
-ERROR:Pack:2310 - Too many comps of type "ILOGIC2" found to fit this device.
-ERROR:Map:237 - The design is too large to fit the device.  Please check the Design Summary section to see which resource requirement for
-   your design exceeds the resources available in the device. Note that the number of slices reported may not be reflected accurately as
-   their packing might not have been completed.
 
 Section 2 - Warnings
 --------------------
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   p_state[1]_p_sendtimer[8]_Mux_1166_o is sourced by a combinatorial pin. This
+   is not good design practice. Use the CE pin to control the loading of data
+   into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   p_state[1]_p_sendtimer[8]_Mux_1130_o is sourced by a combinatorial pin. This
+   is not good design practice. Use the CE pin to control the loading of data
+   into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   p_state[1]_p_sendtimer[8]_Mux_1134_o is sourced by a combinatorial pin. This
+   is not good design practice. Use the CE pin to control the loading of data
+   into the flip-flop.
 
 Section 3 - Informational
 -------------------------
-INFO:LIT:243 - Logical network isgen has no load.
 INFO:MapLib:562 - No environment variables are currently set.
 INFO:LIT:244 - All of the single ended outputs in this design are using slew
    rate limited output drivers. The delay on speed critical single ended outputs
@@ -111,6 +137,9 @@ INFO:Pack:1716 - Initializing temperature to 85.000 Celsius. (default - Range:
    0.000 to 85.000 Celsius)
 INFO:Pack:1720 - Initializing voltage to 1.140 Volts. (default - Range: 1.140 to
    1.260 Volts)
+INFO:Map:215 - The Interim Design Summary has been generated in the MAP Report
+   (.mrp).
+INFO:Pack:1650 - Map created a placed design.
 
 Section 4 - Removed Logic Summary
 ---------------------------------
@@ -127,10 +156,102 @@ VCC 		XST_VCC
 To enable printing of redundant blocks removed and signals merged, set the
 detailed map report option and rerun map.
 
-Section 12 - Configuration String Details
+Section 6 - IOB Properties
+--------------------------
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| IOB Name                           | Type             | Direction | IO Standard          | Diff  | Drive    | Slew | Reg (s)      | Resistor | IOB      |
+|                                    |                  |           |                      | Term  | Strength | Rate |              |          | Delay    |
++---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| clk                                | IOB              | INPUT     | LVCMOS25             |       |          |      |              |          |          |
+| neighbor<0>                        | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<1>                        | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<2>                        | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<3>                        | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<4>                        | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<5>                        | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<6>                        | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<7>                        | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<8>                        | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<9>                        | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<10>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<11>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<12>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<13>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<14>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<15>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<16>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<17>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<18>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<19>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<20>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<21>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<22>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<23>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<24>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<25>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<26>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<27>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<28>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<29>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<30>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| neighbor<31>                       | IOB              | INPUT     | LVCMOS25             |       |          |      | ILATCH       |          |          |
+| out1<0>                            | IOB              | OUTPUT    | LVCMOS25             |       | 12       | SLOW |              |          |          |
+| out1<1>                            | IOB              | OUTPUT    | LVCMOS25             |       | 12       | SLOW |              |          |          |
+| out1<2>                            | IOB              | OUTPUT    | LVCMOS25             |       | 12       | SLOW |              |          |          |
+| out1<3>                            | IOB              | OUTPUT    | LVCMOS25             |       | 12       | SLOW |              |          |          |
+| out1<4>                            | IOB              | OUTPUT    | LVCMOS25             |       | 12       | SLOW |              |          |          |
+| out1<5>                            | IOB              | OUTPUT    | LVCMOS25             |       | 12       | SLOW |              |          |          |
+| out1<6>                            | IOB              | OUTPUT    | LVCMOS25             |       | 12       | SLOW |              |          |          |
+| out1<7>                            | IOB              | OUTPUT    | LVCMOS25             |       | 12       | SLOW |              |          |          |
+| reply_signal                       | IOB              | INPUT     | LVCMOS25             |       |          |      |              |          |          |
+| val                                | IOB              | OUTPUT    | LVCMOS25             |       | 12       | SLOW | OFF          |          |          |
++---------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Section 7 - RPMs
+----------------
+
+Section 8 - Guide Report
+------------------------
+Guide not run on this design.
+
+Section 9 - Area Group and Partition Summary
+--------------------------------------------
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+Area Group Information
+----------------------
+
+  No area groups were found in this design.
+
+----------------------
+
+Section 10 - Timing Report
+--------------------------
+A logic-level (pre-route) timing report can be generated by using Xilinx static
+timing analysis tools, Timing Analyzer (GUI) or TRCE (command line), with the
+mapped NCD and PCF files. Please note that this timing report will be generated
+using estimated delay information. For accurate numbers, please generate a
+timing report with the post Place and Route NCD file.
+
+For more information about the Timing Analyzer, consult the Xilinx Timing
+Analyzer Reference Manual; for more information about TRCE, consult the Xilinx
+Command Line Tools User Guide "TRACE" chapter.
+
+Section 11 - Configuration String Details
 -----------------------------------------
 Use the "-detail" map option to print out Configuration Strings
 
-Section 13 - Control Set Information
+Section 12 - Control Set Information
 ------------------------------------
 Use the "-detail" map option to print out Control Set Information.
+
+Section 13 - Utilization by Hierarchy
+-------------------------------------
+Use the "-detail" map option to print out the Utilization by Hierarchy section.

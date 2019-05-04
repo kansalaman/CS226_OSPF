@@ -16,10 +16,10 @@ ARCHITECTURE behavior OF tb_helloalive IS
     COMPONENT helloalive
     PORT(
          out1 : OUT  std_logic_vector(7 downto 0);
-         on1 : IN  std_logic;
-         networkmask : IN  std_logic_vector(31 downto 0);
-         ospfhelloheader : IN  std_logic_vector(191 downto 0);
-         IPheader : IN  std_logic_vector(159 downto 0);
+--         on1 : IN  std_logic;
+--         networkmask : IN  std_logic_vector(31 downto 0);
+--         ospfhelloheader : IN  std_logic_vector(191 downto 0);
+--         IPheader : IN  std_logic_vector(159 downto 0);
          neighbor : IN  std_logic_vector(31 downto 0);
          clk : IN  std_logic;
          val : OUT  std_logic;
@@ -29,10 +29,10 @@ ARCHITECTURE behavior OF tb_helloalive IS
     
 
    --Inputs
-   signal on1 : std_logic := '1';
-   signal networkmask : std_logic_vector(31 downto 0) := "10101010101010101010101010101010";
-   signal ospfhelloheader : std_logic_vector(191 downto 0) := "000000100000000100000000001011001100000010101000000000100000000100000000000000000000000000000000001010011001000100000000000000000000000000000000000000000000000000000000000000000000000000000000";
-   signal IPheader : std_logic_vector(159 downto 0) := "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
+--   signal on1 : std_logic := '1';
+--   signal networkmask : std_logic_vector(31 downto 0) := "10101010101010101010101010101010";
+--   signal ospfhelloheader : std_logic_vector(191 downto 0) := "000000100000000100000000001011001100000010101000000000100000000100000000000000000000000000000000001010011001000100000000000000000000000000000000000000000000000000000000000000000000000000000000";
+--   signal IPheader : std_logic_vector(159 downto 0) := "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
    signal clk : std_logic := '0';
    signal reply_signal : std_logic := '0';
 
@@ -51,10 +51,10 @@ BEGIN
 	-- Instantiate the Unit Under Test (UUT)
    uut: helloalive PORT MAP (
           out1 => out1,
-          on1 => on1,
-          networkmask => networkmask,
-          ospfhelloheader => ospfhelloheader,
-          IPheader => IPheader,
+--          on1 => on1,
+--          networkmask => networkmask,
+--          ospfhelloheader => ospfhelloheader,
+--          IPheader => IPheader,
           neighbor => neighbor,
           clk => clk,
           val => val,
