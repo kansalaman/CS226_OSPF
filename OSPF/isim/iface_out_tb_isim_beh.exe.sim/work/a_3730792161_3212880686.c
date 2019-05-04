@@ -2117,7 +2117,7 @@ LAB38:    xsi_set_current_line(325, ng0);
     t4 = *((char **)t2);
     t5 = (t4 + 56U);
     t8 = *((char **)t5);
-    *((int *)t8) = 4;
+    *((int *)t8) = 1;
     xsi_driver_first_trans_fast(t1);
     goto LAB29;
 

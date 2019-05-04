@@ -323,7 +323,7 @@ begin
                 n_counter <= p_counter;
             elsif(p_counter=lsa_length_int and temp_wait=0) then
                 n_state <= p_state;
-                n_counter <= 4;
+                n_counter <= 1;
             else
                 n_state <= p_state;
                 n_counter <= p_counter+1;
