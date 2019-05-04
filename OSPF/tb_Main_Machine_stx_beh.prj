@@ -1,0 +1,7 @@
+vhdl isim_temp "ipcore_dir/RAMDB.vhd"
+vhdl isim_temp "ipcore_dir/InterfaceFIFO.vhd"
+vhdl isim_temp "Parser.vhd"
+vhdl isim_temp "LinkStateUpdateMachine.vhd"
+vhdl isim_temp "helloalive.vhd"
+vhdl isim_temp "MainModule.vhd"
+vhdl isim_temp "tb_Main_Machine.vhd"

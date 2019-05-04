@@ -1,1 +1,6 @@
 work	"LinkStateUpdateMachine.vhd"
+work	"MainModule.vhd"
+work	"Parser.vhd"
+work	"helloalive.vhd"
+work	"ipcore_dir/InterfaceFIFO.vhd"
+work	"ipcore_dir/RAMDB.vhd"

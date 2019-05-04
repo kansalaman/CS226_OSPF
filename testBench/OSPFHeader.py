@@ -1,4 +1,4 @@
-from testBench.padder import  pad, chunkstring
+from padder import  pad, chunkstring
 from ipaddress import IPv4Address
 import random
 
@@ -131,16 +131,34 @@ LSA_E = LSA("5.5.5.5", 2, links_E)
 
 # print(len(LSA_A)//8, len(LSA_B)//8, len(LSA_C)//8, len(LSA_D)//8)
 HelloB = "0"*20*8 + HelloPacket("2.2.2.2", "0.0.0.0", ["1.1.1.1", "5.5.5.5", "4.4.4.4"])
+
+# print(HelloB)
+
 HelloC = "0"*20*8 + HelloPacket("3.3.3.3", "0.0.0.0", ["1.1.1.1", "4.4.4.4", "5.5.5.5"])
+
+# print(HelloC)
 
 EmptyDDB = DD("2.2.2.2", "", 5)
 EmptyDDC = DD("3.3.3.3", "", 10)
 
+# print(EmptyDDB)
+# print(EmptyDDC)
+
 DDB = DD("2.2.2.2", LSA_B[:160] + LSA_D[:160] + LSA_E[:160], 6)
 DDC = DD("3.3.3.3", LSA_C[:160] + LSA_D[:160] + LSA_E[:160], 11)
+
+# print(DDB)
+# print(DDC)
 
 ReqB = LSR("2.2.2.2", [LSA_A])
 ReqC = LSR("3.3.3.3", [LSA_A])
 
+# print(ReqC)
+
+
+
 LSU_B = LSU("2.2.2.2", [LSA_B, LSA_D, LSA_E])
 LSU_C = LSU("3.3.3.3", [LSA_C, LSA_D, LSA_E])
+
+# print(LSU_B)
+print(LSU_C)

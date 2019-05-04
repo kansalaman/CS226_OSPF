@@ -5,5 +5,62 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
+<msg type="error" file="HDLCompiler" num="806" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 332: Syntax error near &quot;<arg fmt="%s" index="1">signal</arg>&quot;.
+</msg>
+
+<msg type="error" file="HDLCompiler" num="294" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 360: Cannot update &apos;in&apos; object <arg fmt="%s" index="1">out_val1</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="294" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 361: Cannot update &apos;in&apos; object <arg fmt="%s" index="1">out_val2</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="294" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 362: Cannot update &apos;in&apos; object <arg fmt="%s" index="1">out_val3</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="294" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 363: Cannot update &apos;in&apos; object <arg fmt="%s" index="1">out_val4</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="294" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 364: Cannot update &apos;in&apos; object <arg fmt="%s" index="1">out_val5</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="294" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 365: Cannot update &apos;in&apos; object <arg fmt="%s" index="1">out_val6</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="294" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 366: Cannot update &apos;in&apos; object <arg fmt="%s" index="1">out_val7</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="294" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 367: Cannot update &apos;in&apos; object <arg fmt="%s" index="1">out_val8</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="1728" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 369: Type error near <arg fmt="%s" index="1">in_val1</arg> ; current type <arg fmt="%s" index="2">std_logic_vector</arg>; expected type <arg fmt="%s" index="3">std_ulogic</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="1728" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 370: Type error near <arg fmt="%s" index="1">in_val2</arg> ; current type <arg fmt="%s" index="2">std_logic_vector</arg>; expected type <arg fmt="%s" index="3">std_ulogic</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="1728" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 371: Type error near <arg fmt="%s" index="1">in_val3</arg> ; current type <arg fmt="%s" index="2">std_logic_vector</arg>; expected type <arg fmt="%s" index="3">std_ulogic</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="1728" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 372: Type error near <arg fmt="%s" index="1">in_val4</arg> ; current type <arg fmt="%s" index="2">std_logic_vector</arg>; expected type <arg fmt="%s" index="3">std_ulogic</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="1728" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 373: Type error near <arg fmt="%s" index="1">in_val5</arg> ; current type <arg fmt="%s" index="2">std_logic_vector</arg>; expected type <arg fmt="%s" index="3">std_ulogic</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="1728" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 374: Type error near <arg fmt="%s" index="1">in_val6</arg> ; current type <arg fmt="%s" index="2">std_logic_vector</arg>; expected type <arg fmt="%s" index="3">std_ulogic</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="1728" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 375: Type error near <arg fmt="%s" index="1">in_val7</arg> ; current type <arg fmt="%s" index="2">std_logic_vector</arg>; expected type <arg fmt="%s" index="3">std_ulogic</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="1728" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 376: Type error near <arg fmt="%s" index="1">in_val8</arg> ; current type <arg fmt="%s" index="2">std_logic_vector</arg>; expected type <arg fmt="%s" index="3">std_ulogic</arg>
+</msg>
+
+<msg type="error" file="HDLCompiler" num="806" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 426: Syntax error near &quot;<arg fmt="%s" index="1">=&gt;</arg>&quot;.
+</msg>
+
+<msg type="error" file="HDLCompiler" num="69" delta="unknown" >"/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/MainModule.vhd" Line 576: &lt;<arg fmt="%s" index="1">mainlsaqi</arg>&gt; is not declared.
+</msg>
+
 </messages>
 
