@@ -53,7 +53,7 @@ entity NeighborMachine is
 end NeighborMachine;
 
 architecture Behavioral of NeighborMachine is
-	COMPONENT helloActParse
+    COMPONENT helloActParse
     PORT(
          clk : IN  std_logic;
          neighbor_val : IN  std_logic;

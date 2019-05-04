@@ -1,1 +1,4 @@
+work	"LSAFetcher.vhd"
+work	"NeighborMachine.vhd"
 work	"helloActParse.vhd"
+work	"ipcore_dir/FIFOLSU.vhd"
