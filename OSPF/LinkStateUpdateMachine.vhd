@@ -108,7 +108,8 @@ begin
   case(p_state) is
     when IDLE =>
     --COUNTERS
-      n_c1 <= 0;
+      --n_c1 <= 0;
+      n_c1 <= 1;
       n_c2 <= 0;
       n_sc <= 0;
       n_dumpc <= 0;
@@ -167,6 +168,9 @@ begin
           q_read <= '1';
         when 2 =>
           n_age(7 downto 0) <= q_din;
+          q_read <= '1';
+        when 3 =>
+          n_port <= q_din;
           q_read <= '1';
         when 5 =>
           n_id(31 downto 24) <= q_din;
@@ -437,7 +441,8 @@ begin
         n_state <= IDLE;
         n_len <= (others => '0');
         n_dumpc <= 0;
-        n_c1 <= 0;
+        --n_c1 <= 0;
+        n_c1 <= 1;
       else
         q_read <= '1';
         n_state <= DUMP;

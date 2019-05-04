@@ -10,3 +10,4 @@ netgen -intstyle ise -ar Structure -tm LinkStateUpdateMachine -w -dir netgen/syn
 xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/LinkStateUpdateMachine.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/LinkStateUpdateMachine.syr" 
 xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/LinkStateUpdateMachine.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/LinkStateUpdateMachine.syr" 
 xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/LinkStateUpdateMachine.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/LinkStateUpdateMachine.syr" 
+xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/LinkStateUpdateMachine.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/LinkStateUpdateMachine.syr" 
