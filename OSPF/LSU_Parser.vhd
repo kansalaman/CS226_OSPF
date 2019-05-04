@@ -162,7 +162,7 @@ COMB:process(data_valid,p_state,state_in_int,p_counter,processed_bytes,packet_le
 begin
     case p_state is
         when IDLE =>
-            if(data_valid = '1' and state_in_int>=5 and state_in_int<=8) then
+            if(data_valid = '1' and state_in_int>=4 and state_in_int<=7) then
                 n_state <= LSU_strip;
                 n_counter <= 1;
             elsif (data_valid = '1') then
@@ -191,7 +191,7 @@ begin
 
         when dumpLSA =>
             if(processed_bytes = packet_length_int or data_valid='0') then
-                if(data_valid = '1' and state_in_int>=5 and state_in_int<=8) then
+                if(data_valid = '1' and state_in_int>=4 and state_in_int<=7) then
                     n_state <= LSU_strip;
                     n_counter <= 1;
                 elsif(data_valid = '1') then
@@ -225,7 +225,7 @@ begin
         when sendLSA =>
             
             if(processed_bytes = packet_length_int or data_valid='0') then
-                if(data_valid = '1' and state_in_int>=5 and state_in_int<=8) then
+                if(data_valid = '1' and state_in_int>=4 and state_in_int<=7) then
                     n_state <= LSU_strip;
                     n_counter <= 1;
                 elsif(data_valid='1') then
