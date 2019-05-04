@@ -249,3 +249,4 @@ Simulator is doing circuit initialization process.
 at 0 ps, Instance /helloactparsetb/uut/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
 at 0 ps, Instance /helloactparsetb/uut/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
 Finished circuit initialization process.
+# exit 0
