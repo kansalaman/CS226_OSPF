@@ -254,7 +254,6 @@ begin
 				if (p_read = OPTIONS) then
 					neighbor_more <= temp_dbd_received(1);
 					if (temp_dbd_received(2) = '1') then --INIT from their end
-						init_sig <= '0';
 						if (router_id_sig > self) then
 							master <= '0';
 						else
@@ -264,12 +263,13 @@ begin
 				elsif (p_read = SEQNUM) then
 					receiving_complete <= '1';
 					if (master = '1') then
-						if (curr_seqnum /= temp_dbd_received) then
+						if (curr_seqnum /= temp_dbd_received and init_sig = '0') then
 							seqnum_error <= '1';
 						end if ;
 					else
 						curr_seqnum <= temp_dbd_received;
 					end if ;
+					init_sig <= '0';
 				end if;
 			else
 				lsa_queue_wr_en <= '0';
@@ -299,12 +299,15 @@ begin
 				elsif (p_read = SEQNUM) then
 					receiving_complete <= '1';
 					if (master = '1') then
-						if (curr_seqnum /= temp_dbd_received) then
+						if (curr_seqnum /= temp_dbd_received and init_sig = '0') then
 							seqnum_error <= '1';
+						elsif (init_sig = '0') then
+							curr_seqnum <= curr_seqnum + 1;
 						end if ;
 					else
 						curr_seqnum <= temp_dbd_received;
 					end if ;
+					init_sig <= '0';
 				end if;
 			else
 				lsa_queue_wr_en <= '0';
@@ -384,7 +387,9 @@ begin
 							end if ;
 
 						when SEQNUM =>
-							if (master = '1' and curr_seqnum = temp_dbd_received and init_sig = '0') then
+							if (master = '1' and curr_seqnum = temp_dbd_received) then
+								n_state <= EXCHANGE_LISTENING;
+							elsif (master = '1' and init_sig = '1') then
 								n_state <= EXCHANGE_LISTENING;
 							elsif (master = '1') then
 								n_state <= DOWN;
@@ -460,6 +465,8 @@ begin
 
 						when SEQNUM =>
 							if (curr_seqnum = temp_dbd_received) then
+								n_state <= p_state;
+							elsif (init_sig = '1') then
 								n_state <= p_state;
 							else
 								n_state <= DOWN;
@@ -661,8 +668,6 @@ begin
 				if (dbd_valid <= '1') then
 					dbd_rd_en <= '0';
 					p_dbd <= FETCHING_LSA1;
-					--msb := conv_integer(receiving_begin)*8 + 7;
-					--lsb := conv_integer(receiving_begin)*8;
 					msb := 0;
 					lsb := 7;
 					sending_length <= zero7;
@@ -674,16 +679,12 @@ begin
 				if (sending_length = receiving_begin) then
 					if (dbd_valid = '1') then
 						p_dbd <= FETCHING_LSA2;
-						--msb := conv_integer(receiving_begin)*8;
-						--lsb := conv_integer(receiving_begin)*8 + 7;
 						msb := 0;
 						lsb := 7;
 						sending_length <= zero7;
 						lsa_packet2(159 - msb downto 159 - lsb) <= dbd_out;
 					else
 						p_dbd <= SENDING_IP;
-						--msb := conv_integer(IPlength)*8 + 7;
-						--lsb := conv_integer(IPlength)*8;
 						msb := 0;
 						lsb := 7;
 						sending_length <= zero7;
@@ -701,8 +702,6 @@ begin
 				if (sending_length = receiving_begin) then
 					if (dbd_valid = '1') then
 						p_dbd <= FETCHING_LSA3;
-						--msb := conv_integer(receiving_begin)*8 + 7;
-						--lsb := conv_integer(receiving_begin)*8;
 						msb := 0;
 						lsb := 7;
 						sending_length <= zero7;

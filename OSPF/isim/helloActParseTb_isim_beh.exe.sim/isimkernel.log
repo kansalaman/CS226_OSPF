@@ -2,29 +2,9 @@ Command line:
    helloActParseTb_isim_beh.exe
      -simmode  gui
      -simrunnum  0
-     -socket  47819
+     -socket  56159
 
-Sat May  4 22:32:29 2019
+Sat May  4 23:12:12 2019
 
 
- Elaboration Time: 0.06 sec
-
- Current Memory Usage: 239.174 Meg
-
- Total Signals          : 847
- Total Nets             : 57450
- Total Signal Drivers   : 335
- Total Blocks           : 50
- Total Primitive Blocks : 27
- Total Processes        : 149
- Total Traceable Variables  : 551
- Total Scalar Nets and Variables : 59412
-Total Line Count : 1155
-Total Line Count : 1155
-
- Total Simulation Time: 0.11 sec
-
- Current Memory Usage: 314.675 Meg
-
-Sat May  4 22:33:06 2019
-
+ Elaboration Time: 0.05 sec
