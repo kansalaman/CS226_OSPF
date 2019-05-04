@@ -1,0 +1,392 @@
+Release 14.7 - xst P.20160913 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.04 secs
+ 
+--> 
+Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.04 secs
+ 
+--> 
+Reading design: FloodingFSM.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Parsing
+  3) HDL Elaboration
+  4) HDL Synthesis
+       4.1) HDL Synthesis Report
+  5) Advanced HDL Synthesis
+       5.1) Advanced HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Partition Report
+  8) Design Summary
+       8.1) Primitive and Black Box Usage
+       8.2) Device utilization summary
+       8.3) Partition Resource Summary
+       8.4) Timing Report
+            8.4.1) Clock Information
+            8.4.2) Asynchronous Control Signals Information
+            8.4.3) Timing Summary
+            8.4.4) Timing Details
+            8.4.5) Cross Clock Domains Report
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "FloodingFSM.prj"
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "FloodingFSM"
+Output Format                      : NGC
+Target Device                      : xq6slx150t-2-fgg676
+
+---- Source Options
+Top Module Name                    : FloodingFSM
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Shift Register Extraction          : YES
+ROM Style                          : Auto
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Shift Register Minimum Size        : 2
+Use DSP Block                      : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+LUT Combining                      : Auto
+Reduce Control Sets                : Auto
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100000
+Add Generic Clock Buffer(BUFG)     : 16
+Register Duplication               : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Auto
+Use Synchronous Set                : Auto
+Use Synchronous Reset              : Auto
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Power Reduction                    : NO
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+DSP48 Utilization Ratio            : 100
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+Cores Search Directories           : {"ipcore_dir"  }
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Parsing                                  *
+=========================================================================
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/FloodingFSM.vhd" into library work
+Parsing entity <FloodingFSM>.
+Parsing architecture <Behavioral> of entity <floodingfsm>.
+
+=========================================================================
+*                            HDL Elaboration                            *
+=========================================================================
+
+Elaborating entity <FloodingFSM> (architecture <Behavioral>) from library <work>.
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <FloodingFSM>.
+    Related source file is "/home/ise/ISE/CS226_OSPF/OSPF/FloodingFSM.vhd".
+    Found 8-bit register for signal <p_temp>.
+    Found 1-bit register for signal <p_state>.
+    Summary:
+	inferred   9 D-type flip-flop(s).
+	inferred  26 Multiplexer(s).
+Unit <FloodingFSM> synthesized.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Registers                                            : 2
+ 1-bit register                                        : 1
+ 8-bit register                                        : 1
+# Multiplexers                                         : 26
+ 8-bit 2-to-1 multiplexer                              : 26
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Registers                                            : 9
+ Flip-Flops                                            : 9
+# Multiplexers                                         : 26
+ 8-bit 2-to-1 multiplexer                              : 26
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <FloodingFSM> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block FloodingFSM, actual ratio is 0.
+FlipFlop p_state has been replicated 1 time(s)
+INFO:Xst:1843 - HDL ADVISOR - FlipFlop p_state connected to a primary input has been replicated
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 10
+ Flip-Flops                                            : 10
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Design Summary                             *
+=========================================================================
+
+Top Level Output File Name         : FloodingFSM.ngc
+
+Primitive and Black Box Usage:
+------------------------------
+# BELS                             : 80
+#      LUT3                        : 16
+#      LUT4                        : 64
+# FlipFlops/Latches                : 10
+#      FD                          : 10
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 89
+#      IBUF                        : 17
+#      OBUF                        : 72
+
+Device utilization summary:
+---------------------------
+
+Selected Device : xq6slx150tfgg676-2 
+
+
+Slice Logic Utilization: 
+ Number of Slice Registers:              10  out of  184304     0%  
+ Number of Slice LUTs:                   80  out of  92152     0%  
+    Number used as Logic:                80  out of  92152     0%  
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:     81
+   Number with an unused Flip Flop:      71  out of     81    87%  
+   Number with an unused LUT:             1  out of     81     1%  
+   Number of fully used LUT-FF pairs:     9  out of     81    11%  
+   Number of unique control sets:         1
+
+IO Utilization: 
+ Number of IOs:                          91
+ Number of bonded IOBs:                  90  out of    396    22%  
+
+Specific Feature Utilization:
+ Number of BUFG/BUFGCTRLs:                1  out of     16     6%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+Timing Report
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | BUFGP                  | 10    |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -2
+
+   Minimum period: 1.797ns (Maximum Frequency: 556.483MHz)
+   Minimum input arrival time before clock: 3.934ns
+   Maximum output required time after clock: 6.468ns
+   Maximum combinational path delay: 7.453ns
+
+Timing Details:
+---------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clk'
+  Clock period: 1.797ns (frequency: 556.483MHz)
+  Total number of paths / destination ports: 8 / 8
+-------------------------------------------------------------------------
+Delay:               1.797ns (Levels of Logic = 1)
+  Source:            p_state_1 (FF)
+  Destination:       p_temp_0 (FF)
+  Source Clock:      clk rising
+  Destination Clock: clk rising
+
+  Data Path: p_state_1 to p_temp_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q               8   0.525   0.944  p_state_1 (p_state_1)
+     LUT3:I2->O            1   0.254   0.000  p_temp_0_rstpot (p_temp_0_rstpot)
+     FD:D                      0.074          p_temp_0
+    ----------------------------------------
+    Total                      1.797ns (0.853ns logic, 0.944ns route)
+                                       (47.5% logic, 52.5% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
+  Total number of paths / destination ports: 18 / 10
+-------------------------------------------------------------------------
+Offset:              3.934ns (Levels of Logic = 2)
+  Source:            val (PAD)
+  Destination:       p_temp_0 (FF)
+  Destination Clock: clk rising
+
+  Data Path: val to p_temp_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            82   1.328   2.297  val_IBUF (val_IBUF)
+     LUT3:I0->O            1   0.235   0.000  p_temp_0_rstpot (p_temp_0_rstpot)
+     FD:D                      0.074          p_temp_0
+    ----------------------------------------
+    Total                      3.934ns (1.637ns logic, 2.297ns route)
+                                       (41.6% logic, 58.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+  Total number of paths / destination ports: 136 / 72
+-------------------------------------------------------------------------
+Offset:              6.468ns (Levels of Logic = 2)
+  Source:            p_state (FF)
+  Destination:       out1<7> (PAD)
+  Source Clock:      clk rising
+
+  Data Path: p_state to out1<7>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q              72   0.525   2.100  p_state (p_state)
+     LUT3:I1->O            1   0.250   0.681  Mmux_out2111 (write2_OBUF)
+     OBUF:I->O                 2.912          write2_OBUF (write2)
+    ----------------------------------------
+    Total                      6.468ns (3.687ns logic, 2.781ns route)
+                                       (57.0% logic, 43.0% route)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 144 / 72
+-------------------------------------------------------------------------
+Delay:               7.453ns (Levels of Logic = 3)
+  Source:            val (PAD)
+  Destination:       out1<7> (PAD)
+
+  Data Path: val to out1<7>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            82   1.328   2.297  val_IBUF (val_IBUF)
+     LUT3:I0->O            1   0.235   0.681  Mmux_out2111 (write2_OBUF)
+     OBUF:I->O                 2.912          write2_OBUF (write2)
+    ----------------------------------------
+    Total                      7.453ns (4.475ns logic, 2.978ns route)
+                                       (60.0% logic, 40.0% route)
+
+=========================================================================
+
+Cross Clock Domains Report:
+--------------------------
+
+Clock to Setup on destination clock clk
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+clk            |    1.797|         |         |         |
+---------------+---------+---------+---------+---------+
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 11.00 secs
+Total CPU time to Xst completion: 10.34 secs
+ 
+--> 
+
+
+Total memory usage is 386284 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
+Number of infos    :    1 (   0 filtered)
+

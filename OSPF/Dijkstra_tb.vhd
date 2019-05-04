@@ -67,18 +67,29 @@ ARCHITECTURE behavior OF Dijkstra_tb IS
   );
 END COMPONENT;
 
+COMPONENT RoutingDB
+  PORT (
+    clka : IN STD_LOGIC;
+    ena : IN STD_LOGIC;
+    wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+    addra : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+    dina : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+    douta : OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
+  );
+END COMPONENT;
+
    --Inputs
    signal din, dina : std_logic_vector(127 downto 0) := (others => '0');
    signal enable : std_logic := '0';
    signal clk : std_logic := '0';
-	signal wea : std_logic_vector(0 downto 0) := "0";
+	signal wea1,wea2 : std_logic_vector(0 downto 0) := "0";
 	signal router_ip : std_logic_vector(31 downto 0) := "00000001000000010000000100000001";
  	--Outputs
    signal addr_read : std_logic_vector(5 downto 0);
    signal read : std_logic;
    signal write : std_logic;
    signal addr_write : std_logic_vector(5 downto 0);
-   signal dout : std_logic_vector(63 downto 0);
+   signal dout, douta : std_logic_vector(63 downto 0);
    signal done : std_logic;
 	signal help : std_logic_vector(7 downto 0);
 
@@ -86,7 +97,7 @@ END COMPONENT;
    constant clk_period : time := 10 ns;
  
 BEGIN
- 
+wea2(0) <= write;
 	-- Instantiate the Unit Under Test (UUT)
    uut: Dijkstra PORT MAP (
           din => din(95 downto 0),
@@ -105,11 +116,21 @@ BEGIN
 	RAM: RAMDijkstra PORT MAP(
 			clka => clk,
 			ena => '1',
-			wea => wea,
+			wea => wea1,
 			addra => addr_read,
 			dina => dina,
 			douta => din
 		  );
+		  
+	RDB : RoutingDB
+	  PORT MAP (
+		 clka => clk,
+		 ena => '1',
+		 wea => wea2,
+		 addra => addr_write,
+		 dina => dout,
+		 douta => douta
+	  );
 
    -- Clock process definitions
    clk_process :process

@@ -1,0 +1,3 @@
+xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/FloodingFSM.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/FloodingFSM.syr" 
+xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/FloodingFSM.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/FloodingFSM.syr" 
+xst -intstyle ise -ifn "/home/ise/ISE/CS226_OSPF/OSPF/FloodingFSM.xst" -ofn "/home/ise/ISE/CS226_OSPF/OSPF/FloodingFSM.syr" 

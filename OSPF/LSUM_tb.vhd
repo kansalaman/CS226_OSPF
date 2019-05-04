@@ -112,6 +112,20 @@ ARCHITECTURE behavior OF LSUM_tb IS
 		 douta : OUT STD_LOGIC_VECTOR(127 DOWNTO 0)
 	  );
 	END COMPONENT;
+	 
+	COMPONENT FloodingFSM is
+	Port
+	(
+		clk : in std_logic;
+		val : in std_logic;
+		din : in std_logic_vector(7 downto 0);
+		port_in : in std_logic_vector(7 downto 0);
+		out1, out2, out3, out4, out5, out6, out7, out8 : out std_logic_vector(7 downto 0);
+		write1, write2, write3, write4, write5, write6, write7, write8 : out std_logic
+	);
+	end COMPONENT;
+	
+	
     
 
    --Inputs
@@ -136,6 +150,8 @@ ARCHITECTURE behavior OF LSUM_tb IS
 	signal data_count : std_logic_vector(11 downto 0);
 	signal full : std_logic;
 	signal d_on : std_logic := '0';
+	signal out1, out2, out3, out4, out5, out6, out7, out8 : std_logic_vector(7 downto 0);
+	signal write1, write2, write3, write4, write5, write6, write7, write8 :std_logic;
 	
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -214,6 +230,43 @@ wea_d(0) <= write_dij;
     dina => dout_dij,
     douta => dout_d
   );
+  
+--  COMPONENT FloodingFSM is
+--	Port
+--	(
+--		clk : in std_logic;
+--		val : in std_logic;
+--		din : in std_logic_vector(7 downto 0);
+--		port_in : in std_logic_vector(7 downto 0);
+--		out1, out2, out3, out4, out5, out6, out7, out8 : out std_logic_vector(7 downto 0);
+--		write1, write2, write3, write4, write5, write6, write7, write8 : out std_logic;
+--		dijkstra_on : out std_logic
+--	);
+--	end COMPONENT;
+
+	FLOOD : FloodingFSM
+	PORT MAP (
+		clk => clk,
+		val => fl_val,
+		din => fl_out,
+		port_in => fl_port,
+		out1 => out1,
+		out2 => out2,
+		out3 => out3,
+		out4 => out4,
+		out5 => out5,
+		out6 => out6,
+		out7 => out7,
+		out8 => out8,
+		write1 => write1,
+		write2 => write2,
+		write3 => write3,
+		write4 => write4,
+		write5 => write5,
+		write6 => write6,
+		write7 => write7,
+		write8 => write8
+	);
 
    -- Clock process definitions
    clk_process :process

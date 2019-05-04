@@ -51,11 +51,14 @@ constant zero16 : std_logic_vector(15 downto 0) := (others => '0');
 constant zero32 : std_logic_vector(31 downto 0) := (others => '0');
 constant zeroA : std_logic_vector(ADDR_SIZE-1 downto 0) := (others => '0');
 constant hlen : integer := 18;
--- RAMW1, RAMW2 are to consider for RAM read delays
+
 type STATES is (IDLE, RECV, DBLEN, MATCH, GET_AD, GET_SEQ, WRITE_DB, UPDATE, DUMP);
 
 signal p_state, n_state : STATES := IDLE;
-signal p_c1, n_c1, p_c2, n_c2, p_sc, n_sc, p_dumpc, n_dumpc, n_ac, p_ac, p_wc, n_wc: integer := 0;     --COUNTERS
+
+--COUNTERS
+signal p_c1, n_c1 : integer range 0 to 25 := 0;
+signal p_c2, n_c2, p_sc, n_sc, p_dumpc, n_dumpc, n_ac, p_ac, p_wc, n_wc: integer := 0;     --COUNTERS
 
 signal n_port, p_port, p_op, n_op : std_logic_vector(7 downto 0) := (others => '0');
 signal n_age, p_age, p_links, n_links, p_len, n_len : std_logic_vector(15 downto 0) := (others => '0');
@@ -150,6 +153,9 @@ begin
       n_dumpc <= 0;
       n_ac <= 0;
       n_wc <= 0;
+
+      --Dijkstra
+      dijkstra_on <= '0';
 
       n_c1 <= p_c1 + 1;
       case(p_c1) is
