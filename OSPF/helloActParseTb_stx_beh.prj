@@ -1,0 +1,6 @@
+vhdl isim_temp "ipcore_dir/FIFOLSU.vhd"
+vhdl isim_temp "ipcore_dir/RAMDB.vhd"
+vhdl isim_temp "LSAFetcher.vhd"
+vhdl isim_temp "helloActParse.vhd"
+vhdl isim_temp "LSAFetcherTb.vhd"
+vhdl isim_temp "helloActParseTb.vhd"

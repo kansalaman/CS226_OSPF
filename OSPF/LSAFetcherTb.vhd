@@ -225,7 +225,26 @@ BEGIN
       wait for 100 ns;	
 
       wait for clk_period*10;
-
+        hellogenin <= '1';
+      wait for clk_period;
+      hellogenin <= '0';
+      wait for clk_period;
+      routerid_val <= '1';
+      in1 <= "00001111";
+      wait for clk_period*4;
+      routerid_val <= '0';
+      in1 <= (others => '0');
+      wait for clk_period*20;
+        -- insert stimulus here 
+        for i in 0 to 15 loop
+            wait for clk_period;
+            neighbor_val <= '1';
+               in1 <= conv_std_logic_vector(i, 8);
+        end loop;
+      wait for clk_period;
+      neighbor_val <= '0';
+      in1 <= (others => '0');
+      wait for clk_period*1100;
       -- insert stimulus here 
 
       wait;

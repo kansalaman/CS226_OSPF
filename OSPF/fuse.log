@@ -7,11 +7,11 @@ Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/ipcore_dir/FIFOLSU.vhd"
 Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/ipcore_dir/RAMDB.vhd" into library work
 Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/LSAFetcher.vhd" into library work
 Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" into library work
-Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/LSAFetcherTb.vhd" into library work
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 107372 KB
-Fuse CPU Usage: 1080 ms
+Fuse Memory Usage: 107380 KB
+Fuse CPU Usage: 1070 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
@@ -34,6 +34,6 @@ Compiling architecture behavior of entity helloactparsetb
 Time Resolution for simulation is 1ps.
 Compiled 31 VHDL Units
 Built simulation executable /home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb_isim_beh.exe
-Fuse Memory Usage: 126552 KB
+Fuse Memory Usage: 126560 KB
 Fuse CPU Usage: 1220 ms
-GCC CPU Usage: 1410 ms
+GCC CPU Usage: 1390 ms

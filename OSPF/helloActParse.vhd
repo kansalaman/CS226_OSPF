@@ -621,11 +621,11 @@ begin
 				sending_complete <= '0';
 				if (p_state = EXSTART) then
 					p_dbd <= SENDING_IP;
-					msb := conv_integer(IPlength)*8 + 7;
-					lsb := conv_integer(IPlength)*8;
+					msb := 0;
+					lsb := 7;
 					dbd_outval_sig <= '1';
-					dbd_out1 <= IPheader(msb downto lsb);
-					sending_length <= IPlength;
+					dbd_out1 <= IPheader(159 - msb downto 159 - lsb);
+					sending_length <= (others => '0');
 				elsif (p_state = EXCHANGE_SENDING) then
 					if (more_sig = '1') then
 						p_dbd <= LSA_WAIT;
@@ -635,11 +635,11 @@ begin
 						dbd_outval_sig <= '0';
 					else
 						p_dbd <= SENDING_IP;
-						msb := conv_integer(IPlength)*8 + 7;
-						lsb := conv_integer(IPlength)*8;
+						msb := 0;
+						lsb := 7;
 						dbd_outval_sig <= '1';
-						dbd_out1 <= IPheader(msb downto lsb);
-						sending_length <= IPlength;
+						dbd_out1 <= IPheader(159 - msb downto 159 - lsb);
+						sending_length <= zero7;
 					end if;
 				else
 					p_dbd <= IDLE;
@@ -651,118 +651,126 @@ begin
 				if (dbd_valid <= '1') then
 					dbd_rd_en <= '0';
 					p_dbd <= FETCHING_LSA1;
-					msb := conv_integer(receiving_begin)*8 + 7;
-					lsb := conv_integer(receiving_begin)*8;
-					sending_length <= receiving_begin;
-					lsa_packet1(msb downto lsb) <= dbd_out;
+					--msb := conv_integer(receiving_begin)*8 + 7;
+					--lsb := conv_integer(receiving_begin)*8;
+					msb := 0;
+					lsb := 7;
+					sending_length <= zero7;
+					lsa_packet1(159 - msb downto 159 - lsb) <= dbd_out;
 				else
 					p_dbd <= LSA_WAIT;
 				end if ;
 			when FETCHING_LSA1 =>
-				if (sending_length = zero7) then
+				if (sending_length = receiving_begin) then
 					if (dbd_valid = '1') then
 						p_dbd <= FETCHING_LSA2;
-						msb := conv_integer(receiving_begin)*8 + 7;
-						lsb := conv_integer(receiving_begin)*8;
-						sending_length <= receiving_begin;
-						lsa_packet2(msb downto lsb) <= dbd_out;
+						--msb := conv_integer(receiving_begin)*8;
+						--lsb := conv_integer(receiving_begin)*8 + 7;
+						msb := 0;
+						lsb := 7;
+						sending_length <= zero7;
+						lsa_packet2(159 - msb downto 159 - lsb) <= dbd_out;
 					else
 						p_dbd <= SENDING_IP;
-						msb := conv_integer(IPlength)*8 + 7;
-						lsb := conv_integer(IPlength)*8;
-						sending_length <= IPlength;
-						dbd_out1 <= IPheader(msb downto lsb);
+						--msb := conv_integer(IPlength)*8 + 7;
+						--lsb := conv_integer(IPlength)*8;
+						msb := 0;
+						lsb := 7;
+						sending_length <= zero7;
+						dbd_out1 <= IPheader(159 - msb downto 159 - lsb);
 						dbd_outval_sig <= '1';
 					end if ;
 				else
-					msb := conv_integer(sending_length - 1)*8 + 7;
-					lsb := conv_integer(sending_length - 1)*8;
-					sending_length <= sending_length - 1;
+					msb := conv_integer(sending_length + 1)*8;
+					lsb := conv_integer(sending_length + 1)*8 + 7;
+					sending_length <= sending_length + 1;
 					p_dbd <= FETCHING_LSA1;
-					lsa_packet1(msb downto lsb) <= dbd_out;
+					lsa_packet1(159 - msb downto 159 - lsb) <= dbd_out;
 				end if ;
 			when FETCHING_LSA2 =>
-				if (sending_length = zero7) then
+				if (sending_length = receiving_begin) then
 					if (dbd_valid = '1') then
 						p_dbd <= FETCHING_LSA3;
-						msb := conv_integer(receiving_begin)*8 + 7;
-						lsb := conv_integer(receiving_begin)*8;
-						sending_length <= receiving_begin;
-						lsa_packet3(msb downto lsb) <= dbd_out;
+						--msb := conv_integer(receiving_begin)*8 + 7;
+						--lsb := conv_integer(receiving_begin)*8;
+						msb := 0;
+						lsb := 7;
+						sending_length <= zero7;
+						lsa_packet3(159 - msb downto 159 - lsb) <= dbd_out;
 					else
 						p_dbd <= SENDING_IP;
-						msb := conv_integer(IPlength)*8 + 7;
-						lsb := conv_integer(IPlength)*8;
-						sending_length <= IPlength;
-						dbd_out1 <= IPheader(msb downto lsb);
+						msb := 0;
+						lsb := 7;
+						sending_length <= zero7;
+						dbd_out1 <= IPheader(159 - msb downto 159 - lsb);
 						dbd_outval_sig <= '1';
 					end if ;
 				else
-					msb := conv_integer(sending_length - 1)*8 + 7;
-					lsb := conv_integer(sending_length - 1)*8;
-					sending_length <= sending_length - 1;
+					msb := conv_integer(sending_length + 1)*8;
+					lsb := conv_integer(sending_length + 1)*8 + 7;
+					sending_length <= sending_length + 1;
 					p_dbd <= FETCHING_LSA2;
-					lsa_packet2(msb downto lsb) <= dbd_out;
+					lsa_packet2(159 - msb downto 159 - lsb) <= dbd_out;
 				end if ;
 			when FETCHING_LSA3 =>
-				if (sending_length = zero7) then
+				if (sending_length = receiving_begin) then
 					p_dbd <= SENDING_IP;
-					msb := conv_integer(IPlength)*8 + 7;
-					lsb := conv_integer(IPlength)*8;
-					sending_length <= IPlength;
-					dbd_out1 <= IPheader(msb downto lsb);
+					msb := 0;
+					lsb := 7;
+					sending_length <= zero7;
+					dbd_out1 <= IPheader(159 - msb downto 159 - lsb);
 					dbd_outval_sig <= '1';
 				else
-					msb := conv_integer(sending_length - 1)*8 + 7;
-					lsb := conv_integer(sending_length - 1)*8;
-					sending_length <= sending_length - 1;
+					msb := conv_integer(sending_length + 1)*8;
+					lsb := conv_integer(sending_length + 1)*8 + 7;
+					sending_length <= sending_length + 1;
 					p_dbd <= FETCHING_LSA3;
-					lsa_packet3(msb downto lsb) <= dbd_out;
+					lsa_packet3(159 - msb downto 159 - lsb) <= dbd_out;
 				end if ;
 			when SENDING_IP =>
-				if (sending_length = zero7) then
+				if (sending_length = IPlength) then
 					p_dbd <= SENDING_OSPFHEAD;
-					msb := conv_integer(ospfheader)*8 + 7;
-					lsb := conv_integer(ospfheader)*8;
-					sending_length <= ospflength;
-					dbd_out1 <= ospfheader(msb downto lsb);
+					msb := 0;
+					lsb := 7;
+					sending_length <= zero7;
+					dbd_out1 <= ospfheader(191 - msb downto 191 - lsb);
 					dbd_outval_sig <= '1';
 				else
 					p_dbd <= SENDING_IP;
-					msb := conv_integer(sending_length - 1)*8 + 7;
-					lsb := conv_integer(sending_length - 1)*8;
-					sending_length <= sending_length - 1;
-					dbd_out1 <= IPheader(msb downto lsb);
+					msb := conv_integer(sending_length + 1)*8;
+					lsb := conv_integer(sending_length + 1)*8 + 7;
+					sending_length <= sending_length + 1;
+					dbd_out1 <= IPheader(159 - msb downto 159 - lsb);
 					dbd_outval_sig <= '1';
 				end if ;
 			when SENDING_OSPFHEAD =>
-				if (sending_length = zero7) then
+				if (sending_length = ospflength) then
 					p_dbd <= SENDING_DBD;
-					msb := conv_integer(dbd_length)*8 + 7;
-					lsb := conv_integer(dbd_length)*8;
-					sending_length <= dbd_length;
-					dbd_out1 <= dbd_packet(msb downto lsb);
+					msb := 0;
+					lsb := 7;
+					sending_length <= zero7;
+					dbd_out1 <= dbd_packet(543 - msb downto 543 - lsb);
 					dbd_outval_sig <= '1';
 				else
 					p_dbd <= SENDING_OSPFHEAD;
-					msb := conv_integer(sending_length - 1)*8 + 7;
-					lsb := conv_integer(sending_length - 1)*8;
-					sending_length <= sending_length - 1;
-					dbd_out1 <= ospfheader(msb downto lsb);
+					msb := conv_integer(sending_length + 1)*8;
+					lsb := conv_integer(sending_length + 1)*8 + 7;
+					sending_length <= sending_length + 1;
+					dbd_out1 <= ospfheader(191 - msb downto 191 - lsb);
 					dbd_outval_sig <= '1';
 				end if ;
 			when others => --SENDING_DBD
-				if (sending_length = zero7) then
+				if (sending_length = dbd_length) then
 					p_dbd <= IDLE;
 					dbd_out1 <= (others => '0');
 					dbd_outval_sig <= '0';
 					sending_complete <= '1';
 				else
 					p_dbd <= SENDING_DBD;
-					msb := conv_integer(sending_length - 1)*8 + 7;
-					lsb := conv_integer(sending_length - 1)*8;
-					sending_length <= sending_length - 1;
-					dbd_out1 <= dbd_packet(msb downto lsb);
+					msb := conv_integer(sending_length + 1)*8;
+					lsb := conv_integer(sending_length + 1)*8 + 7;
+					sending_length <= sending_length + 1;
+					dbd_out1 <= dbd_packet(543 - msb downto 543 - lsb);
 					dbd_outval_sig <= '1';
 				end if ;
 
