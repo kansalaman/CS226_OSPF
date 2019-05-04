@@ -69,6 +69,45 @@ ARCHITECTURE behavior OF helloActParseTb IS
          lsa_queue_empty : IN  std_logic
         );
     END COMPONENT;
+    COMPONENT LSAFetcher
+    PORT(
+         clk : IN  std_logic;
+         rd_en : IN  std_logic;
+         rst : IN  std_logic;
+         num_lsa : OUT  std_logic_vector(1 downto 0);
+         db_rd_en : OUT  std_logic;
+         db_addr : OUT  std_logic_vector(11 downto 0);
+         db_din : IN  std_logic_vector(7 downto 0);
+         dout : OUT  std_logic_vector(7 downto 0);
+         db_busy : IN  std_logic;
+         rd_val : OUT  std_logic;
+         empty : OUT std_logic
+        );
+    END COMPONENT;
+
+    COMPONENT RAMDB
+    PORT (
+     clka : IN STD_LOGIC;
+     ena : IN STD_LOGIC;
+     wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+     addra : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+     dina : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+     douta : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
+    );
+   END component;
+   COMPONENT FIFOLSU IS
+    PORT (
+      clk : IN STD_LOGIC;
+      rst : IN STD_LOGIC;
+      din : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+      wr_en : IN STD_LOGIC;
+      rd_en : IN STD_LOGIC;
+      dout : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+      full : OUT STD_LOGIC;
+      empty : OUT STD_LOGIC;
+      data_count : OUT STD_LOGIC_VECTOR(11 DOWNTO 0)
+    );
+   END COMPONENT;
     
 
    --Inputs
@@ -99,6 +138,12 @@ ARCHITECTURE behavior OF helloActParseTb IS
    signal lsa_queue_dout : std_logic_vector(7 downto 0);
    signal lsa_queue_rd_en : std_logic;
 
+
+   --EXTRAS
+   signal db_addr : STD_LOGIC_VECTOR(11 downto 0);
+   signal db_din : STD_LOGIC_VECTOR(7 downto 0);
+   signal db_busy : STD_LOGIC := '0';
+   signal db_rd_en : STD_LOGIC;
    -- Clock period definitions
    constant clk_period : time := 10 ns;
  
@@ -131,7 +176,38 @@ BEGIN
           lsa_queue_val => lsa_queue_val,
           lsa_queue_empty => lsa_queue_empty
         );
-
+   ram : RAMDB PORT MAP(
+          clka => clk,
+          ena => '1',
+          wea => "0",
+          addra => db_addr,
+          dina => (others => '0'),
+          douta => db_din
+     );
+   queue : FIFOLSU PORT MAP(
+          clk => clk,
+          rst => '0',
+          din =>  lsa_queue_dout,
+          wr_en => lsa_queue_wr_en,
+          rd_en => lsa_queue_rd_en,
+          dout =>  lsa_queue_din,
+          full =>  open,
+          empty =>  lsa_queue_empty,
+          data_count => open
+    );
+   fetcher : LSAFetcher PORT MAP(
+          clk => clk,
+          rd_en => dbd_rd_en,
+          rst => dbd_rst,
+          num_lsa => numLSA,
+          db_rd_en => db_rd_en,
+          db_addr => db_addr,
+          db_din => db_din,
+          dout => dbd_out,
+          db_busy => db_busy,
+          rd_val => dbd_valid,
+          empty => dbd_empty
+    );
    -- Clock process definitions
    clk_process :process
    begin
