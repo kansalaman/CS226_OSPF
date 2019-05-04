@@ -41,7 +41,8 @@ entity helloActParse is
            stateout : out STD_LOGIC_VECTOR(2 downto 0);
            router_id : out STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
            out1 : out STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
-           outval : out STD_LOGIC := '0';
+           dbd_outval : out STD_LOGIC := '0';
+           lsr_outval : out STD_LOGIC := '0';
            dbd_rd_en : out STD_LOGIC := '0';
            dbd_rst : out STD_LOGIC := '0';
            numLSA : in STD_LOGIC_VECTOR(1 downto 0);
@@ -52,14 +53,8 @@ entity helloActParse is
 		   lsa_queue_dout : out STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
 		   lsa_queue_rd_en : out STD_LOGIC := '0';
 		   lsa_queue_din : in STD_LOGIC_VECTOR(7 downto 0);
+		   lsa_queue_val : in STD_LOGIC;
 		   lsa_queue_empty : in STD_LOGIC);
-           --lsa_queue_dout : out STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
-           --lsa_queue_wr_en : out STD_LOGIC := '0';
-           --request_list_din : in STD_LOGIC_VECTOR(7 downto 0);
-           --request_list_rd_en : out STD_LOGIC := '0';
-           --request_list_empty : in STD_LOGIC;
-           --database_din : in STD_LOGIC_VECTOR(7 downto 0);
-           --database_rd_en : out STD_LOGIC := '0');
 end helloActParse;
 
 architecture Behavioral of helloActParse is
@@ -76,6 +71,10 @@ architecture Behavioral of helloActParse is
 	signal sending_complete : STD_LOGIC := '1';
 	signal receiving_complete : STD_LOGIC := '1';
 
+	signal dbd_out1 : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
+	signal lsr_out1 : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
+	signal lsr_outval_sig : STD_LOGIC := '0';
+	signal dbd_outval_sig : STD_LOGIC := '0';
 
 	signal router_id_sig : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
 	signal sending_length, sending_len_next: STD_LOGIC_VECTOR(6 downto 0) := (others => '0');
@@ -198,6 +197,13 @@ begin
 			old_neighbor <= active_neighbor;
 		end if;
 		
+		if (lsa_queue_val = '1') then
+			lsr_outval_sig <= '1';
+			lsr_out1 <= lsa_queue_din;
+		else
+			lsr_outval_sig <= '0';
+			lsr_out1 <= (others => '0');
+		end if ;
 
 		if (ID_part = "00" and routerid_val = '1') then
 			router_id_sig <= neighbor_id;
@@ -205,12 +211,12 @@ begin
 
 		--case( n_dbd ) is
 		--	when IDLE =>
-		--		out1 <= (others => '0');
-		--		outval <= '0';
+		--		dbd_out1 <= (others => '0');
+		--		dbd_outval_sig <= '0';
 
 		--	when FETCHING_LSA =>
-		--		out1 <= (others => '0');
-		--		outval <= '0';
+		--		dbd_out1 <= (others => '0');
+		--		dbd_outval_sig <= '0';
 		--		if (dbd_valid = '1') then
 		--			r_msb := conv_integer(receiving_lsa)*8 + 7;
 		--			l_msb := conv_integer(receiving_lsa)*8;
@@ -219,14 +225,14 @@ begin
 		--		end if;
 		--	when SENDING_IP =>
 		--		receiving_lsa <= receiving_begin;
-		--		out1 <= IPheader(msb downto lsb);
-		--		outval <= '1';
+		--		dbd_out1 <= IPheader(msb downto lsb);
+		--		dbd_outval_sig <= '1';
 		--	when SENDING_OSPFHEAD =>
-		--		out1 <= ospfheader(msb downto lsb);
-		--		outval <= '1';
+		--		dbd_out1 <= ospfheader(msb downto lsb);
+		--		dbd_outval_sig <= '1';
 		--	when others => --SENDING_DBD
-		--		out1 <= dbd_packet(msb downto lsb);
-		--		outval <= '1';
+		--		dbd_out1 <= dbd_packet(msb downto lsb);
+		--		dbd_outval_sig <= '1';
 		--end case ;
 		if (n_state = EXSTART) then
 			if (p_read = LSA_PART1
@@ -310,7 +316,7 @@ COMBSTATE : process(p_state, ID_part, old_neighbor, routerid_val,
 							master, temp_dbd_received, dbd_length, curr_seqnum,
 							curr_seqnum, dbd_length, sending_complete, 
 							seqnum_error, neighbor_more, more_sig,
-							init_sig, receiving_complete)
+							init_sig, receiving_complete, lsa_queue_empty)
 begin
 	case( p_state ) is
 	
@@ -444,12 +450,10 @@ begin
 							end if ;
 
 						when SEQNUM =>
-							if (master = '1' and curr_seqnum = temp_dbd_received) then
+							if (curr_seqnum = temp_dbd_received) then
 								n_state <= p_state;
-							elsif (master = '1') then
-								n_state <= DOWN;
 							else
-								n_state <= p_state;
+								n_state <= DOWN;
 							end if ;
 						when LSA_PART1 =>
 							n_state <= p_state;
@@ -505,6 +509,16 @@ begin
 					n_state <= p_state;
 					next_time <= curr_time - 1;
 				end if ;
+			end if ;
+
+		when LOADING =>
+			next_time <= max_time;
+			if (lsa_queue_empty = '1') then
+				lsa_queue_rd_en <= '0';
+				n_state <= FULL;
+			else
+				lsa_queue_rd_en <= '1';
+				n_state <= p_state;
 			end if ;
 
 		when others => --FULL
@@ -609,29 +623,29 @@ begin
 					p_dbd <= SENDING_IP;
 					msb := conv_integer(IPlength)*8 + 7;
 					lsb := conv_integer(IPlength)*8;
-					outval <= '1';
-					out1 <= IPheader(msb downto lsb);
+					dbd_outval_sig <= '1';
+					dbd_out1 <= IPheader(msb downto lsb);
 					sending_length <= IPlength;
 				elsif (p_state = EXCHANGE_SENDING) then
 					if (more_sig = '1') then
 						p_dbd <= LSA_WAIT;
 						dbd_rd_en <= '1';
 						sending_length <= zero7;
-						out1 <= (others => '0');
-						outval <= '0';
+						dbd_out1 <= (others => '0');
+						dbd_outval_sig <= '0';
 					else
 						p_dbd <= SENDING_IP;
 						msb := conv_integer(IPlength)*8 + 7;
 						lsb := conv_integer(IPlength)*8;
-						outval <= '1';
-						out1 <= IPheader(msb downto lsb);
+						dbd_outval_sig <= '1';
+						dbd_out1 <= IPheader(msb downto lsb);
 						sending_length <= IPlength;
 					end if;
 				else
 					p_dbd <= IDLE;
 					sending_length <= zero7;
-					out1 <= (others => '0');
-					outval <= '0';
+					dbd_out1 <= (others => '0');
+					dbd_outval_sig <= '0';
 				end if ;
 			when LSA_WAIT =>
 				if (dbd_valid <= '1') then
@@ -657,8 +671,8 @@ begin
 						msb := conv_integer(IPlength)*8 + 7;
 						lsb := conv_integer(IPlength)*8;
 						sending_length <= IPlength;
-						out1 <= IPheader(msb downto lsb);
-						outval <= '1';
+						dbd_out1 <= IPheader(msb downto lsb);
+						dbd_outval_sig <= '1';
 					end if ;
 				else
 					msb := conv_integer(sending_length - 1)*8 + 7;
@@ -680,8 +694,8 @@ begin
 						msb := conv_integer(IPlength)*8 + 7;
 						lsb := conv_integer(IPlength)*8;
 						sending_length <= IPlength;
-						out1 <= IPheader(msb downto lsb);
-						outval <= '1';
+						dbd_out1 <= IPheader(msb downto lsb);
+						dbd_outval_sig <= '1';
 					end if ;
 				else
 					msb := conv_integer(sending_length - 1)*8 + 7;
@@ -696,8 +710,8 @@ begin
 					msb := conv_integer(IPlength)*8 + 7;
 					lsb := conv_integer(IPlength)*8;
 					sending_length <= IPlength;
-					out1 <= IPheader(msb downto lsb);
-					outval <= '1';
+					dbd_out1 <= IPheader(msb downto lsb);
+					dbd_outval_sig <= '1';
 				else
 					msb := conv_integer(sending_length - 1)*8 + 7;
 					lsb := conv_integer(sending_length - 1)*8;
@@ -711,15 +725,15 @@ begin
 					msb := conv_integer(ospfheader)*8 + 7;
 					lsb := conv_integer(ospfheader)*8;
 					sending_length <= ospflength;
-					out1 <= ospfheader(msb downto lsb);
-					outval <= '1';
+					dbd_out1 <= ospfheader(msb downto lsb);
+					dbd_outval_sig <= '1';
 				else
 					p_dbd <= SENDING_IP;
 					msb := conv_integer(sending_length - 1)*8 + 7;
 					lsb := conv_integer(sending_length - 1)*8;
 					sending_length <= sending_length - 1;
-					out1 <= IPheader(msb downto lsb);
-					outval <= '1';
+					dbd_out1 <= IPheader(msb downto lsb);
+					dbd_outval_sig <= '1';
 				end if ;
 			when SENDING_OSPFHEAD =>
 				if (sending_length = zero7) then
@@ -727,28 +741,29 @@ begin
 					msb := conv_integer(dbd_length)*8 + 7;
 					lsb := conv_integer(dbd_length)*8;
 					sending_length <= dbd_length;
-					out1 <= dbd_packet(msb downto lsb);
-					outval <= '1';
+					dbd_out1 <= dbd_packet(msb downto lsb);
+					dbd_outval_sig <= '1';
 				else
 					p_dbd <= SENDING_OSPFHEAD;
 					msb := conv_integer(sending_length - 1)*8 + 7;
 					lsb := conv_integer(sending_length - 1)*8;
 					sending_length <= sending_length - 1;
-					out1 <= ospfheader(msb downto lsb);
-					outval <= '1';
+					dbd_out1 <= ospfheader(msb downto lsb);
+					dbd_outval_sig <= '1';
 				end if ;
 			when others => --SENDING_DBD
 				if (sending_length = zero7) then
 					p_dbd <= IDLE;
-					out1 <= (others => '0');
+					dbd_out1 <= (others => '0');
+					dbd_outval_sig <= '0';
 					sending_complete <= '1';
 				else
 					p_dbd <= SENDING_DBD;
 					msb := conv_integer(sending_length - 1)*8 + 7;
 					lsb := conv_integer(sending_length - 1)*8;
 					sending_length <= sending_length - 1;
-					out1 <= dbd_packet(msb downto lsb);
-					outval <= '1';
+					dbd_out1 <= dbd_packet(msb downto lsb);
+					dbd_outval_sig <= '1';
 				end if ;
 
 		end case ;
@@ -861,5 +876,11 @@ stateout <= "000" when p_state = DOWN else
 				"101" when p_state = EXCHANGE_SENDING else
 				"110" when p_state = LOADING else
 				"111";
+out1 <= dbd_out1 when dbd_outval_sig = '1' else
+		lsr_out1 when lsr_outval_sig = '1' else
+		(others => '0');
+
+lsr_outval <= lsr_outval_sig;
+dbd_outval <= dbd_outval_sig;
 
 end Behavioral;

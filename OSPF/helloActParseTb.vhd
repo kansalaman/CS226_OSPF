@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   16:45:51 05/04/2019
+-- Create Date:   17:19:00 05/04/2019
 -- Design Name:   
 -- Module Name:   /home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb.vhd
 -- Project Name:  OSPF
@@ -53,7 +53,8 @@ ARCHITECTURE behavior OF helloActParseTb IS
          stateout : OUT  std_logic_vector(2 downto 0);
          router_id : OUT  std_logic_vector(31 downto 0);
          out1 : OUT  std_logic_vector(7 downto 0);
-         outval : OUT  std_logic;
+         dbd_outval : OUT  std_logic;
+         lsr_outval : OUT  std_logic;
          dbd_rd_en : OUT  std_logic;
          dbd_rst : OUT  std_logic;
          numLSA : IN  std_logic_vector(1 downto 0);
@@ -64,6 +65,7 @@ ARCHITECTURE behavior OF helloActParseTb IS
          lsa_queue_dout : OUT  std_logic_vector(7 downto 0);
          lsa_queue_rd_en : OUT  std_logic;
          lsa_queue_din : IN  std_logic_vector(7 downto 0);
+         lsa_queue_val : IN  std_logic;
          lsa_queue_empty : IN  std_logic
         );
     END COMPONENT;
@@ -82,13 +84,15 @@ ARCHITECTURE behavior OF helloActParseTb IS
    signal dbd_valid : std_logic := '0';
    signal dbd_empty : std_logic := '0';
    signal lsa_queue_din : std_logic_vector(7 downto 0) := (others => '0');
+   signal lsa_queue_val : std_logic := '0';
    signal lsa_queue_empty : std_logic := '0';
 
  	--Outputs
    signal stateout : std_logic_vector(2 downto 0);
    signal router_id : std_logic_vector(31 downto 0);
    signal out1 : std_logic_vector(7 downto 0);
-   signal outval : std_logic;
+   signal dbd_outval : std_logic;
+   signal lsr_outval : std_logic;
    signal dbd_rd_en : std_logic;
    signal dbd_rst : std_logic;
    signal lsa_queue_wr_en : std_logic;
@@ -112,7 +116,8 @@ BEGIN
           stateout => stateout,
           router_id => router_id,
           out1 => out1,
-          outval => outval,
+          dbd_outval => dbd_outval,
+          lsr_outval => lsr_outval,
           dbd_rd_en => dbd_rd_en,
           dbd_rst => dbd_rst,
           numLSA => numLSA,
@@ -123,6 +128,7 @@ BEGIN
           lsa_queue_dout => lsa_queue_dout,
           lsa_queue_rd_en => lsa_queue_rd_en,
           lsa_queue_din => lsa_queue_din,
+          lsa_queue_val => lsa_queue_val,
           lsa_queue_empty => lsa_queue_empty
         );
 
