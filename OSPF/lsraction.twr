@@ -1,0 +1,116 @@
+--------------------------------------------------------------------------------
+Release 14.7 Trace  (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+/opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/trce -intstyle ise -v 3 -s 2I
+-n 3 -fastpaths -xml lsraction.twx lsraction.ncd -o lsraction.twr lsraction.pcf
+
+Design file:              lsraction.ncd
+Physical constraint file: lsraction.pcf
+Device,package,speed:     xa7a100t,csg324,I,-2I (PRELIMINARY 1.07 2013-10-13)
+Report level:             verbose report
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+INFO:Timing:2698 - No timing constraints found, doing default enumeration.
+INFO:Timing:3412 - To improve timing, see the Timing Closure User Guide (UG612).
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths 
+   option. All paths that are not constrained will be reported in the 
+   unconstrained paths section(s) of the report.
+INFO:Timing:3339 - The clock-to-out numbers in this timing report are based on 
+   a 50 Ohm transmission line loading model.  For the details of this model, 
+   and for more information on accounting for different loading conditions, 
+   please see the device datasheet.
+
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Setup/Hold to clock data_val
+------------+------------+------------+------------+------------+-----------------------------+--------+
+            |Max Setup to|  Process   |Max Hold to |  Process   |                             | Clock  |
+Source      | clk (edge) |   Corner   | clk (edge) |   Corner   |Internal Clock(s)            | Phase  |
+------------+------------+------------+------------+------------+-----------------------------+--------+
+len<0>      |   -0.247(F)|      FAST  |    1.598(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<1>      |   -0.264(F)|      FAST  |    1.693(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<2>      |   -0.269(F)|      FAST  |    1.698(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<3>      |    1.587(F)|      SLOW  |    0.908(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<4>      |    1.477(F)|      SLOW  |    1.108(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<5>      |    1.487(F)|      SLOW  |    1.089(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<6>      |    1.121(F)|      SLOW  |    1.289(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<7>      |    1.374(F)|      SLOW  |    1.127(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<8>      |    1.498(F)|      SLOW  |    0.575(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<9>      |    1.269(F)|      SLOW  |    0.783(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<10>     |    0.932(F)|      SLOW  |    1.015(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<11>     |    1.414(F)|      SLOW  |    0.848(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<12>     |    1.286(F)|      SLOW  |    0.807(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<13>     |    1.015(F)|      SLOW  |    0.707(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<14>     |    1.351(F)|      SLOW  |    0.309(F)|      FAST  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<15>     |    1.382(F)|      SLOW  |    0.043(F)|      FAST  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+------------+------------+------------+------------+------------+-----------------------------+--------+
+
+Setup/Hold to clock len_val
+------------+------------+------------+------------+------------+-----------------------------+--------+
+            |Max Setup to|  Process   |Max Hold to |  Process   |                             | Clock  |
+Source      | clk (edge) |   Corner   | clk (edge) |   Corner   |Internal Clock(s)            | Phase  |
+------------+------------+------------+------------+------------+-----------------------------+--------+
+len<0>      |   -0.113(F)|      FAST  |    1.272(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<1>      |   -0.130(F)|      FAST  |    1.367(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<2>      |   -0.135(F)|      FAST  |    1.372(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<3>      |    1.848(F)|      SLOW  |    0.582(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<4>      |    1.738(F)|      SLOW  |    0.782(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<5>      |    1.748(F)|      SLOW  |    0.763(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<6>      |    1.382(F)|      SLOW  |    0.963(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<7>      |    1.635(F)|      SLOW  |    0.801(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<8>      |    1.759(F)|      SLOW  |    0.349(F)|      FAST  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<9>      |    1.530(F)|      SLOW  |    0.457(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<10>     |    1.193(F)|      SLOW  |    0.689(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<11>     |    1.675(F)|      SLOW  |    0.522(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<12>     |    1.547(F)|      SLOW  |    0.481(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<13>     |    1.276(F)|      SLOW  |    0.381(F)|      SLOW  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<14>     |    1.612(F)|      SLOW  |    0.143(F)|      FAST  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+len<15>     |    1.643(F)|      SLOW  |   -0.123(F)|      FAST  |p_state[3]_GND_10_o_Mux_361_o|   0.000|
+------------+------------+------------+------------+------------+-----------------------------+--------+
+
+Clock to Setup on destination clock clk
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+data_val       |         |    2.071|         |         |
+len_val        |         |    0.948|         |         |
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock data_val
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+clk            |         |         |    7.907|         |
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock len_val
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+clk            |         |         |    5.120|         |
+---------------+---------+---------+---------+---------+
+
+
+Analysis completed Sat May  4 16:22:23 2019 
+--------------------------------------------------------------------------------
+
+Trace Settings:
+-------------------------
+Trace Settings 
+
+Peak Memory Usage: 768 MB
+
+
+

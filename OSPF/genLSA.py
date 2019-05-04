@@ -36,7 +36,7 @@ def chunkstring(string, length):
     return (string[0+i:length+i] for i in range(0, len(string), length))
 
 
-packet = list(chunkstring(LSAge + Options + LSType + LSID + Ad + LSSeqNo + Checksum + length + VEB + links + li, 8))
+packet = list(chunkstring(LSAge + LSID + Ad + LSSeqNo + length + links + li, 8))
 print(len(packet))
 for i in packet:
     print(i)

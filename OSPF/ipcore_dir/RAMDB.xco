@@ -1,7 +1,7 @@
 ##############################################################
 #
 # Xilinx Core Generator version 14.7
-# Date: Fri May  3 17:18:56 2019
+# Date: Sat May  4 11:31:03 2019
 #
 ##############################################################
 #
@@ -46,7 +46,7 @@ CSET axi_id_width=4
 CSET axi_slave_type=Memory_Slave
 CSET axi_type=AXI4_Full
 CSET byte_size=8
-CSET coe_file="/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/ramdb.coe"
+CSET coe_file="/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsrdb.coe"
 CSET collision_warnings=ALL
 CSET component_name=RAMDB
 CSET disable_collision_warnings=false
@@ -105,4 +105,4 @@ CSET write_width_b=8
 MISC pkg_timestamp=2012-11-19T16:22:25Z
 # END Extra information
 GENERATE
-# CRC: 45c69a64
+# CRC: 51683ead
