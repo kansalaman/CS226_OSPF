@@ -1,4 +1,4 @@
-Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb_isim_beh.exe -prj /home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb_beh.prj work.helloActParseTb 
+Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb_isim_beh.exe -prj /home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb_beh.prj helloActParseTb 
 ISim P.20131013 (signature 0xfbc00daa)
 Number of CPUs detected in this system: 1
 Turning on mult-threading, number of parallel sub-compilation jobs: 0 
@@ -10,7 +10,7 @@ Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" into
 Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 107380 KB
+Fuse Memory Usage: 107392 KB
 Fuse CPU Usage: 1070 ms
 Compiling package standard
 Compiling package std_logic_1164
@@ -34,6 +34,6 @@ Compiling architecture behavior of entity helloactparsetb
 Time Resolution for simulation is 1ps.
 Compiled 31 VHDL Units
 Built simulation executable /home/yash20/isefiles/CS226_OSPF/OSPF/helloActParseTb_isim_beh.exe
-Fuse Memory Usage: 126560 KB
+Fuse Memory Usage: 126572 KB
 Fuse CPU Usage: 1220 ms
-GCC CPU Usage: 1390 ms
+GCC CPU Usage: 1370 ms

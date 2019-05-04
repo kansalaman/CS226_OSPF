@@ -63,12 +63,15 @@ architecture Behavioral of helloActParse is
 	type DBD_READ is (IDLE_R, OPTIONS, SEQNUM, LSA_PART1, LSA_PART2, LSA_PART3, LSA_PART4, LSA_PART5);
 	constant zero8 : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
 	constant zero7 : STD_LOGIC_VECTOR(6 downto 0) := (others => '0');
+	signal neighval_sig : STD_LOGIC;
+	signal routid_sig : STD_LOGIC;
+	signal dbd_val_sig : STD_LOGIC;
 
 	signal p_state, n_state : FSM := DOWN;
 	signal p_dbd : DBD := IDLE;
 	signal p_read : DBD_READ := IDLE_R;
 	--signal send, send_next : STD_LOGIC := '0';
-	signal sending_complete : STD_LOGIC := '1';
+	signal sending_complete : STD_LOGIC := '0';
 	signal receiving_complete : STD_LOGIC := '1';
 
 	signal dbd_out1 : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
@@ -189,11 +192,11 @@ begin
 		else
 			dbd_rst <= '0';
 		end if ;
-		if (n_state = EXCHANGE_SENDING or n_state = EXSTART) then
+		if ((n_state = EXCHANGE_SENDING or n_state = EXSTART) and p_read = IDLE_R) then
 			receiving_complete <= '0';
 		end if ;
 
-		if (ID_part = "00" and neighbor_val = '1') then
+		if (ID_part = "00" and neighval_sig = '1') then
 			old_neighbor <= active_neighbor;
 		end if;
 		
@@ -205,10 +208,13 @@ begin
 			lsr_out1 <= (others => '0');
 		end if ;
 
-		if (ID_part = "00" and routerid_val = '1') then
+		if (ID_part = "00" and routid_sig = '1') then
 			router_id_sig <= neighbor_id;
 		end if ;
-
+		
+		routid_sig <= routerid_val;
+		neighval_sig <= neighbor_val;
+		dbd_val_sig <= dbd_val;
 		--case( n_dbd ) is
 		--	when IDLE =>
 		--		dbd_out1 <= (others => '0');
@@ -242,12 +248,11 @@ begin
 				or p_read = LSA_PART4) then
 				lsa_queue_wr_en <= '1';
 				lsa_queue_dout <= in1;
-			elsif (ID_part = "00" and dbd_val = '1') then
+			elsif (ID_part = "00" and dbd_val_sig = '1') then
 				lsa_queue_wr_en <= '0';
 				lsa_queue_dout <= (others => '0');
 				if (p_read = OPTIONS) then
 					neighbor_more <= temp_dbd_received(1);
-					receiving_complete <= '1';
 					if (temp_dbd_received(2) = '1') then --INIT from their end
 						init_sig <= '0';
 						if (router_id_sig > self) then
@@ -257,6 +262,7 @@ begin
 						end if ;					
 					end if ;
 				elsif (p_read = SEQNUM) then
+					receiving_complete <= '1';
 					if (master = '1') then
 						if (curr_seqnum /= temp_dbd_received) then
 							seqnum_error <= '1';
@@ -277,7 +283,7 @@ begin
 				or p_read = LSA_PART4) then
 				lsa_queue_wr_en <= '1';
 				lsa_queue_dout <= in1;
-			elsif (ID_part = "00" and dbd_val = '1') then
+			elsif (ID_part = "00" and dbd_val_sig = '1') then
 				lsa_queue_wr_en <= '0';
 				lsa_queue_dout <= (others => '0');
 				if (p_read = OPTIONS) then
@@ -291,6 +297,7 @@ begin
 						end if ;					
 					end if ;
 				elsif (p_read = SEQNUM) then
+					receiving_complete <= '1';
 					if (master = '1') then
 						if (curr_seqnum /= temp_dbd_received) then
 							seqnum_error <= '1';
@@ -312,14 +319,13 @@ end process;
 
 -------- ORIGINAL STATE MACHINE --------
 COMBSTATE : process(p_state, ID_part, old_neighbor, routerid_val,
-							curr_time, hellogenin, self, dbd_val, p_read,
+							curr_time, hellogenin, self, dbd_val_sig, p_read,
 							master, temp_dbd_received, dbd_length, curr_seqnum,
 							curr_seqnum, dbd_length, sending_complete, 
 							seqnum_error, neighbor_more, more_sig,
 							init_sig, receiving_complete, lsa_queue_empty)
 begin
 	case( p_state ) is
-	
 		when DOWN =>
 			if (hellogenin = '1') then
 				n_state <= INIT;
@@ -358,17 +364,18 @@ begin
 				n_state <= DOWN;
 				next_time <= zero_time;
 			else
-				if (ID_part = "00" and dbd_val = '1') then
+				if (ID_part = "00" and dbd_val_sig = '1') then
 					next_time <= max_time;
 					case( p_read ) is
 						when IDLE_R =>
-							if (master = '1' and init_sig = '0') then
-								n_state <= EXCHANGE_LISTENING;
-							elsif (master = '0' and init_sig = '0') then
-								n_state <= EXCHANGE_SENDING;
-							else
-								n_state <= p_state;
-							end if ;
+							--if (master = '1' and init_sig = '0') then
+							--	n_state <= EXCHANGE_LISTENING;
+							--elsif (master = '0' and init_sig = '0') then
+							--	n_state <= EXCHANGE_SENDING;
+							--else
+							--	n_state <= p_state;
+							--end if ;
+							n_state <= p_state;
 						when OPTIONS =>
 							if (temp_dbd_received(2) = '0') then
 								n_state <= DOWN;
@@ -377,12 +384,14 @@ begin
 							end if ;
 
 						when SEQNUM =>
-							if (master = '1' and curr_seqnum = temp_dbd_received) then
-								n_state <= p_state;
+							if (master = '1' and curr_seqnum = temp_dbd_received and init_sig = '0') then
+								n_state <= EXCHANGE_LISTENING;
 							elsif (master = '1') then
 								n_state <= DOWN;
+							elsif (init_sig = '0') then
+								n_state <= EXCHANGE_SENDING;
 							else
-								n_state <= p_state;
+								n_state <= DOWN;
 							end if ;
 						when LSA_PART1 =>
 							n_state <= p_state;
@@ -437,7 +446,7 @@ begin
 				elsif (receiving_complete = '1' and p_read = IDLE_R) then
 					n_state <= EXCHANGE_SENDING;
 					next_time <= max_time;
-				elsif (ID_part = "00" and dbd_val = '1') then
+				elsif (ID_part = "00" and dbd_val_sig = '1') then
 					next_time <= max_time;
 					case( p_read ) is
 						when IDLE_R =>
@@ -474,7 +483,7 @@ begin
 				if (receiving_complete = '1' and p_read = IDLE_R) then
 					n_state <= EXCHANGE_SENDING;
 					next_time <= max_time;
-				elsif (ID_part = "00" and dbd_val = '1') then
+				elsif (ID_part = "00" and dbd_val_sig = '1') then
 					next_time <= max_time;
 					case( p_read ) is
 						when IDLE_R =>
@@ -618,15 +627,15 @@ begin
 	if (clk = '1' and clk'event) then
 		case( p_dbd ) is
 			when IDLE =>
-				sending_complete <= '0';
 				if (p_state = EXSTART) then
+					sending_complete <= '0';
 					p_dbd <= SENDING_IP;
 					msb := 0;
 					lsb := 7;
 					dbd_outval_sig <= '1';
 					dbd_out1 <= IPheader(159 - msb downto 159 - lsb);
 					sending_length <= (others => '0');
-				elsif (p_state = EXCHANGE_SENDING) then
+				elsif (p_state = EXCHANGE_SENDING and sending_complete = '0') then
 					if (more_sig = '1') then
 						p_dbd <= LSA_WAIT;
 						dbd_rd_en <= '1';
@@ -643,6 +652,7 @@ begin
 					end if;
 				else
 					p_dbd <= IDLE;
+					sending_complete <= '0';
 					sending_length <= zero7;
 					dbd_out1 <= (others => '0');
 					dbd_outval_sig <= '0';
@@ -849,7 +859,7 @@ end process;
 SEQREAD : process(clk)
 begin
 	if (clk = '1' and clk'event) then
-		if (ID_part = "01" and dbd_val = '1') then
+		if (ID_part = "00" and dbd_val = '1') then
 			case( p_read ) is
 				when IDLE_R =>
 					p_read <= OPTIONS;

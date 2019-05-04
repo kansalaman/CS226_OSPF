@@ -113,7 +113,7 @@ ARCHITECTURE behavior OF helloActParseTb IS
    --Inputs
    signal clk : std_logic := '0';
    signal neighbor_val : std_logic := '0';
-   signal self : std_logic_vector(31 downto 0) := (31 downto 2 => '0', others => '1');
+   signal self : std_logic_vector(31 downto 0) := "00000100000001010000011000000111";
    signal routerid_val : std_logic := '0';
    signal dbd_val : std_logic := '0';
    signal in1 : std_logic_vector(7 downto 0) := (others => '0');
@@ -250,7 +250,7 @@ BEGIN
       wait for clk_period;
       neighbor_val <= '0';
       in1 <= (others => '0');
-      wait for clk_period*20;
+      wait for clk_period*100;
       -- insert stimulus here 
       dbd_val <= '1';
       in1 <= "00000000";
@@ -271,8 +271,44 @@ BEGIN
       wait for clk_period;
       dbd_val <= '0';
       in1 <= (others => '0');
-
-
+		wait for clk_period*200;
+		dbd_val <= '1';
+      in1 <= "00000000";
+      wait for clk_period;
+      in1 <= "00000000";
+      wait for clk_period;
+      in1 <= "00000000";
+      wait for clk_period;
+      in1 <= "00000001";
+      wait for clk_period;
+      in1 <= "00000000";
+      wait for clk_period;
+      in1 <= "00000000";
+      wait for clk_period;
+      in1 <= "11000000";
+      wait for clk_period;
+      in1 <= "00000000";
+      wait for clk_period;
+      dbd_val <= '0';
+		wait for clk_period*200;
+		dbd_val <= '1';
+      in1 <= "00000000";
+      wait for clk_period;
+      in1 <= "00000000";
+      wait for clk_period;
+      in1 <= "00000000";
+      wait for clk_period;
+      in1 <= "00000001";
+      wait for clk_period;
+      in1 <= "00000000";
+      wait for clk_period;
+      in1 <= "00000000";
+      wait for clk_period;
+      in1 <= "11000000";
+      wait for clk_period;
+      in1 <= "00000000";
+      wait for clk_period;
+      dbd_val <= '0';
       wait;
    end process;
 
