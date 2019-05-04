@@ -230,6 +230,7 @@ architecture Behavioral of MainModule is
 
 type QArrayT is array (1 to 8) of std_logic_vector(7 downto 0);
 type QVArrayT is array (1 to 8) of std_logic;
+type QDCArrayT is array (1 to 8) of std_logic_vector(10 downto 0);
 type OutputArrayT is array (1 to 8) of std_logic_vector(7 downto 0);
 type OutputArrayV is array (1 to 8) of std_logic;
 
@@ -240,32 +241,37 @@ signal outputvalArray : OutputArrayV;
 signal ackQOArr, ackQIArr : QArrayT;
 signal LSAQOArr, LSAQIArr : QArrayT;
 signal ackQWArr, ackQRArr, LSAQWArr, LSAQRArr : QVArrayT;
-
---Queue Empty Arrays
+--Queue Empty/Full Arrays
 signal ackQEArr, LSAQEArr : QVArrayT;
+signal ackQFArr, LSAQFArr : QVArrayT;
+--Queues super reset
+signal rst : std_logic := '0';
+--Queue Data Count Arrays
+signal ackQDCArr, LSAQDCArr : QDCArrayT;
 
 begin
+  --Mapping outputs to Output Array
+  out1 <= outputArray(1);
+  out2 <= outputArray(2);
+  out3 <= outputArray(3);
+  out4 <= outputArray(4);
+  out5 <= outputArray(5);
+  out6 <= outputArray(6);
+  out7 <= outputArray(7);
+  out8 <= outputArray(8);
 
-  outputArray(1) <= 
-  --component interfaceOut is
-  --    Generic
-  --    (
-  --      PORT_NO : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
-  --      router_id : std_logic_vector(31 downto 0) := "11110011000000000000000000000000"
-  --    );
-  --    Port ( 
-  --       clk : in std_logic;
-  --       qin1 : in std_logic_vector(7 downto 0); -- ACKs
-  --       qin2 : in std_logic_vector(7 downto 0); -- LSA
-  --       readq1 : out std_logic;
-  --       readq2 : out std_logic;
-  --       empq1 : in std_logic;
-  --       empq2 : in std_logic;
-  --       dout: out std_logic_vector(7 downto 0);
-  --    -- if((current_state=serve1 or current_state=serve2) and not(current_byte_no=1 or current_byte_no=2)) then
-  --       dout_val: out std_logic
-  --    );
-  --end component;
+  --Mapping output validities to output validity array
+  out_val1 <= outputvalArray(1);
+  out_val2 <= outputvalArray(2);
+  out_val3 <= outputvalArray(3);
+  out_val4 <= outputvalArray(4);
+  out_val5 <= outputvalArray(5);
+  out_val6 <= outputvalArray(6);
+  out_val7 <= outputvalArray(7);
+  out_val8 <= outputvalArray(8);
+ 
+
+  --Interface output machines + queues + LSUParser + LSRMachine + DBDMachine for-generate loop
   INTERFACE_OUTPUTS : for i in 1 to 8 generate
     I : interfaceOut
       generic map 
@@ -282,10 +288,90 @@ begin
         readq2 => LSAQRArr(i),
         empq1 => ackQEArr(i),
         empq2 => LSAQEArr(i),
+        dout => outputArray(i),
+        dout_val => outputvalArray(i)
+      );
 
+    AcKQ : InterfaceFIFO
+      port map
+      (
+        clk => clk,
+        rst => rst,
+        din => ackQIArr(i),
+        wr_en => ackQWArr(i),
+        rd_en => ackQRArr(i),
+        dout => ackQOArr(i),
+        full => ackQFArr(i),
+        empty => ackQEArr(i),
+        data_count => ackQDCArr(i)
+      );
+
+    LSAQ : InterfaceFIFO
+      port map
+      (
+        clk => clk,
+        rst => rst,
+        din => LSAQIArr(i),
+        wr_en => LSAQWArr(i),
+        rd_en => LSAQRArr(i),
+        dout => LSAQOArr(i),
+        full => LSAQFArr(i),
+        empty => LSAQEArr(i),
+        data_count => LSAQDCArr(i)
+      );
+    --    component LSU_Parser is
+    --    Generic
+    --    (
+    --        PORT_NO : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
+    --        router_id : std_logic_vector(31 downto 0) := "11110011000000000000000000000000"
+    --    );
+    --    Port ( state_in : in  STD_LOGIC_VECTOR (3 downto 0);
+    --           data_in : in  STD_LOGIC_VECTOR (7 downto 0);
+    --           data_valid : in  STD_LOGIC;
+    --        clk : in std_logic;
+    --           write_to_q : out  STD_LOGIC;
+    --           qout : out  STD_LOGIC_VECTOR (7 downto 0);
+    --           ack_q_out : out STD_LOGIC_VECTOR(7 downto 0);
+    --           ack_q_val : out std_logic);
+    --end component;
+
+    --TODO TODO TODO
+    LSUP : LSU_Parser
+      generic map
+      (
+        PORT_NO => std_logic_vector(to_unsigned(i, 8)),
+        router_id => router_id
+      )
+      port map
+      (
 
       );
+
+    --TODO - HelloAlive Machine
+    --TODO - DBD Machine
+    --TODO - LSR Machine
   end generate;
+
+  --COMPONENT RAMDB
+  --  PORT (
+  --    clka : IN STD_LOGIC;
+  --    ena : IN STD_LOGIC;
+  --    wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+  --    addra : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+  --    dina : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+  --    douta : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
+  --  );
+  --END COMPONENT;
+  Database_RAM : RAMDB
+    port map
+    (
+      clka => clk,
+      ena => dbRAMena,
+      wea => dbRAMwea,
+      addra => dbRAMaddr,
+      dina => dbRAMdin,
+      douta => dbRAMdout
+    );
 
 
 

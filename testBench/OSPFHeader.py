@@ -91,7 +91,7 @@ def LSA(lsid, seqno, linkarray):
 def LSU(rid, LSAList):
     LSAComb = "".join(LSAList)
     header = makeHeader(4, rid, len(LSAComb)//8)
-    return header + LSAComb
+    return header + pad(len(LSAList), 32) + LSAComb
 
 
 # Router A
