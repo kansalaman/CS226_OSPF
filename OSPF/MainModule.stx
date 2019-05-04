@@ -1,0 +1,143 @@
+Release 14.7 - xst P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to /home/yash20/isefiles/CS226_OSPF/OSPF/xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.03 secs
+ 
+--> 
+Parameter xsthdpdir set to /home/yash20/isefiles/CS226_OSPF/OSPF/xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.03 secs
+ 
+--> 
+Reading design: MainModule.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Parsing
+  3) HDL Elaboration
+  4) HDL Synthesis
+       4.1) HDL Synthesis Report
+  5) Advanced HDL Synthesis
+       5.1) Advanced HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Partition Report
+  8) Design Summary
+       8.1) Primitive and Black Box Usage
+       8.2) Device utilization summary
+       8.3) Partition Resource Summary
+       8.4) Timing Report
+            8.4.1) Clock Information
+            8.4.2) Asynchronous Control Signals Information
+            8.4.3) Timing Summary
+            8.4.4) Timing Details
+            8.4.5) Cross Clock Domains Report
+
+
+=========================================================================
+*                          HDL Parsing                                  *
+=========================================================================
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/ipcore_dir/RAMDijkstra.vhd" into library work
+Parsing entity <RAMDijkstra>.
+Parsing architecture <RAMDijkstra_a> of entity <ramdijkstra>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/ipcore_dir/FIFOLSU.vhd" into library work
+Parsing entity <FIFOLSU>.
+Parsing architecture <FIFOLSU_a> of entity <fifolsu>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/ipcore_dir/RAMDB.vhd" into library work
+Parsing entity <RAMDB>.
+Parsing architecture <RAMDB_a> of entity <ramdb>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/ipcore_dir/RoutingDB.vhd" into library work
+Parsing entity <RoutingDB>.
+Parsing architecture <RoutingDB_a> of entity <routingdb>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/ipcore_dir/InterfaceFIFO.vhd" into library work
+Parsing entity <InterfaceFIFO>.
+Parsing architecture <InterfaceFIFO_a> of entity <interfacefifo>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/Comparator_Simple.vhd" into library work
+Parsing entity <Comparator_Simple>.
+Parsing architecture <Behavioral> of entity <comparator_simple>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/Comparator_Single.vhd" into library work
+Parsing entity <Comparator_Single>.
+Parsing architecture <Behavioral> of entity <comparator_single>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/numones.vhd" into library work
+Parsing entity <numones>.
+Parsing architecture <Behavioral> of entity <numones>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/LSAFetcher.vhd" into library work
+Parsing entity <LSAFetcher>.
+Parsing architecture <Behavioral> of entity <lsafetcher>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/helloActParse.vhd" into library work
+Parsing entity <helloActParse>.
+Parsing architecture <Behavioral> of entity <helloactparse>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/Comparator.vhd" into library work
+Parsing entity <Comparator>.
+Parsing architecture <Behavioral> of entity <comparator>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/Parser.vhd" into library work
+Parsing entity <Parser>.
+Parsing architecture <Behavioral> of entity <parser>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/NeighborMachine.vhd" into library work
+Parsing entity <NeighborMachine>.
+Parsing architecture <Behavioral> of entity <neighbormachine>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/LSU_Parser.vhd" into library work
+Parsing entity <LSU_Parser>.
+Parsing architecture <Behavioral> of entity <lsu_parser>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/lsugen.vhd" into library work
+Parsing entity <lsugen>.
+Parsing architecture <Behavioral> of entity <lsugen>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/lsraction.vhd" into library work
+Parsing entity <lsraction>.
+Parsing architecture <Behavioral> of entity <lsraction>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/LinkStateUpdateMachine.vhd" into library work
+Parsing entity <LinkStateUpdateMachine>.
+Parsing architecture <Behavioral> of entity <linkstateupdatemachine>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/interfaceOut.vhd" into library work
+Parsing entity <interfaceOut>.
+Parsing architecture <Behavioral> of entity <interfaceout>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/helloalive.vhd" into library work
+Parsing entity <helloalive>.
+Parsing architecture <Behavioral> of entity <helloalive>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/FloodingFSM.vhd" into library work
+Parsing entity <FloodingFSM>.
+Parsing architecture <Behavioral> of entity <floodingfsm>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/Dijkstra.vhd" into library work
+Parsing entity <Dijkstra>.
+Parsing architecture <Behavioral> of entity <dijkstra>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/DBtoDijkstra.vhd" into library work
+Parsing entity <DBtoDijkstra>.
+Parsing architecture <Behavioral> of entity <dbtodijkstra>.
+Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" into library work
+Parsing entity <MainModule>.
+Parsing architecture <Behavioral> of entity <mainmodule>.
+ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 483: Cannot update 'in' object out_val1
+ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 484: Cannot update 'in' object out_val2
+ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 485: Cannot update 'in' object out_val3
+ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 486: Cannot update 'in' object out_val4
+ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 487: Cannot update 'in' object out_val5
+ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 488: Cannot update 'in' object out_val6
+ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 489: Cannot update 'in' object out_val7
+ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 490: Cannot update 'in' object out_val8
+ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 492: Type error near in_val1 ; current type std_logic_vector; expected type std_ulogic
+ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 493: Type error near in_val2 ; current type std_logic_vector; expected type std_ulogic
+ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 494: Type error near in_val3 ; current type std_logic_vector; expected type std_ulogic
+ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 495: Type error near in_val4 ; current type std_logic_vector; expected type std_ulogic
+ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 496: Type error near in_val5 ; current type std_logic_vector; expected type std_ulogic
+ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 497: Type error near in_val6 ; current type std_logic_vector; expected type std_ulogic
+ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 498: Type error near in_val7 ; current type std_logic_vector; expected type std_ulogic
+ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 499: Type error near in_val8 ; current type std_logic_vector; expected type std_ulogic
+WARNING:HDLCompiler:946 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 552: Actual for formal port state_in is neither a static name nor a globally static expression
+ERROR:HDLCompiler:32 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 562: <i> is already declared in this region.
+ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 629: Type error near telling_plen ; current type ioarrayv; expected type std_logic
+ERROR:HDLCompiler:69 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 636: <lsr_db_addr> is not declared.
+Sorry, too many errors..
+--> 
+
+
+Total memory usage is 347332 kilobytes
+
+Number of errors   :   19 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+
