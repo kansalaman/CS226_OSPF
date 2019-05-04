@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
 Reading design: interfaceOut.prj
@@ -135,11 +135,13 @@ Synthesizing Unit <interfaceOut>.
     Found 2-bit register for signal <packet_count>.
     Found 16-bit register for signal <lsa_length>.
     Found 32-bit register for signal <max_index>.
+    Found 1-bit register for signal <dout_val>.
     Found 8-bit register for signal <dout>.
     Found 1-bit register for signal <readq1>.
     Found 1-bit register for signal <readq2>.
     Found 32-bit register for signal <dataobtained_p>.
     Found 3-bit register for signal <p_state>.
+    Found 2-bit register for signal <temp_wait>.
     Found finite state machine <FSM_0> for signal <p_state>.
     -----------------------------------------------------------------------
     | States             | 5                                              |
@@ -151,14 +153,14 @@ Synthesizing Unit <interfaceOut>.
     | Encoding           | auto                                           |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-    Found 32-bit adder for signal <plen_vec1> created at line 98.
-    Found 32-bit adder for signal <plen_vec2> created at line 99.
-    Found 2-bit adder for signal <packet_count[1]_GND_6_o_add_15_OUT> created at line 129.
-    Found 32-bit adder for signal <max_index[31]_GND_6_o_add_29_OUT> created at line 145.
-    Found 32-bit adder for signal <dataobtained_p[31]_GND_6_o_add_90_OUT> created at line 237.
-    Found 32-bit adder for signal <p_counter[31]_GND_6_o_add_1942_OUT> created at line 324.
-    Found 8-bit 361-to-1 multiplexer for signal <n_counter[8]_X_6_o_wide_mux_65_OUT> created at line 195.
-    Found 32-bit 5-to-1 multiplexer for signal <n_counter> created at line 266.
+    Found 32-bit adder for signal <plen_vec1> created at line 99.
+    Found 32-bit adder for signal <plen_vec2> created at line 100.
+    Found 2-bit adder for signal <packet_count[1]_GND_6_o_add_25_OUT> created at line 141.
+    Found 32-bit adder for signal <max_index[31]_GND_6_o_add_41_OUT> created at line 159.
+    Found 32-bit adder for signal <dataobtained_p[31]_GND_6_o_add_104_OUT> created at line 255.
+    Found 32-bit adder for signal <p_counter[31]_GND_6_o_add_1965_OUT> created at line 348.
+    Found 8-bit 361-to-1 multiplexer for signal <n_counter[8]_X_6_o_wide_mux_79_OUT> created at line 211.
+    Found 32-bit 5-to-1 multiplexer for signal <n_counter> created at line 284.
 WARNING:Xst:737 - Found 1-bit latch for signal <data_arr<0><7>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <data_arr<0><6>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <data_arr<0><5>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
@@ -3047,17 +3049,19 @@ WARNING:Xst:737 - Found 1-bit latch for signal <data_arr<360><3>>. Latches may b
 WARNING:Xst:737 - Found 1-bit latch for signal <data_arr<360><2>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <data_arr<360><1>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <data_arr<360><0>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-    Found 32-bit comparator lessequal for signal <n0041> created at line 183
-    Found 32-bit comparator lessequal for signal <n0043> created at line 183
-    Found 32-bit comparator greater for signal <max_index[31]_dataobtained_p[31]_LessThan_103_o> created at line 245
-    Found 32-bit comparator equal for signal <lsa_length_int[31]_p_counter[31]_equal_1926_o> created at line 300
-    Found 32-bit comparator equal for signal <max_index[31]_p_counter[31]_equal_1942_o> created at line 319
+    Found 32-bit comparator equal for signal <lsa_length_int[31]_n_counter[31]_equal_10_o> created at line 116
+    Found 32-bit comparator lessequal for signal <n0051> created at line 199
+    Found 32-bit comparator lessequal for signal <n0053> created at line 199
+    Found 32-bit comparator greater for signal <max_index[31]_dataobtained_p[31]_LessThan_118_o> created at line 263
+    Found 32-bit comparator equal for signal <lsa_length_int[31]_p_counter[31]_equal_1947_o> created at line 324
+    Found 32-bit comparator equal for signal <max_index[31]_p_counter[31]_equal_1965_o> created at line 343
+    WARNING:Xst:2404 -  FFs/Latches <temp_wait<31:2>> (without init value) have a constant value of 0 in block <interfaceOut>.
     Summary:
 	inferred   6 Adder/Subtractor(s).
-	inferred 128 D-type flip-flop(s).
+	inferred 131 D-type flip-flop(s).
 	inferred 2888 Latch(s).
-	inferred   5 Comparator(s).
-	inferred 6163 Multiplexer(s).
+	inferred   6 Comparator(s).
+	inferred 6177 Multiplexer(s).
 	inferred   1 Finite State Machine(s).
 Unit <interfaceOut> synthesized.
 
@@ -3068,22 +3072,23 @@ Macro Statistics
 # Adders/Subtractors                                   : 6
  2-bit adder                                           : 1
  32-bit adder                                          : 5
-# Registers                                            : 10
- 1-bit register                                        : 2
+# Registers                                            : 12
+ 1-bit register                                        : 3
  16-bit register                                       : 1
- 2-bit register                                        : 3
+ 2-bit register                                        : 4
  32-bit register                                       : 3
  8-bit register                                        : 1
 # Latches                                              : 2888
  1-bit latch                                           : 2888
-# Comparators                                          : 5
- 32-bit comparator equal                               : 2
+# Comparators                                          : 6
+ 32-bit comparator equal                               : 3
  32-bit comparator greater                             : 1
  32-bit comparator lessequal                           : 2
-# Multiplexers                                         : 6163
- 1-bit 2-to-1 multiplexer                              : 6137
+# Multiplexers                                         : 6177
+ 1-bit 2-to-1 multiplexer                              : 6149
  16-bit 2-to-1 multiplexer                             : 2
- 32-bit 2-to-1 multiplexer                             : 10
+ 2-bit 2-to-1 multiplexer                              : 1
+ 32-bit 2-to-1 multiplexer                             : 11
  32-bit 5-to-1 multiplexer                             : 1
  8-bit 2-to-1 multiplexer                              : 12
  8-bit 361-to-1 multiplexer                            : 1
@@ -3097,8 +3102,8 @@ Macro Statistics
 
 
 Synthesizing (advanced) Unit <interfaceOut>.
-The following registers are absorbed into counter <packet_count>: 1 register on signal <packet_count>.
 The following registers are absorbed into counter <max_index>: 1 register on signal <max_index>.
+The following registers are absorbed into counter <packet_count>: 1 register on signal <packet_count>.
 Unit <interfaceOut> synthesized (advanced).
 
 =========================================================================
@@ -3111,17 +3116,18 @@ Macro Statistics
 # Counters                                             : 2
  2-bit up counter                                      : 1
  32-bit up counter                                     : 1
-# Registers                                            : 94
- Flip-Flops                                            : 94
-# Comparators                                          : 5
- 32-bit comparator equal                               : 2
+# Registers                                            : 97
+ Flip-Flops                                            : 97
+# Comparators                                          : 6
+ 32-bit comparator equal                               : 3
  32-bit comparator greater                             : 1
  32-bit comparator lessequal                           : 2
-# Multiplexers                                         : 6185
- 1-bit 2-to-1 multiplexer                              : 6153
+# Multiplexers                                         : 6184
+ 1-bit 2-to-1 multiplexer                              : 6149
  1-bit 361-to-1 multiplexer                            : 8
- 16-bit 2-to-1 multiplexer                             : 1
- 32-bit 2-to-1 multiplexer                             : 10
+ 16-bit 2-to-1 multiplexer                             : 2
+ 2-bit 2-to-1 multiplexer                              : 1
+ 32-bit 2-to-1 multiplexer                             : 11
  32-bit 5-to-1 multiplexer                             : 1
  8-bit 2-to-1 multiplexer                              : 12
 # FSMs                                                 : 1
@@ -3142,19 +3148,16 @@ Optimizing FSM <FSM_0> on signal <p_state[1:3]> with user encoding.
  makehead  | 011
  packetout | 100
 -----------------------
-WARNING:Xst:1293 - FF/Latch <lsa_length_2> has a constant value of 1 in block <interfaceOut>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <lsa_length_4> has a constant value of 1 in block <interfaceOut>. This FF/Latch will be trimmed during the optimization process.
 INFO:Xst:2261 - The FF/Latch <state_temp_1> in Unit <interfaceOut> is equivalent to the following FF/Latch, which will be removed : <makeLSUhead_1> 
 
 Optimizing unit <interfaceOut> ...
-INFO:Xst:2261 - The FF/Latch <lsa_length_0> in Unit <interfaceOut> is equivalent to the following 5 FFs/Latches, which will be removed : <lsa_length_1> <lsa_length_3> <lsa_length_5> <lsa_length_6> <lsa_length_7> 
 INFO:Xst:3203 - The FF/Latch <state_temp_1> in Unit <interfaceOut> is the opposite to the following FF/Latch, which will be removed : <makeLSUhead_0> 
 
 Mapping all equations...
 Building and optimizing final netlist ...
 Found area constraint ratio of 100 (+ 5) on block interfaceOut, actual ratio is 25.
-FlipFlop p_state_FSM_FFd2 has been replicated 1 time(s)
-FlipFlop state_temp_1 has been replicated 1 time(s)
+FlipFlop p_counter_1 has been replicated 1 time(s)
+FlipFlop state_temp_1 has been replicated 2 time(s)
 
 Final Macro Processing ...
 
@@ -3162,8 +3165,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 124
- Flip-Flops                                            : 124
+# Registers                                            : 135
+ Flip-Flops                                            : 135
 
 =========================================================================
 
@@ -3186,22 +3189,22 @@ Top Level Output File Name         : interfaceOut.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 5481
+# BELS                             : 5578
 #      GND                         : 1
-#      INV                         : 12
-#      LUT1                        : 146
-#      LUT2                        : 27
-#      LUT3                        : 37
-#      LUT4                        : 111
-#      LUT5                        : 372
-#      LUT6                        : 4409
-#      MUXCY                       : 198
-#      MUXF7                       : 12
+#      INV                         : 10
+#      LUT1                        : 147
+#      LUT2                        : 16
+#      LUT3                        : 29
+#      LUT4                        : 142
+#      LUT5                        : 389
+#      LUT6                        : 4464
+#      MUXCY                       : 208
+#      MUXF7                       : 16
 #      VCC                         : 1
 #      XORCY                       : 155
-# FlipFlops/Latches                : 3012
-#      FD                          : 38
-#      FDE                         : 12
+# FlipFlops/Latches                : 3023
+#      FD                          : 41
+#      FDE                         : 20
 #      FDR                         : 32
 #      FDRE                        : 42
 #      LDE                         : 2888
@@ -3219,15 +3222,15 @@ Selected Device : 6slx45tcsg324-2
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:            3012  out of  54576     5%  
- Number of Slice LUTs:                 5114  out of  27288    18%  
-    Number used as Logic:              5114  out of  27288    18%  
+ Number of Slice Registers:            3023  out of  54576     5%  
+ Number of Slice LUTs:                 5197  out of  27288    19%  
+    Number used as Logic:              5197  out of  27288    19%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:   5176
-   Number with an unused Flip Flop:    2164  out of   5176    41%  
-   Number with an unused LUT:            62  out of   5176     1%  
-   Number of fully used LUT-FF pairs:  2950  out of   5176    56%  
+ Number of LUT Flip Flop pairs used:   5264
+   Number with an unused Flip Flop:    2241  out of   5264    42%  
+   Number with an unused LUT:            67  out of   5264     1%  
+   Number of fully used LUT-FF pairs:  2956  out of   5264    56%  
    Number of unique control sets:       368
 
 IO Utilization: 
@@ -3258,8 +3261,8 @@ Clock Information:
 ----------------------------------------------------------------------------------------------------------------------+------------------------+-------+
 Clock Signal                                                                                                          | Clock buffer(FF name)  | Load  |
 ----------------------------------------------------------------------------------------------------------------------+------------------------+-------+
-clk                                                                                                                   | BUFGP                  | 124   |
-max_index[31]_dataobtained_p[31]_LessThan_103_o(Mcompar_max_index[31]_dataobtained_p[31]_LessThan_103_o_cy<15>_inv1:O)| BUFG(*)(data_arr<1>_7) | 2888  |
+clk                                                                                                                   | BUFGP                  | 135   |
+max_index[31]_dataobtained_p[31]_LessThan_118_o(Mcompar_max_index[31]_dataobtained_p[31]_LessThan_118_o_cy<15>_inv1:O)| BUFG(*)(data_arr<0>_7) | 2888  |
 ----------------------------------------------------------------------------------------------------------------------+------------------------+-------+
 (*) This 1 clock signal(s) are generated by combinatorial logic,
 and XST is not able to identify which are the primary clock signals.
@@ -3273,8 +3276,8 @@ Timing Summary:
 ---------------
 Speed Grade: -2
 
-   Minimum period: 13.049ns (Maximum Frequency: 76.633MHz)
-   Minimum input arrival time before clock: 12.722ns
+   Minimum period: 14.198ns (Maximum Frequency: 70.432MHz)
+   Minimum input arrival time before clock: 13.539ns
    Maximum output required time after clock: 4.118ns
    Maximum combinational path delay: No path found
 
@@ -3284,53 +3287,53 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk'
-  Clock period: 13.049ns (frequency: 76.633MHz)
-  Total number of paths / destination ports: 696896 / 252
+  Clock period: 14.198ns (frequency: 70.432MHz)
+  Total number of paths / destination ports: 3870373 / 271
 -------------------------------------------------------------------------
-Delay:               13.049ns (Levels of Logic = 11)
-  Source:            p_counter_20 (FF)
-  Destination:       dout_0 (FF)
+Delay:               14.198ns (Levels of Logic = 11)
+  Source:            p_counter_0 (FF)
+  Destination:       dout_2 (FF)
   Source Clock:      clk rising
   Destination Clock: clk rising
 
-  Data Path: p_counter_20 to dout_0
+  Data Path: p_counter_0 to dout_2
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q               4   0.525   1.259  p_counter_20 (p_counter_20)
-     LUT6:I0->O            1   0.254   0.000  Mcompar_lsa_length_int[31]_p_counter[31]_equal_1926_o_lut<6> (Mcompar_lsa_length_int[31]_p_counter[31]_equal_1926_o_lut<6>)
-     MUXCY:S->O            1   0.215   0.000  Mcompar_lsa_length_int[31]_p_counter[31]_equal_1926_o_cy<6> (Mcompar_lsa_length_int[31]_p_counter[31]_equal_1926_o_cy<6>)
-     MUXCY:CI->O          71   0.023   1.984  Mcompar_lsa_length_int[31]_p_counter[31]_equal_1926_o_cy<7> (lsa_length_int[31]_p_counter[31]_equal_1926_o)
-     LUT6:I5->O           13   0.254   1.206  Mmux_n_counter3_SW1_1 (Mmux_n_counter3_SW1)
-     LUT6:I4->O           21   0.250   1.310  Mmux_n_counter3_3 (Mmux_n_counter32)
-     LUT6:I5->O            1   0.254   0.910  mux16_21 (mux16_21)
-     LUT6:I3->O            1   0.235   0.958  mux16_15 (mux16_15)
-     LUT6:I2->O            1   0.254   0.958  mux16_9 (mux16_9)
-     LUT6:I2->O            1   0.254   0.682  Mmux_dout[7]_GND_6_o_mux_79_OUT33 (Mmux_dout[7]_GND_6_o_mux_79_OUT32)
-     LUT6:I5->O            1   0.254   0.682  Mmux_dout[7]_GND_6_o_mux_79_OUT34 (Mmux_dout[7]_GND_6_o_mux_79_OUT33)
-     LUT6:I5->O            1   0.254   0.000  Mmux_dout[7]_GND_6_o_mux_79_OUT36 (dout[7]_GND_6_o_mux_79_OUT<0>)
-     FDRE:D                    0.074          dout_0
+     FD:C->Q               5   0.525   1.271  p_counter_0 (p_counter_0)
+     LUT6:I1->O            3   0.254   1.196  GND_6_o_p_counter[31]_equal_1957_o<31>11 (GND_6_o_p_counter[31]_equal_1957_o<31>11)
+     LUT6:I1->O            8   0.254   1.052  p_state_FSM_FFd2-In11 (p_state_FSM_FFd2-In1)
+     LUT6:I4->O            2   0.250   0.834  Mmux_n_counter1141_SW0 (N248)
+     LUT6:I4->O           19   0.250   1.261  Mmux_n_counter1143_1 (Mmux_n_counter1143)
+     LUT4:I3->O            7   0.254   1.340  Mmux_n_counter451 (n_counter<29>)
+     LUT6:I1->O            8   0.254   1.220  GND_6_o_GND_6_o_AND_13_o14_1 (GND_6_o_GND_6_o_AND_13_o141)
+     LUT6:I2->O           21   0.254   1.310  GND_6_o_GND_6_o_AND_8_o1 (GND_6_o_GND_6_o_AND_8_o)
+     LUT6:I5->O            2   0.254   0.726  Mmux_dout[7]_GND_6_o_mux_93_OUT94 (Mmux_dout[7]_GND_6_o_mux_93_OUT93)
+     LUT6:I5->O            1   0.254   0.000  Mmux_dout[7]_GND_6_o_mux_93_OUT92_SW1_G (N284)
+     MUXF7:I1->O           1   0.175   0.682  Mmux_dout[7]_GND_6_o_mux_93_OUT92_SW1 (N262)
+     LUT6:I5->O            1   0.254   0.000  Mmux_dout[7]_GND_6_o_mux_93_OUT97 (dout[7]_GND_6_o_mux_93_OUT<2>)
+     FDRE:D                    0.074          dout_2
     ----------------------------------------
-    Total                     13.049ns (3.100ns logic, 9.949ns route)
-                                       (23.8% logic, 76.2% route)
+    Total                     14.198ns (3.306ns logic, 10.892ns route)
+                                       (23.3% logic, 76.7% route)
 
 =========================================================================
-Timing constraint: Default period analysis for Clock 'max_index[31]_dataobtained_p[31]_LessThan_103_o'
+Timing constraint: Default period analysis for Clock 'max_index[31]_dataobtained_p[31]_LessThan_118_o'
   Clock period: 1.741ns (frequency: 574.383MHz)
   Total number of paths / destination ports: 2888 / 2888
 -------------------------------------------------------------------------
 Delay:               1.741ns (Levels of Logic = 1)
   Source:            data_arr<19>_7 (LATCH)
   Destination:       data_arr<19>_7 (LATCH)
-  Source Clock:      max_index[31]_dataobtained_p[31]_LessThan_103_o falling
-  Destination Clock: max_index[31]_dataobtained_p[31]_LessThan_103_o falling
+  Source Clock:      max_index[31]_dataobtained_p[31]_LessThan_118_o falling
+  Destination Clock: max_index[31]_dataobtained_p[31]_LessThan_118_o falling
 
   Data Path: data_arr<19>_7 to data_arr<19>_7
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      LDE:G->Q              3   0.581   0.874  data_arr<19>_7 (data_arr<19>_7)
-     LUT6:I4->O            1   0.250   0.000  Mmux_data_arr[19][7]_data_arr[19][7]_MUX_1531_o11 (data_arr[19][7]_data_arr[19][7]_MUX_1531_o)
+     LUT6:I4->O            1   0.250   0.000  Mmux_data_arr[19][7]_data_arr[19][7]_MUX_1530_o11 (data_arr[19][7]_data_arr[19][7]_MUX_1530_o)
      LDE:D                     0.036          data_arr<19>_7
     ----------------------------------------
     Total                      1.741ns (0.867ns logic, 0.874ns route)
@@ -3338,47 +3341,47 @@ Delay:               1.741ns (Levels of Logic = 1)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
-  Total number of paths / destination ports: 12022 / 217
+  Total number of paths / destination ports: 52145 / 236
 -------------------------------------------------------------------------
-Offset:              12.722ns (Levels of Logic = 10)
+Offset:              13.539ns (Levels of Logic = 10)
   Source:            empq1 (PAD)
-  Destination:       dout_0 (FF)
+  Destination:       dout_1 (FF)
   Destination Clock: clk rising
 
-  Data Path: empq1 to dout_0
+  Data Path: empq1 to dout_1
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             9   1.328   1.406  empq1_IBUF (empq1_IBUF)
-     LUT6:I1->O            5   0.254   0.949  Mmux_n_counter222_1 (Mmux_n_counter2221)
-     LUT6:I4->O           13   0.250   1.206  Mmux_n_counter3_SW1_1 (Mmux_n_counter3_SW1)
-     LUT6:I4->O           21   0.250   1.310  Mmux_n_counter3_3 (Mmux_n_counter32)
-     LUT6:I5->O            1   0.254   0.910  mux16_21 (mux16_21)
-     LUT6:I3->O            1   0.235   0.958  mux16_15 (mux16_15)
-     LUT6:I2->O            1   0.254   0.958  mux16_9 (mux16_9)
-     LUT6:I2->O            1   0.254   0.682  Mmux_dout[7]_GND_6_o_mux_79_OUT33 (Mmux_dout[7]_GND_6_o_mux_79_OUT32)
-     LUT6:I5->O            1   0.254   0.682  Mmux_dout[7]_GND_6_o_mux_79_OUT34 (Mmux_dout[7]_GND_6_o_mux_79_OUT33)
-     LUT6:I5->O            1   0.254   0.000  Mmux_dout[7]_GND_6_o_mux_79_OUT36 (dout[7]_GND_6_o_mux_79_OUT<0>)
-     FDRE:D                    0.074          dout_0
+     IBUF:I->O            13   1.328   1.374  empq1_IBUF (empq1_IBUF)
+     LUT4:I0->O            2   0.254   0.834  Mmux_n_counter115_SW0 (N19)
+     LUT6:I4->O           58   0.250   1.991  Mmux_n_counter115 (Mmux_n_counter115)
+     LUT6:I4->O           14   0.250   1.235  Mmux_n_counter251_28 (Mmux_n_counter25127)
+     LUT6:I4->O            1   0.250   1.112  mux1_185 (mux1_185)
+     LUT6:I1->O            1   0.254   0.910  mux1_143 (mux1_143)
+     LUT6:I3->O            1   0.235   0.790  mux1_101 (mux1_101)
+     LUT6:I4->O            1   0.250   0.682  Mmux_dout[7]_GND_6_o_mux_93_OUT62 (Mmux_dout[7]_GND_6_o_mux_93_OUT61)
+     LUT5:I4->O            1   0.254   0.958  Mmux_dout[7]_GND_6_o_mux_93_OUT63 (Mmux_dout[7]_GND_6_o_mux_93_OUT62)
+     LUT6:I2->O            1   0.254   0.000  Mmux_dout[7]_GND_6_o_mux_93_OUT65 (dout[7]_GND_6_o_mux_93_OUT<1>)
+     FDRE:D                    0.074          dout_1
     ----------------------------------------
-    Total                     12.722ns (3.661ns logic, 9.061ns route)
-                                       (28.8% logic, 71.2% route)
+    Total                     13.539ns (3.653ns logic, 9.886ns route)
+                                       (27.0% logic, 73.0% route)
 
 =========================================================================
-Timing constraint: Default OFFSET IN BEFORE for Clock 'max_index[31]_dataobtained_p[31]_LessThan_103_o'
+Timing constraint: Default OFFSET IN BEFORE for Clock 'max_index[31]_dataobtained_p[31]_LessThan_118_o'
   Total number of paths / destination ports: 5776 / 2888
 -------------------------------------------------------------------------
 Offset:              4.270ns (Levels of Logic = 2)
   Source:            qin1<7> (PAD)
-  Destination:       data_arr<1>_7 (LATCH)
-  Destination Clock: max_index[31]_dataobtained_p[31]_LessThan_103_o falling
+  Destination:       data_arr<0>_7 (LATCH)
+  Destination Clock: max_index[31]_dataobtained_p[31]_LessThan_118_o falling
 
-  Data Path: qin1<7> to data_arr<1>_7
+  Data Path: qin1<7> to data_arr<0>_7
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      IBUF:I->O           361   1.328   2.671  qin1_7_IBUF (qin1_7_IBUF)
-     LUT6:I3->O            1   0.235   0.000  Mmux_data_arr[0][7]_data_arr[0][7]_MUX_619_o11 (data_arr[0][7]_data_arr[0][7]_MUX_619_o)
+     LUT6:I3->O            1   0.235   0.000  Mmux_data_arr[0][7]_data_arr[0][7]_MUX_618_o11 (data_arr[0][7]_data_arr[0][7]_MUX_618_o)
      LDE:D                     0.036          data_arr<0>_7
     ----------------------------------------
     Total                      4.270ns (1.599ns logic, 2.671ns route)
@@ -3386,7 +3389,7 @@ Offset:              4.270ns (Levels of Logic = 2)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
-  Total number of paths / destination ports: 10 / 10
+  Total number of paths / destination ports: 11 / 11
 -------------------------------------------------------------------------
 Offset:              4.118ns (Levels of Logic = 1)
   Source:            dout_7 (FF)
@@ -3413,31 +3416,31 @@ Clock to Setup on destination clock clk
                                                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock                                   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 -----------------------------------------------+---------+---------+---------+---------+
-clk                                            |   13.049|         |         |         |
-max_index[31]_dataobtained_p[31]_LessThan_103_o|         |    7.777|         |         |
+clk                                            |   14.198|         |         |         |
+max_index[31]_dataobtained_p[31]_LessThan_118_o|         |    7.874|         |         |
 -----------------------------------------------+---------+---------+---------+---------+
 
-Clock to Setup on destination clock max_index[31]_dataobtained_p[31]_LessThan_103_o
+Clock to Setup on destination clock max_index[31]_dataobtained_p[31]_LessThan_118_o
 -----------------------------------------------+---------+---------+---------+---------+
                                                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock                                   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 -----------------------------------------------+---------+---------+---------+---------+
-clk                                            |         |         |    9.510|         |
-max_index[31]_dataobtained_p[31]_LessThan_103_o|         |         |    1.741|         |
+clk                                            |         |         |    9.992|         |
+max_index[31]_dataobtained_p[31]_LessThan_118_o|         |         |    1.741|         |
 -----------------------------------------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
 Total REAL time to Xst completion: 47.00 secs
-Total CPU time to Xst completion: 42.37 secs
+Total CPU time to Xst completion: 42.08 secs
  
 --> 
 
 
-Total memory usage is 490888 kilobytes
+Total memory usage is 491872 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings : 2890 (   0 filtered)
-Number of infos    :    3 (   0 filtered)
+Number of warnings : 2889 (   0 filtered)
+Number of infos    :    2 (   0 filtered)
 

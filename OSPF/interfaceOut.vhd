@@ -93,6 +93,7 @@ signal dataobtained_p : integer := 0;
 signal dataobtained : integer := 0;
 signal plen_vec1,plen_vec2 : std_logic_vector(31 downto 0);
 signal state_temp : integer range 0 to 3;
+signal temp_wait : integer := 0;
 begin
 lsa_length_int <= conv_integer(lsa_length);
 plen_vec1 <= std_logic_vector(to_unsigned(max_index+24,32));
@@ -110,6 +111,16 @@ begin
         p_state <= n_state;
         p_counter <= n_counter;
 
+        if((current_state = serve1 or current_state = serve2) and current_byte_no=lsa_length_int and temp_wait=0) then
+            temp_wait <= 2;
+        elsif((current_state = serve1 or current_state = serve2) and current_byte_no=lsa_length_int and temp_wait=2) then
+            temp_wait <= 1;
+        else
+            temp_wait <=0;
+        end if;
+        
+
+
         if(current_state=serve1) then
             state_temp <= 1;
         elsif(current_state=serve2) then
@@ -122,14 +133,16 @@ begin
             makeLSUhead <= 2;
         end if;
 
+        if(temp_wait = 0) then
         if(current_state=idle) then
             packet_count <= 0;
         elsif(current_state=serve1 or current_state=serve2) then
-            if(p_counter=lsa_length_int) then
+            if(current_byte_no=lsa_length_int) then
                 packet_count <= packet_count+1;
             else
                 packet_count <= packet_count;
             end if;
+        end if;
         end if;
 
 
@@ -141,12 +154,15 @@ begin
             lsa_length <= "0000000000010100";
         end if;
 
+        if(temp_wait=0) then
         if(current_state=serve1 or current_state=serve2) then
             max_index <= max_index+1;
         elsif(current_state=idle) then
             max_index <= 0;
+            --temp_wait <= 0;
         else
             max_index <= max_index;
+        end if;
         end if;
 
 
@@ -186,7 +202,7 @@ begin
         elsif(current_state=makeHead and current_byte_no/=28) then
             dout_val <= '1';
             dout <= "00000000";
-        elsif(current_state=makeHead and current_byte_no=28) then
+        elsif(current_state=makeHead and current_byte_no=28 and temp_wait=0) then
             dout_val <= '1';
             dout <= std_logic_vector(to_unsigned(packet_count,8));
         
@@ -206,14 +222,14 @@ begin
             
 
 
-        if(current_state=serve1) then
+        if(current_state=serve1 and temp_wait = 0) then
             readq1 <= '1';
             -- max_index <= current_byte_no;
         else
             readq1 <= '0';
         end if;
 
-        if(current_state=serve2) then
+        if(current_state=serve2 and temp_wait = 0) then
             readq2 <= '1';
             -- max_index <= current_byte_no;
         else
@@ -263,7 +279,7 @@ end process;
 -- end process;
 
 
-comb1 : process(p_state,p_counter,empq1,empq2,packet_count,lsa_length_int,makeLSUhead,max_index)
+comb1 : process(p_state,p_counter,empq1,empq2,packet_count,lsa_length_int,makeLSUhead,max_index,temp_wait)
 begin
     case p_state is
         when idle =>
@@ -285,7 +301,10 @@ begin
             elsif(empq1='1') then
                 n_state <= makeHead;
                 n_counter <= 1;
-            elsif(p_counter=lsa_length_int) then
+            elsif(p_counter=lsa_length_int and temp_wait/=0) then
+                n_state <= p_state;
+                n_counter <= p_counter;
+            elsif(p_counter=lsa_length_int and temp_wait=0) then
                 n_state <= p_state;
                 n_counter <= 1;
             else
@@ -299,9 +318,12 @@ begin
             elsif(empq2='1') then
                 n_state <= makeHead;
                 n_counter <= 1;
-            elsif(p_counter=lsa_length_int) then
+            elsif(p_counter=lsa_length_int and temp_wait/=0) then
                 n_state <= p_state;
-                n_counter <= 1;
+                n_counter <= p_counter;
+            elsif(p_counter=lsa_length_int and temp_wait=0) then
+                n_state <= p_state;
+                n_counter <= 4;
             else
                 n_state <= p_state;
                 n_counter <= p_counter+1;
