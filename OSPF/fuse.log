@@ -8,8 +8,8 @@ Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_
 Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsraction_tb.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 103760 KB
-Fuse CPU Usage: 1270 ms
+Fuse Memory Usage: 103764 KB
+Fuse CPU Usage: 1570 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
@@ -25,9 +25,8 @@ Compiling architecture behavioral of entity BLK_MEM_GEN_V7_3 [\BLK_MEM_GEN_V7_3(
 Compiling architecture ramdb_a of entity RAMDB [ramdb_default]
 Compiling architecture behavior of entity lsraction_tb
 Time Resolution for simulation is 1ps.
-Waiting for 1 sub-compilation(s) to finish...
 Compiled 21 VHDL Units
 Built simulation executable /home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsraction_tb_isim_beh.exe
-Fuse Memory Usage: 679984 KB
-Fuse CPU Usage: 1420 ms
-GCC CPU Usage: 300 ms
+Fuse Memory Usage: 679992 KB
+Fuse CPU Usage: 1740 ms
+GCC CPU Usage: 330 ms

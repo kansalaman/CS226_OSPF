@@ -51,6 +51,7 @@ entity lsraction is
 			 
 end lsraction;
 
+
 architecture Behavioral of lsraction is
 
 -- Constants
@@ -85,6 +86,8 @@ signal get_entries : std_logic := '1';
 signal advlen: std_logic_vector(15 downto 0) := (others => '0');
 signal cur_router, cur_item : std_logic_vector(31 downto 0) := (others => '0');
 
+
+
 begin
 
 SEQ: process(clk)
@@ -106,6 +109,7 @@ COMBSTATE:  process(p_state, len_val, data_val, p_len, p_advcounter, p_loc,
 		next_search_loc, advlen, adv_router_loc, len_loc, cur_item, p_lencounter, cur_router, 
 		entries, p_sendcounter, routers)
 variable lsanumber: integer := 0;
+variable update : integer := 0;
 variable iter: integer := 0;
 variable increment: integer := 0;
 
@@ -148,14 +152,15 @@ begin
 				routers(32*(3-lsanumber) -8 -1 downto 32*(3-lsanumber)-16) <= in1; 
 				n_readcounter <= p_readcounter + 1;
 			elsif (p_readcounter = "00001010") then
+				update := lsanumber +1;
 				routers(32*(3-lsanumber)-16 -1 downto 32*(3-lsanumber)-24) <= in1; 
 				n_readcounter <= p_readcounter + 1;
 			elsif	(p_readcounter = "00001011") then
 				routers(32*(3-lsanumber)-24-1 downto 32*(3-lsanumber)-32) <= in1; 
-				n_readcounter <= p_readcounter + 1;
-			elsif (p_readcounter = "00001011") then
+--				n_readcounter <= p_readcounter + 1;
+--			elsif (p_readcounter = "00001011") then
 				n_readcounter <= zero8;
-				lsanumber := lsanumber +1;
+				lsanumber := update;
 			else
 			n_readcounter <= p_readcounter+1;
 			end if;
@@ -164,6 +169,7 @@ begin
 		if (p_lsacounter = "000") then
 				n_state <= IDLE;
 				n_lsacounter <= "000";
+				n_loc <= zero8 & "0001";
 			else
 				n_lsacounter <= p_lsacounter - 1;
 				n_state <= LINSEARCH;
@@ -184,6 +190,7 @@ begin
 				if (conv_std_logic_vector(iter, 8) = entries) then
 					badreq <= '1';
 					n_state <= IDLE;
+					n_loc <= zero8 & "0001";
 				else
 					iter := increment;
 --					n_loc <= next_search_loc;
@@ -231,11 +238,11 @@ begin
 		if (cur_item = cur_router) then
 			db_addr <= p_loc;
 			n_state <= SENDING;
-			db_read <= '1';
-			n_loc <= zero8 & "0001";
+			db_read <= '1';	
+			n_loc <= p_loc;
 			n_sendcounter <= (others => '0');
 		else
-			n_loc <= p_loc + next_search_loc;
+			n_loc <= next_search_loc;
 			n_state <= LINSEARCH;
 			increment := iter +1;
 		end if;
@@ -244,6 +251,8 @@ begin
 				db_read <= '0';
 				db_addr <= p_loc;
 				n_sendcounter <= (others => '0'); 
+				next_search_loc <= zero8 & "0001";
+				n_loc <= zero8 & "0001";
 				if (p_lsacounter = "000") then
 					n_state <= IDLE;
 				else
@@ -252,8 +261,11 @@ begin
 			else
 				out_val <='1';
 				out1 <= db_din;
+				n_loc <= p_loc;
 				db_addr <= p_loc + conv_integer(p_sendcounter+1);
 				n_sendcounter <= p_sendcounter +1;
+				n_state <= p_state;
+				next_search_loc <= next_search_loc;
 			end if;
 				
 	end case;

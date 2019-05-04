@@ -29,3 +29,4 @@ ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -i -bm tb_numones.b
 map -intstyle ise -p xa7a100t-csg324-2I -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -mt off -ir off -pr off -lc off -power off -o lsraction_map.ncd lsraction.ngd lsraction.pcf 
 par -w -intstyle ise -ol high -mt off lsraction_map.ncd lsraction.ncd lsraction.pcf 
 trce -intstyle ise -v 3 -s 2I -n 3 -fastpaths -xml lsraction.twx lsraction.ncd -o lsraction.twr lsraction.pcf 
+xst -intstyle ise -ifn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsraction.xst" -ofn "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsraction.syr" 

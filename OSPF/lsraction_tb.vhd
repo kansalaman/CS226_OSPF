@@ -144,7 +144,7 @@ BEGIN
    begin		
       -- hold reset state for 100 ns.
       len_val <='1';
-		len <= "00000000" & "00100100";
+		len <= "00000000" & "00110000";
 		wait for clk_period;
 		len_val <='0';
 		len <= "00000000" & "00000000";
@@ -155,6 +155,10 @@ BEGIN
 		data_val <= '0';
 		wait for clk_period*7;
 		in1 <= "00000001";
+		wait for clk_period * 4;
+		in1 <= "00000000";
+		wait for clk_period * 8;
+		in1 <= "00000010";
 		wait for clk_period * 4;
 		in1 <= "00000000";
       -- insert stimulus here
