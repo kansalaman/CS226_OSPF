@@ -8,8 +8,8 @@ Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/LSAFetcher.vhd" into li
 Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/LSAFetcherTb.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 103620 KB
-Fuse CPU Usage: 990 ms
+Fuse Memory Usage: 103912 KB
+Fuse CPU Usage: 1110 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
@@ -27,6 +27,6 @@ Compiling architecture behavior of entity lsafetchertb
 Time Resolution for simulation is 1ps.
 Compiled 21 VHDL Units
 Built simulation executable /home/yash20/isefiles/CS226_OSPF/OSPF/LSAFetcherTb_isim_beh.exe
-Fuse Memory Usage: 122780 KB
-Fuse CPU Usage: 1110 ms
-GCC CPU Usage: 2170 ms
+Fuse Memory Usage: 123080 KB
+Fuse CPU Usage: 1230 ms
+GCC CPU Usage: 880 ms

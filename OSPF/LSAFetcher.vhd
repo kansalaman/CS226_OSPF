@@ -19,6 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -43,7 +44,8 @@ entity LSAFetcher is
            db_din : in  STD_LOGIC_VECTOR (7 downto 0);
            dout : out  STD_LOGIC_VECTOR (7 downto 0) := (others => '0');
            db_busy : in STD_LOGIC;
-           rd_val : out STD_LOGIC := '0');
+           rd_val : out STD_LOGIC := '0';
+           empty : out STD_LOGIC);
 end LSAFetcher;
 
 architecture Behavioral of LSAFetcher is
@@ -58,6 +60,7 @@ architecture Behavioral of LSAFetcher is
 				ADV1, ADV2, ADV3, ADV4, SEQ1, SEQ2, SEQ3, SEQ4, CHECK1, CHECK2, LEN1, LEN2);
 	signal n_state, p_state : FSM := IDLE;
 	signal numlsa_sig : STD_LOGIC_VECTOR(1 downto 0) := (others => '0');
+	signal empty_sig, empty_next : STD_LOGIC := '0';
 begin
 
 SEQ : process(clk)
@@ -70,9 +73,13 @@ begin
 
 		if (n_state = LEN2) then
 			numlsa_sig <= numlsa_sig + 1;
+		end if;
+		if (n_state = R_BEGIN) then
+			numlsa_sig <= "00";
 		end if ;
 		dout <= dout_next;
 		total_lsas <= total_next;
+		empty_sig <= empty_next;
 		--if (n_state = R_BEGIN) then
 		--	total_lsas <= next_data;
 		--	dout <= (others => '0');
@@ -82,20 +89,24 @@ begin
 	end if ;
 end process;
 
-COMB : process(p_state, curr_pointer, db_din, db_busy, rd_en, total_lsas, rst)
+COMB : process(p_state, curr_pointer, db_din, db_busy, rd_en, total_lsas, rst, empty_sig, numlsa_sig)
 	variable num_of_lsa : integer;
 begin
-	next_data <= db_din;
 
 	if (rst = '1') then
 		n_state <= IDLE;
 		next_pointer <= (ADDR_SIZE - 1 downto 1 => '0', others => '1');
 		db_addr <= (ADDR_SIZE - 1 downto 1 => '0', others => '1');
 		db_rd_en <= '0';
+		empty_next <= '0';
+		dout_next <= (others => '0');
+		rd_next <= '0';
+		total_next <= total_lsas;
 	else
 		
 		case( p_state ) is
 			when IDLE =>
+				empty_next <= empty_sig;
 				dout_next <= (others => '0');
 				total_next <= total_lsas;
 				rd_next <= '0';
@@ -116,6 +127,7 @@ begin
 					db_rd_en <= '0';
 				end if ;
 			when R_BEGIN =>
+				empty_next <= empty_sig;
 				rd_next <= '0';
 				dout_next <= (others => '0');
 				total_next <= db_din;
@@ -124,6 +136,7 @@ begin
 				db_addr <= curr_pointer;
 				db_rd_en <= '1';
 			when LSAGE1 =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= db_din;
 				total_next <= total_lsas;
@@ -132,6 +145,7 @@ begin
 				db_addr <= curr_pointer + 1;
 				db_rd_en <= '1';
 			when LSAGE2 =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= db_din;
 				total_next <= total_lsas;
@@ -140,6 +154,7 @@ begin
 				db_addr <= curr_pointer;
 				db_rd_en <= '1';
 			when OPTIONS =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= (others => '0');
 				total_next <= total_lsas;
@@ -148,14 +163,16 @@ begin
 				db_addr <= curr_pointer;
 				db_rd_en <= '1';
 			when LSTYPE =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
-				dout_next <= (7 downto 1 => '0', others => '1');
+				dout_next <= (others => '0');
 				total_next <= total_lsas;
 				n_state <= LINK1;
 				next_pointer <= curr_pointer + 1;
 				db_addr <= curr_pointer + 1;
 				db_rd_en <= '1';
 			when LINK1 =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= db_din;
 				total_next <= total_lsas;
@@ -164,6 +181,7 @@ begin
 				db_addr <= curr_pointer + 1;
 				db_rd_en <= '1';
 			when LINK2 =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= db_din;
 				total_next <= total_lsas;
@@ -172,6 +190,7 @@ begin
 				db_addr <= curr_pointer + 1;
 				db_rd_en <= '1';
 			when LINK3 =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= db_din;
 				total_next <= total_lsas;
@@ -180,6 +199,7 @@ begin
 				db_addr <= curr_pointer + 1;
 				db_rd_en <= '1';
 			when LINK4 => 
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= db_din;
 				total_next <= total_lsas;
@@ -188,6 +208,7 @@ begin
 				db_addr <= curr_pointer + 1;
 				db_rd_en <= '1';
 			when ADV1 =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= db_din;
 				total_next <= total_lsas;
@@ -196,6 +217,7 @@ begin
 				db_addr <= curr_pointer + 1;
 				db_rd_en <= '1';
 			when ADV2 =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= db_din;
 				total_next <= total_lsas;
@@ -204,6 +226,7 @@ begin
 				db_addr <= curr_pointer + 1;
 				db_rd_en <= '1';
 			when ADV3 =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= db_din;
 				total_next <= total_lsas;
@@ -212,6 +235,7 @@ begin
 				db_addr <= curr_pointer + 1;
 				db_rd_en <= '1';
 			when ADV4 =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= db_din;
 				total_next <= total_lsas;
@@ -220,6 +244,7 @@ begin
 				db_addr <= curr_pointer + 1;
 				db_rd_en <= '1';
 			when SEQ1 =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= db_din;
 				total_next <= total_lsas;
@@ -228,6 +253,7 @@ begin
 				db_addr <= curr_pointer + 1;
 				db_rd_en <= '1';
 			when SEQ2 =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= db_din;
 				total_next <= total_lsas;
@@ -236,6 +262,7 @@ begin
 				db_addr <= curr_pointer + 1;
 				db_rd_en <= '1';
 			when SEQ3 =>
+				empty_next <= empty_sig;
 				dout_next <= db_din;
 				rd_next <= '1';
 				total_next <= total_lsas;
@@ -244,6 +271,7 @@ begin
 				db_addr <= curr_pointer + 1;
 				db_rd_en <= '1';
 			when SEQ4 =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= db_din;
 				total_next <= total_lsas;
@@ -252,6 +280,7 @@ begin
 				db_addr <= curr_pointer;
 				db_rd_en <= '1';
 			when CHECK1 =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= (others => '0');
 				total_next <= total_lsas;
@@ -260,6 +289,7 @@ begin
 				db_addr <= curr_pointer;
 				db_rd_en <= '1';
 			when CHECK2 =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= (others => '0');
 				total_next <= total_lsas;
@@ -268,6 +298,7 @@ begin
 				db_addr <= curr_pointer + 1;
 				db_rd_en <= '1';
 			when LEN1 =>
+				empty_next <= empty_sig;
 				rd_next <= '1';
 				dout_next <= db_din;
 				total_next <= total_lsas;
@@ -275,27 +306,34 @@ begin
 				next_pointer <= curr_pointer + 1;
 				db_addr <= curr_pointer + 1;
 				db_rd_en <= '1';
-			when LEN2 =>
+			when others => --LEN2
 				rd_next <= '1';
 				dout_next <= db_din;
 				total_next <= total_lsas;
 				num_of_lsa := conv_integer(curr_pointer - 16)/114 + 1;
-				if (num_of_lsa = total_lsas) then
+				if (num_of_lsa = conv_integer(total_lsas)) then
+					empty_next <= '1';
 					n_state <= IDLE;
 					db_rd_en <= '0';
 					next_pointer <= curr_pointer;
 					db_addr <= curr_pointer;
+				elsif (numlsa_sig = "11") then
+					empty_next <= '0';
+					n_state <= IDLE;
+					db_rd_en <= '0';
+					next_pointer <= curr_pointer + 99;
+					db_addr <= curr_pointer + 99;
 				else
+					empty_next <= '0';
 					n_state <= LSAGE1;
 					db_rd_en <= '1';
 					next_pointer <= curr_pointer + 99;
 					db_addr <= curr_pointer + 99;
 				end if ;
-			when others =>
-		
 		end case ;
 	end if;
 end process;
 num_lsa <= numlsa_sig;
+empty <= empty_sig;
 
 end Behavioral;

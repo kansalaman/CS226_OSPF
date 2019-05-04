@@ -50,7 +50,8 @@ ARCHITECTURE behavior OF LSAFetcherTb IS
          db_din : IN  std_logic_vector(7 downto 0);
          dout : OUT  std_logic_vector(7 downto 0);
          db_busy : IN  std_logic;
-         rd_val : OUT  std_logic
+         rd_val : OUT  std_logic;
+         empty : OUT std_logic
         );
     END COMPONENT;
 
@@ -78,6 +79,7 @@ ARCHITECTURE behavior OF LSAFetcherTb IS
    signal db_addr : std_logic_vector(11 downto 0);
    signal dout : std_logic_vector(7 downto 0);
    signal rd_val : std_logic;
+   signal empty : std_logic;
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -95,7 +97,8 @@ BEGIN
           db_din => db_din,
           dout => dout,
           db_busy => db_busy,
-          rd_val => rd_val
+          rd_val => rd_val,
+          empty => empty
         );
 	RAMM : RAMDB PORT MAP(
           clka => clk,
@@ -126,9 +129,15 @@ BEGIN
       db_busy <= '0';
       wait for clk_period;
       rd_en <= '1';
-      wait for clk_period*10;
+      wait for clk_period;
       rd_en <= '0';
       -- insert stimulus here 
+
+      wait for clk_period*100;
+
+      rd_en <= '1';
+      wait for clk_period;
+      rd_en <= '0';
 
       wait;
    end process;

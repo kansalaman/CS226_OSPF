@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <symbol version="7" name="RAMDB">
     <symboltype>BLOCK</symboltype>
-    <timestamp>2019-5-3T20:31:24</timestamp>
+    <timestamp>2019-5-4T10:2:41</timestamp>
     <pin polarity="Input" x="0" y="80" name="addra[11:0]" />
     <pin polarity="Input" x="0" y="112" name="dina[7:0]" />
     <pin polarity="Input" x="0" y="144" name="ena" />
