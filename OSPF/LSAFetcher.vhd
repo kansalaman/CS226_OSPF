@@ -149,7 +149,7 @@ begin
 				db_rd_en <= '1';
 			when LSTYPE =>
 				rd_next <= '1';
-				dout_next <= (others => '0');
+				dout_next <= (7 downto 1 => '0', others => '1');
 				total_next <= total_lsas;
 				n_state <= LINK1;
 				next_pointer <= curr_pointer + 1;
