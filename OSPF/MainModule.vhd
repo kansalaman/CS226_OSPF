@@ -55,7 +55,8 @@ architecture Behavioral of MainModule is
       telling_plen : out std_logic;
       telling_rid: out std_logic;
       telling_lsr : out std_logic;
-      telling_neighbour: out std_logic
+      telling_neighbour: out std_logic;
+      full_size_len: out std_logic_vector(15 downto 0)
     );
   end component;
 
@@ -263,15 +264,13 @@ architecture Behavioral of MainModule is
       out1 : inout  STD_LOGIC_VECTOR (7 downto 0):= "00000000";
       badreq: out STD_LOGIC;
       out_val : out  STD_LOGIC;
-       -- Memory related controls
-       -- empty : in std_logic;
-       db_read : out std_logic;
-       db_addr : out std_logic_vector(ADDR_SIZE-1 downto 0);
-       db_din : in std_logic_vector(7 downto 0);
-       db_write : out std_logic;
-       db_dout : out std_logic_vector(7 downto 0);
-       db_busy_read : in std_logic;
-       db_busy_write : in std_logic
+      db_read : out std_logic;
+      db_addr : out std_logic_vector(ADDR_SIZE-1 downto 0);
+      db_din : in std_logic_vector(7 downto 0);
+      db_write : out std_logic;
+      db_dout : out std_logic_vector(7 downto 0);
+      db_busy_read : in std_logic;
+      db_busy_write : in std_logic
       );
   end component;
 
@@ -281,23 +280,31 @@ type QDCArrayT is array (1 to 8) of std_logic_vector(10 downto 0);
 type IOArrayT is array (1 to 8) of std_logic_vector(7 downto 0);
 type IOArrayV is array (1 to 8) of std_logic;
 
+signal dummy_var : std_logic;
 --I/O Ports Array
 signal outputArray, inputArray : IOArrayT;
 signal outputvalArray, inputvalArray : IOArrayV;
 
---Parser i/o
+--Parser I/O
 signal parserOutput : IOArrayT;
-signal dummy1, dummy2 : IOArrayV;
 signal telling_neighbour, telling_lsu, telling_dd, telling_plen, telling_rid, telling_lsr : IOArrayV;
+type ParserLenT is array(1 to 8) of std_logic_vector(15 downto 0);
+signal full_size_len : ParserLenT;
 
---LSU_P i/o
+--LSU_P I/O
 signal LSUPQ_W : IOArrayV;
 signal LSUPQ_O : IOArrayT;
 
---Hello alive i/o
+--Hello Alive I/O
 signal haOArr : IOArrayT;
 signal haVArr : IOArrayV;
-signal haDummy : std_logic;
+
+--LSR I/O
+signal lsrOutArr : IOArrayT;
+
+signal lsrOutVArr, lsr_db_read  : IOArrayV;
+type LsrAddrT is array(1 to 8) of std_logic_vector(11 downto 0);
+signal lsr_dr_addr : LsrAddrT;
 
 --Queue Read/Write Arrays
 signal ackQOArr, ackQIArr : QArrayT;
@@ -311,8 +318,16 @@ signal rst : std_logic := '0';
 --Queue Data Count Arrays
 signal ackQDCArr, LSAQDCArr : QDCArrayT;
 
+--LSUM I/O
+signal LSUMRAMrea : std_logic := '0';
+signal LSUMRAMaddr : std_logic_vector(11 downto 0) := (others => '0');
+signal LSUM_fl_val : std_logic := '0';
+signal LSUM_fl_out : std_logic_vector(7 downto 0);
+signal LSUM_fl_port : std_logic_vector(7 downto 0);
+
 --Main LSA Queue I/O
 signal mainLSAQ
+
 --Database RAM I/O
 signal dbRAMena : std_logic;
 signal dbRAMwea : std_logic_vector(0 downto 0);
@@ -370,14 +385,15 @@ begin
         validity => inputvalArray(i),
         clk => clk,
         out1 => parserOutput(i),
-        hello_out => dummy1(i),
-        ls_out => dummy2(i),
+        hello_out => open,
+        ls_out => open,
         telling_lsu => telling_lsu(i),
         telling_dd => telling_dd(i),
         telling_plen => telling_plen(i),
         telling_rid => telling_rid(i),
         telling_lsr => telling_lsr(i),
-        telling_neighbour => telling_neighbour(i)
+        telling_neighbour => telling_neighbour(i),
+        full_size_len => full_size_len(i)
       );
 
     --component LSU_Parser is
@@ -489,7 +505,7 @@ begin
         nieghbour => 
         clk => clk,
         val => haVArr(i),
-        reply_signal => haDummy
+        reply_signal => dummy_var
       );
     --TODO - DBD Machine
     --TODO - LSR Machine
@@ -497,22 +513,20 @@ begin
       port map
       ( 
         clk => clk,
-        len : in  STD_LOGIC_VECTOR (15 downto 0);
-        len_val : in  STD_LOGIC;
-        in1 : in  STD_LOGIC_VECTOR (7 downto 0);
-        data_val: in STD_LOGIC;
-        out1 : inout  STD_LOGIC_VECTOR (7 downto 0):= "00000000";
-        badreq: out STD_LOGIC;
-        out_val : out  STD_LOGIC;
-         -- Memory related controls
-         -- empty : in std_logic;
-        db_read : out std_logic;
-        db_addr : out std_logic_vector(ADDR_SIZE-1 downto 0);
-        db_din : in std_logic_vector(7 downto 0);
-        db_write : out std_logic;
-        db_dout : out std_logic_vector(7 downto 0);
-        db_busy_read : in std_logic;
-        db_busy_write : in std_logic
+        len => full_size_len(i),
+        len_val => telling_plen,
+        in1 => parserOutput(i),
+        data_val => telling_lsr(i),
+        out1 => lsrOutArr(i),
+        badreq => open,
+        out_val => lsrOutVArr(i),
+        db_read => lsr_db_read(i),
+        db_addr => lsr_db_addr(i),
+        db_din => dbRAMdout,
+        db_write => open,
+        db_dout => open,
+        db_busy_read => dummy_var,
+        db_busy_write => dummy_var
       );
   end generate;
 
@@ -541,6 +555,11 @@ begin
   --  );
   --end component;
 
+  Main_Q : InterfaceFIFO
+    port map
+    (
+
+    );
   LSU_Update_M : LinkStateUpdateMachine
     port map
     (
@@ -565,8 +584,6 @@ begin
       dina => dbRAMdin,
       douta => dbRAMdout
     );
-
-
 
 end Behavioral;
 
