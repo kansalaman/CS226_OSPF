@@ -137,3 +137,9 @@ EmptyDDC = DD("3.3.3.3", "", 10)
 
 DDB = DD("2.2.2.2", LSA_B[:160] + LSA_D[:160] + LSA_E[:160], 6)
 DDC = DD("3.3.3.3", LSA_C[:160] + LSA_D[:160] + LSA_E[:160], 11)
+
+ReqB = LSR("2.2.2.2", [LSA_A])
+ReqC = LSR("3.3.3.3", [LSA_A])
+
+LSU_B = LSU("2.2.2.2", [LSA_B, LSA_D, LSA_E])
+LSU_C = LSU("3.3.3.3", [LSA_C, LSA_D, LSA_E])
