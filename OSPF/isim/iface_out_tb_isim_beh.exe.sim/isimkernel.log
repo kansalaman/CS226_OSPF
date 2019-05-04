@@ -1,0 +1,10 @@
+Command line:
+   iface_out_tb_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  35399
+
+Sat May  4 09:45:24 2019
+
+
+ Elaboration Time: 0.05 sec

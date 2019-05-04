@@ -135,7 +135,7 @@ begin
 
         if(current_state=serve2 and dataobtained_p=19) then
             lsa_length(15 downto 8) <= data_arr(19);
-        elsif(current_state=serve2 and dataobtained_p=19) then
+        elsif(current_state=serve2 and dataobtained_p=20) then
             lsa_length(7 downto 0) <= data_arr(20);
         elsif(current_state=serve1) then
             lsa_length <= "0000000000010100";
@@ -193,6 +193,8 @@ begin
         elsif(current_state=packetout) then
             dout_val <= '1';
             dout <= data_arr(current_byte_no);
+		  else
+				dout_val <= '0';
         end if;
         
         

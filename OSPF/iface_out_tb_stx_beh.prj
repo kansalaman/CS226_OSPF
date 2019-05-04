@@ -1,0 +1,3 @@
+vhdl isim_temp "ipcore_dir/FIFOACK.vhd"
+vhdl isim_temp "interfaceOut.vhd"
+vhdl isim_temp "iface_out_tb.vhd"
