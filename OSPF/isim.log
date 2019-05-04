@@ -1511,3 +1511,4 @@ at 255 ns(1), Instance /lsraction_tb/comp/U0/native_mem_module/mem_module/ : War
 at 265 ns(1), Instance /lsraction_tb/comp/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
 at 275 ns(1), Instance /lsraction_tb/comp/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
 at 285 ns(1), Instance /lsraction_tb/comp/U0/native_mem_module/mem_module/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+# exit 0
