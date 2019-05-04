@@ -251,6 +251,8 @@ begin
             dataobtained_p <= 0;
         elsif ((current_state=serve1 or current_state=serve2) and max_index+1=2) then
             dataobtained_p <= 0;
+        elsif((current_state=serve1 or current_state=serve2) and (current_byte_no=1 or current_byte_no=2)) then
+            dataobtained_p <= dataobtained_p;
         else
             dataobtained_p <= dataobtained_p+1;
         end if;
