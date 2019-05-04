@@ -247,6 +247,17 @@ architecture Behavioral of MainModule is
     );
   end component;
 
+  COMPONENT RoutingDB
+    PORT (
+      clka : IN STD_LOGIC;
+      ena : IN STD_LOGIC;
+      wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+      addra : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+      dina : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+      douta : OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
+    );
+  END COMPONENT;
+
   --LSR Reply
   component lsraction is
     Generic
@@ -274,13 +285,99 @@ architecture Behavioral of MainModule is
       );
   end component;
 
+  component lsugen is
+    Generic
+    (
+      ADDR_SIZE : integer := 12;
+      PORTS : integer := 8
+    );
+    Port
+    (
+     -- State determinatation
+    n1state : in std_logic_vector(2 downto 0);
+     n2state : in std_logic_vector(2 downto 0);
+     n3state : in std_logic_vector(2 downto 0);
+     n4state : in std_logic_vector(2 downto 0);
+     
+     n5state : in std_logic_vector(2 downto 0);
+     n6state : in std_logic_vector(2 downto 0);
+     n7state : in std_logic_vector(2 downto 0);
+     n8state : in std_logic_vector(2 downto 0);
+     
+     -- Neighbour's IP 
+     neigh1: in std_logic_vector(31 downto 0);
+     neigh2: in std_logic_vector(31 downto 0);
+     neigh3: in std_logic_vector(31 downto 0);
+     neigh4: in std_logic_vector(31 downto 0);
+     
+     neigh5: in std_logic_vector(31 downto 0);
+     neigh6: in std_logic_vector(31 downto 0);
+     neigh7: in std_logic_vector(31 downto 0);
+     neigh8: in std_logic_vector(31 downto 0);
+     
+     -- Flooding related controls
+     out_val: inout std_logic := '0';
+     out1: inout std_logic_vector(7 downto 0):= (others => '0');
+     negIface: out std_logic_vector(7 downto 0) := (others => '0');
+     
+     -- Memory related controls
+     clk : in std_logic;
+  --    empty : in std_logic;
+    db_read : out std_logic;
+    db_addr : out std_logic_vector(ADDR_SIZE-1 downto 0);
+    db_din : in std_logic_vector(7 downto 0);
+    db_write : out std_logic;
+    db_dout : out std_logic_vector(7 downto 0);
+     db_busy_read : in std_logic;
+     db_busy_write : in std_logic      
+    );
+  end component;
+
+  --Neighborhood Machine
+  component NeighborMachine is
+    Generic (
+        self : std_logic_vector(31 downto 0) := "10101010101010101010101010101010"
+        );
+    PORT (
+        clk : IN STD_LOGIC;
+        neighbor_val : IN std_logic;
+        routerid_val : IN std_logic;
+        dbd_val : IN std_logic;
+        in1 : IN std_logic_vector(7 downto 0);
+        hellogenin : IN std_logic;
+        stateout : OUT std_logic_vector(2 downto 0);
+        router_id : OUT std_logic_vector(31 downto 0);
+        out1 : OUT std_logic_vector(7 downto 0);
+        dbd_outval : OUT std_logic;
+        lsr_outval : OUT std_logic;
+        db_rd_en : OUT std_logic;
+        db_addr : OUT std_logic_vector(11 downto 0);
+        db_din : IN std_logic_vector(7 downto 0);
+        db_busy : IN std_logic
+        );
+  end component;
+
 type QArrayT is array (1 to 8) of std_logic_vector(7 downto 0);
 type QVArrayT is array (1 to 8) of std_logic;
 type QDCArrayT is array (1 to 8) of std_logic_vector(10 downto 0);
 type IOArrayT is array (1 to 8) of std_logic_vector(7 downto 0);
 type IOArrayV is array (1 to 8) of std_logic;
 
-signal dummy_var : std_logic;
+
+--Neighborhood Machine I/O
+type NM_StateOutT is array(1 to 8) of std_logic_vector(2 downto 0);
+type NM_RouterIDT is array(1 to 8) of std_logic_vector(31 downto 0);
+type NM_AddrT is array(1 to 8) of std_logic_vector(11 downto 0);
+signal neighM_stateout : NM_StateOutT;
+signal neighM_router_id : NM_RouterIDT;
+signal neighM_outArr : QArrayT;
+signal neighM_dbd_outval : QVArrayT;
+signal neighM_lsr_outval : QVArrayT;
+signal neighM_db_rd_en : QVArrayT;
+signal neighM_db_addr : NM_AddrT;
+signal neighM_db_din : QArrayT;
+
+signal dummy_var : std_logic := '0';
 --I/O Ports Array
 signal outputArray, inputArray : IOArrayT;
 signal outputvalArray, inputvalArray : IOArrayV;
@@ -326,7 +423,9 @@ signal LSUM_fl_out : std_logic_vector(7 downto 0);
 signal LSUM_fl_port : std_logic_vector(7 downto 0);
 
 --Main LSA Queue I/O
-signal mainLSAQ
+signal mainLSAQW, mainLSAQR, mainLSAQE : std_logic := '0';
+signal mainLSAQI, mainLSAQO : std_logic_vector(7 downto 0);
+signal mainLSAQDC : std_logic_vector(11 downto 0);
 
 --Database RAM I/O
 signal dbRAMena : std_logic;
@@ -335,6 +434,25 @@ signal dbRAMaddr : std_logic_vector(11 downto 0);
 signal dbRAMdin : std_logic_vector(7 downto 0);
 signal dbRAMdout : std_logic_vector(7 downto 0);
 signal dbRAMrea : std_logic;
+
+--Dijkstra RAM I/O
+signal RAMDijkstra_wea : std_logic_vector(0 downto 0) := (others => '0');
+signal RAMDijkstra_addr : std_logic_vector(5 downto 0) := (others => '0');
+signal RAMDijkstra_din, RAMDijkstra_dout : std_logic_vector(127 downto 0) := (others => '0');
+
+--Routing RAM I/O
+signal routingRAMwea : std_logic_vector(0 downto 0) := (others => '0');
+signal routingRAMaddr : std_logic_vector(5 downto 0) := (others => '0');
+signal routingRAMdin : std_logic_vector(63 downto 0) := (others => '0');
+signal routingRAMdout : std_logic_vector(63 downto 0) := (others => '0');
+
+--DBtoDijkstra I/O
+signal db2dj_d_on, db2dj_db_read : std_logic;
+signal db2dj_addr, db2dj_db_addr : std_logic_vector(5 downto 0) := (others => '0');
+
+--Dijkstra I/O
+signal dj_addr_read, dj_addr_write : std_logic_vector(5 downto 0) := (others => '0');
+signal dj_done : std_logic;
 
 begin
   --Mapping i/o ports to i/o Array
@@ -396,23 +514,28 @@ begin
         full_size_len => full_size_len(i)
       );
 
-    --component LSU_Parser is
-    --  Generic
-    --  (
-    --      PORT_NO : STD_LOGIC_VECTOR(7 downto 0) := "00000000";
-    --      router_id : std_logic_vector(31 downto 0) := "11110011000000000000000000000000"
-    --  );
-    --  Port 
-    --  ( 
-    --    state_in : in  STD_LOGIC_VECTOR (3 downto 0);
-    --     data_in : in  STD_LOGIC_VECTOR (7 downto 0);
-    --     data_valid : in  STD_LOGIC;
-    --     clk : in std_logic;
-    --         write_to_q : out  STD_LOGIC;
-    --         qout : out  STD_LOGIC_VECTOR (7 downto 0);
-    --         ack_q_out : out STD_LOGIC_VECTOR(7 downto 0);
-    --         ack_q_val : out std_logic);
-    --end component;
+    NM : NeighborMachine
+      generic map (
+          self => router_id
+          )
+      port map (
+          clk => clk,
+          neighbor_val => telling_neighbour(i),
+          routerid_val => telling_rid(i),
+          dbd_val => telling_dd(i),
+          in1 => parserOutput(i),
+          hellogenin => haVArr(i),
+          stateout => neighM_stateout(i),
+          router_id => neighM_router_id(i),
+          out1 => neighM_outArr(i),
+          dbd_outval => neighM_dbd_outval(i),
+          lsr_outval => neighM_lsr_outval(i),
+          db_rd_en => neighM_db_rd_en(i),
+          db_addr => neighM_db_addr(i),
+          db_din => neighM_db_din(i),
+          db_busy => dummy_var
+          );
+    end component;
 
     LSU_P : LSU_Parser
       generic map
@@ -422,7 +545,7 @@ begin
       )
       port map
       (
-        state_in =>
+        state_in => '0' & neighM_stateout(i),
         data_in => parserOutput(i),
         data_valid => telling_lsu(i),
         clk => clk,
@@ -479,21 +602,7 @@ begin
         data_count => LSAQDCArr(i)
       );
 
-    --TODO - HelloAlive Machine
-    --entity helloalive is
-    --  Generic (
-    --    ROUTER_IP : STD_LOGIC_VECTOR(31 downto 0) := "00000001000000010000000100000001"
-    --    );
-    --    Port (  out1 : out  STD_LOGIC_VECTOR (7 downto 0):= "00000000";
-    --            neighbor: in STD_LOGIC_VECTOR(31 downto 0); -- My neighbours.
-    --            clk : in std_logic;
-    --            val: out std_logic :='0';
-    --            reply_signal: in std_logic := '0'
-    --        );
 
-    --    end helloalive;
-
-    --TODO
     HA : HelloAlive
       generic map
       (
@@ -502,14 +611,12 @@ begin
       port map
       (
         out1 => haOArr(i),
-        nieghbour => 
+        neighbor => neighM_router_id(i),
         clk => clk,
         val => haVArr(i),
         reply_signal => dummy_var
       );
-    --TODO - DBD Machine
-
-    --TODO - LSR Machine
+    
     LSR_M : lsraction
       port map
       ( 
@@ -555,19 +662,7 @@ begin
   --    dijkstra_on : out std_logic
   --  );
   --end component;
---AckQ : InterfaceFIFO
---      port map
---      (
---        clk => clk,
---        rst => rst,
---        din => ackQIArr(i),
---        wr_en => ackQWArr(i),
---        rd_en => ackQRArr(i),
---        dout => ackQOArr(i),
---        full => ackQFArr(i),
---        empty => ackQEArr(i),
---        data_count => ackQDCArr(i)
---      );
+
   Main_Q : InterfaceFIFO
     port map
     (
@@ -604,6 +699,118 @@ begin
       addra => dbRAMaddr,
       dina => dbRAMdin,
       douta => dbRAMdout
+    );
+
+  FloodF : FloodingFSM
+    port map
+    (
+      clk => clk,
+      val => fl_val,
+      din => fl_din,
+      port_in => fl_port_in,
+
+      --Mux with LSAQ
+      out1 => fl_out1,
+      out2 => fl_out2,
+      out3 => fl_out3,
+      out4 => fl_out4,
+      out5 => fl_out5,
+      out6 => fl_out6,
+      out7 => fl_out7,
+      out8 => fl_out8,
+
+      write1 => fl_write1,
+      write2 => fl_write2,
+      write3 => fl_write3,
+      write4 => fl_write4,
+      write5 => fl_write5,
+      write6 => fl_write6,
+      write7 => fl_write7,
+      write8 => fl_write8
+    );
+
+  --component DBtoDijkstra is
+  --  Generic
+  --  (
+  --    DB_ADDR_SIZE : integer := 12;
+  --    ADDR_SIZE : integer := 6;
+  --    NETWORK_SIZE : integer := 6;
+  --    COST_SIZE : integer := 6;
+  --    ROUTERID_SIZE : integer := 5;
+  --    PORTS : integer := 8
+  --  );
+  --  Port
+  --  (
+  --    clk : in STD_LOGIC;
+  --    write : out STD_LOGIC := '0';
+  --    addr : out STD_LOGIC_VECTOR(5 downto 0);
+  --    dout : out  STD_LOGIC_VECTOR ((PORTS*(NETWORK_SIZE+COST_SIZE)+2**ROUTERID_SIZE - 1) downto 0);
+  --    db_din : in STD_LOGIC_VECTOR(7 downto 0);
+  --    db_read : out STD_LOGIC;
+  --    db_addr : out STD_LOGIC_VECTOR(DB_ADDR_SIZE-1 downto 0);
+  --    enable : in STD_LOGIC;
+  --    d_on : out STD_LOGIC
+  --  );
+  --end component;
+
+  DB2D : DBtoDijkstra
+    port map
+    (
+      clk => clk,
+      write => RAMDijkstra_wea(0),
+      --TO DO Please MUX WITH RAMDijkstra's Address
+      addr => db2dj_addr,
+      dout => RAMDijkstra_din,
+      db_read => db2dj_db_read,
+      db_addr => db2dj_db_addr,
+
+      -- Don't need to do anything here
+      enable => dijkstra_on,
+      d_on => db2dj_d_on
+    );
+
+
+  RDijkstra : RAMDijkstra
+    port map
+    (
+      clka => clk,
+      ena => '1',
+      wea => RAMDijkstra_wea,
+      addra => RAMDijkstra_addr,
+      dina => RAMDijkstra_din,
+      douta => RAMDijkstra_dout
+    );
+
+  DijkstraInstantiate : Dijkstra
+    generic map
+    (
+      ROUTER_INDEX => 1
+    )
+    port map
+    (
+      din => RAMDijkstra_dout(95 downto 0),
+      ip_in => RAMDijkstra_dout(127 downto 96),
+      addr_read => dj_addr_read(5 downto 0),
+      read => dj_read,
+      write => routingRAMwea(0),
+      addr_write => routingRAMaddr,
+      dout => routingRAMdin,
+      enable => db2dj_d_on,
+      done => dj_done,
+      help => open,
+      router_ip => router_ip,
+      clk => clk
+    );
+
+  RoutingDatabase : RoutingDB
+    port map
+    (
+      clk => clk,
+      ena => '1',
+      wea => routingRAMwea,
+      addra => routingRAMaddr,
+      dina => routingRAMdin,
+      douta => routingRAMdout
     );
 
 end Behavioral;
