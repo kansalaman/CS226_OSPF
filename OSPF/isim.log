@@ -1,5 +1,6 @@
 ISim log file
-Running: /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/lsup_tb2_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/lsup_tb2_isim_beh.wdb 
+Running: /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/parsertb_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/parsertb_isim_beh.wdb 
+INFO: There is another simulation running in the same directory. Using database file name isim1.wdb.
 ISim P.20131013 (signature 0xfbc00daa)
 WARNING: A WEBPACK license was found.
 WARNING: Please use Xilinx License Configuration Manager to check out a full ISim license.
@@ -9,10 +10,6 @@ Time resolution is 1 ps
 # onerror resume
 # wave add /
 # run 1000 ns
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-# restart
-# run 10.00us
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
 # restart

@@ -52,7 +52,8 @@ ARCHITECTURE behavior OF parsertb IS
          telling_plen : OUT  std_logic;
          telling_rid : OUT  std_logic;
          telling_lsr : OUT  std_logic;
-         telling_neighbour : OUT  std_logic
+         telling_neighbour : OUT  std_logic;
+			full_size_len: out std_logic_vector(15 downto 0)
         );
     END COMPONENT;
     
@@ -72,6 +73,7 @@ ARCHITECTURE behavior OF parsertb IS
    signal telling_rid : std_logic;
    signal telling_lsr : std_logic;
    signal telling_neighbour : std_logic;
+	signal full_size_len : std_logic_vector(15 downto 0);
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -91,7 +93,8 @@ BEGIN
           telling_plen => telling_plen,
           telling_rid => telling_rid,
           telling_lsr => telling_lsr,
-          telling_neighbour => telling_neighbour
+          telling_neighbour => telling_neighbour,
+			 full_size_len => full_size_len
         );
 
    -- Clock process definitions

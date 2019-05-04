@@ -1,26 +1,25 @@
-Running: /Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/lsup_tb2_isim_beh.exe -prj /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/lsup_tb2_beh.prj work.lsup_tb2 
+Running: /Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/parsertb_isim_beh.exe -prj /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/parsertb_beh.prj work.parsertb 
 ISim P.20131013 (signature 0xfbc00daa)
 Number of CPUs detected in this system: 4
 Turning on mult-threading, number of parallel sub-compilation jobs: 8 
 Determining compilation order of HDL files
 Parsing VHDL file "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/message_parser.vhd" into library work
-Parsing VHDL file "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/LSU_Parser.vhd" into library work
-Parsing VHDL file "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/lsup_tb2.vhd" into library work
+Parsing VHDL file "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/parsertb.vhd" into library work
 Starting static elaboration
 Completed static elaboration
 Fuse Memory Usage: 98952 KB
-Fuse CPU Usage: 1110 ms
+Fuse CPU Usage: 1170 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
 Compiling package std_logic_unsigned
 Compiling package numeric_std
-Compiling architecture behavioral of entity LSU_Parser [\LSU_Parser(('0','0','0','0','0'...]
 Compiling architecture behavioral of entity Parser [parser_default]
-Compiling architecture behavior of entity lsup_tb2
+Compiling architecture behavior of entity parsertb
 Time Resolution for simulation is 1ps.
-Compiled 10 VHDL Units
-Built simulation executable /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/lsup_tb2_isim_beh.exe
-Fuse Memory Usage: 675672 KB
-Fuse CPU Usage: 1250 ms
-GCC CPU Usage: 720 ms
+Waiting for 1 sub-compilation(s) to finish...
+Compiled 8 VHDL Units
+Built simulation executable /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/parsertb_isim_beh.exe
+Fuse Memory Usage: 675500 KB
+Fuse CPU Usage: 1330 ms
+GCC CPU Usage: 800 ms

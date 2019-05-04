@@ -1,3 +1,0 @@
-vhdl work "message_parser.vhd"
-vhdl work "LSU_Parser.vhd"
-vhdl work "lsup_tb2.vhd"

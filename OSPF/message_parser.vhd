@@ -16,7 +16,8 @@ entity Parser is
         --    packet_len_valid: out STD_LOGIC;
            telling_rid: out std_logic;
            telling_lsr : out std_logic;
-           telling_neighbour: out std_logic);
+           telling_neighbour: out std_logic;
+           full_size_len: out std_logic_vector(15 downto 0));
 end Parser;
 
 architecture Behavioral of Parser is
@@ -29,6 +30,7 @@ type states is (IDLE, IP_STRIP, OSPF_STRIP, HELLO, DD,LSR,LSU,LS);
 signal p_state, n_state : states := IDLE;
 begin
 packet_length_int <= to_integer(unsigned(packet_length));
+full_size_len <= packet_length;
 process(clk)
     variable current_byte_no : INTEGER;
     variable current_state : states; 
@@ -88,7 +90,7 @@ begin
         if(current_state=OSPF_STRIP and current_byte_no=3) then
             packet_length(15 downto 8) <= in1;
             if(typePacket="00000011") then
-                telling_plen <= '1';
+                telling_plen <= '0';
             else
                 telling_plen <= '0';
             end if;
