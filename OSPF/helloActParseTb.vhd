@@ -142,7 +142,8 @@ ARCHITECTURE behavior OF helloActParseTb IS
    --EXTRAS
    signal db_addr : STD_LOGIC_VECTOR(11 downto 0);
    signal db_din : STD_LOGIC_VECTOR(7 downto 0);
-
+   signal db_busy : STD_LOGIC := '0';
+   signal db_rd_en : STD_LOGIC;
    -- Clock period definitions
    constant clk_period : time := 10 ns;
  
@@ -195,17 +196,17 @@ BEGIN
           data_count => open
     );
    fetcher : LSAFetcher PORT MAP(
-          clk => ,
-          rd_en => ,
-          rst => ,
-          num_lsa => ,
-          db_rd_en => ,
-          db_addr => ,
-          db_din => ,
-          dout => ,
-          db_busy => ,
-          rd_val => ,
-          empty => 
+          clk => clk,
+          rd_en => dbd_rd_en,
+          rst => dbd_rst,
+          num_lsa => numLSA,
+          db_rd_en => db_rd_en,
+          db_addr => db_addr,
+          db_din => db_din,
+          dout => dbd_out,
+          db_busy => db_busy,
+          rd_val => dbd_valid,
+          empty => dbd_empty
     );
    -- Clock process definitions
    clk_process :process
