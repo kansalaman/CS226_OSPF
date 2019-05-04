@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------------------
--- Company: 		AC/DC
+-- Company:     AC/DC
 -- Engineer: 
 -- 
 -- Create Date:    08:19:38 05/04/2019 
@@ -23,25 +23,23 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity MainModule is
-	Port
-	(
-		clk : in std_logic;
-		--Inputs
-		in1, in2, in3, in4, in5, in6, in7, in8 : in std_logic_vector(7 downto 0);
-		in_val1, in_val2, in_val3, in_val4, in_val5, in_val6, in_val7, in_val8 : in std_logic_vector(7 downto 0);
+  Port
+  (
+    clk : in std_logic;
+    --Inputs
+    in1, in2, in3, in4, in5, in6, in7, in8 : in std_logic_vector(7 downto 0);
+    in_val1, in_val2, in_val3, in_val4, in_val5, in_val6, in_val7, in_val8 : in std_logic;
 
-		--Outputs
-		out1, out2, out3, out4, out5, out6, out7, out8 : out std_logic_vector(7 downto 0);
-		out_val1, out_val2, out_val3, out_val4, out_val5, out_val6, out_val7, out_val8 : std_logic;
+    --Outputs
+    out1, out2, out3, out4, out5, out6, out7, out8 : out std_logic_vector(7 downto 0);
+    out_val1, out_val2, out_val3, out_val4, out_val5, out_val6, out_val7, out_val8 : out std_logic
 
-		--Dijkstra button
-		dijkstra_on : in std_logic := '0'
-	);
+  );
 end MainModule;
 
 architecture Behavioral of MainModule is
   constant router_id : std_logic_vector(31 downto 0) := "00000001000000010000000100000001";
-	component Parser is
+  component Parser is
     Port 
     ( 
       in1 : in  STD_LOGIC_VECTOR (7 downto 0);
@@ -401,7 +399,7 @@ signal lsrOutArr : IOArrayT;
 
 signal lsrOutVArr, lsr_db_read  : IOArrayV;
 type LsrAddrT is array(1 to 8) of std_logic_vector(11 downto 0);
-signal lsr_dr_addr : LsrAddrT;
+signal lsr_db_addr : LsrAddrT;
 
 --Queue Read/Write Arrays
 signal ackQOArr, ackQIArr : QArrayT;
@@ -422,6 +420,19 @@ signal LSUM_fl_val : std_logic := '0';
 signal LSUM_fl_out : std_logic_vector(7 downto 0);
 signal LSUM_fl_port : std_logic_vector(7 downto 0);
 signal LSUM_db_write : std_logic_vector(0 downto 0);
+signal LSUM_db_out : std_logic_vector(7 downto 0);
+signal dijkstra_on : std_logic;
+
+--LSUGEN I/O
+signal LSU_GEN_out_val : STD_LOGIC;
+signal LSU_GEN_out1 : STD_LOGIC_VECTOR(7 downto 0);
+signal LSU_GEN_FACE : STD_LOGIC_VECTOR(7 downto 0);
+     
+     -- Memory related controls
+signal lsu_gen_db_read : STD_LOGIC;
+signal lsu_gen_db_addr : STD_LOGIC_VECTOR(11 downto 0);
+signal lsu_gen_db_dout : STD_LOGIC_VECTOR(7 downto 0);
+signal lsu_gen_db_write : STD_LOGIC_VECTOR(0 downto 0);
 
 --Main LSA Queue I/O
 signal mainLSAQW, mainLSAQR, mainLSAQE : std_logic := '0';
@@ -458,6 +469,8 @@ signal dj_done : std_logic;
 --FLOODING I/O
 signal fl_out : IOArrayT;
 signal fl_write : IOArrayV;
+signal fl_val : std_logic;
+signal fl_port_in, fl_din : std_logic_vector(7 downto 0);
 
 begin
   --Mapping i/o ports to i/o Array
@@ -559,7 +572,7 @@ begin
         ack_q_val => ackQWArr(i)
       );
 
-    I : interfaceOut
+    INT_OUT : interfaceOut
       generic map 
       (
         PORT_NO => std_logic_vector(to_unsigned(i, 8)),
@@ -626,7 +639,7 @@ begin
       ( 
         clk => clk,
         len => full_size_len(i),
-        len_val => telling_plen,
+        len_val => telling_plen(i),
         in1 => parserOutput(i),
         data_val => telling_lsr(i),
         out1 => lsrOutArr(i),
@@ -717,7 +730,7 @@ begin
       dout => mainLSAQO,
       full => open,
       empty => mainLSAQE,
-      data_count => mainLSADC
+      data_count => open
     );
   LSU_Update_M : LinkStateUpdateMachine
     port map
@@ -816,21 +829,21 @@ begin
       din => RAMDijkstra_dout(95 downto 0),
       ip_in => RAMDijkstra_dout(127 downto 96),
       addr_read => dj_addr_read(5 downto 0),
-      read => dj_read,
+      read => open,
       write => routingRAMwea(0),
       addr_write => routingRAMaddr,
       dout => routingRAMdin,
       enable => db2dj_d_on,
       done => dj_done,
       help => open,
-      router_ip => router_ip,
+      router_ip => router_id,
       clk => clk
     );
 
   RoutingDatabase : RoutingDB
     port map
     (
-      clk => clk,
+      clka => clk,
       ena => '1',
       wea => routingRAMwea,
       addra => routingRAMaddr,
@@ -842,94 +855,97 @@ begin
 --TODO : dbRAMaddr mux in all possibel addr
 -- neighM_db_rd_en(i) and neighM_db_addr(i),
 -- db_read => db2dj_db_read and db_addr => db2dj_db_addr,
-dbRAMaddr <= db2dj_db_addr when db2dj_db_read else
-             lsu_gen_db_addr when lsu_gen_db_read else
-             neighM_db_addr(1) when neighM_db_rd_en(1) else
-             neighM_db_addr(2) when neighM_db_rd_en(2) else
-             neighM_db_addr(3) when neighM_db_rd_en(3) else
-             neighM_db_addr(4) when neighM_db_rd_en(4) else
-             neighM_db_addr(5) when neighM_db_rd_en(5) else
-             neighM_db_addr(6) when neighM_db_rd_en(6) else
-             neighM_db_addr(7) when neighM_db_rd_en(7) else
-             neighM_db_addr(8) when neighM_db_rd_en(8) else
-             lsr_db_addr(1) when lsr_db_read(1) else
-             lsr_db_addr(2) when lsr_db_read(2) else
-             lsr_db_addr(3) when lsr_db_read(3) else
-             lsr_db_addr(4) when lsr_db_read(4) else
-             lsr_db_addr(5) when lsr_db_read(5) else
-             lsr_db_addr(6) when lsr_db_read(6) else
-             lsr_db_addr(7) when lsr_db_read(7) else
-             lsr_db_addr(8) when lsr_db_read(8) else
-             LSUMRAMaddr when LSUMRAMrea else
+dbRAMaddr <= db2dj_db_addr when (db2dj_db_read = '1') else
+             lsu_gen_db_addr when (lsu_gen_db_read = '1') else
+             neighM_db_addr(1) when (neighM_db_rd_en(1) = '1') else
+             neighM_db_addr(2) when (neighM_db_rd_en(2) = '1') else
+             neighM_db_addr(3) when (neighM_db_rd_en(3) = '1') else
+             neighM_db_addr(4) when (neighM_db_rd_en(4) = '1') else
+             neighM_db_addr(5) when (neighM_db_rd_en(5) = '1') else
+             neighM_db_addr(6) when (neighM_db_rd_en(6) = '1') else
+             neighM_db_addr(7) when (neighM_db_rd_en(7) = '1') else
+             neighM_db_addr(8) when (neighM_db_rd_en(8) = '1') else
+             lsr_db_addr(1) when (lsr_db_read(1) = '1') else
+             lsr_db_addr(2) when (lsr_db_read(2) = '1') else
+             lsr_db_addr(3) when (lsr_db_read(3) = '1') else
+             lsr_db_addr(4) when (lsr_db_read(4) = '1') else
+             lsr_db_addr(5) when (lsr_db_read(5) = '1') else
+             lsr_db_addr(6) when (lsr_db_read(6) = '1') else
+             lsr_db_addr(7) when (lsr_db_read(7) = '1') else
+             lsr_db_addr(8) when (lsr_db_read(8) = '1') else
+             LSUMRAMaddr when (LSUMRAMrea = '1') else
              (others => '0');
 
-addra <= db2dj_addr or dj_addr_read;
+RAMDijkstra_addr <= db2dj_addr or dj_addr_read;
 
 --QUEUEMUX : for i in 1 to 8 loop
---    LSAQIArr(i) <= fl_out(i) when fl_write(i) else
---                   lsrOutArr(i) when telling_lsr(i) else
+--    LSAQIArr(i) <= fl_out(i) when (fl_write(i) = '1') else
+--                   lsrOutArr(i) when (telling_lsr(i) = '1') else
 --                   (others => '0');
 --    LSAQWArr(i) <= fl_write(i) or telling_lsr(i);
 --end loop;
-LSAQIArr(1) <= fl_out(1) when fl_write(1) else
-                   lsrOutArr(1) when telling_lsr(1) else
+LSAQIArr(1) <= fl_out(1) when (fl_write(1) = '1') else
+                   lsrOutArr(1) when (telling_lsr(1) = '1') else
                    (others => '0');
 LSAQWArr(1) <= fl_write(1) or telling_lsr(1);
 
-LSAQIArr(2) <= fl_out(2) when fl_write(2) else
-                   lsrOutArr(i) when telling_lsr(2) else
+LSAQIArr(2) <= fl_out(2) when (fl_write(2) = '1') else
+                   lsrOutArr(2) when (telling_lsr(2) = '1') else
                    (others => '0');
 LSAQWArr(2) <= fl_write(2) or telling_lsr(2);
 
-LSAQIArr(3) <= fl_out(3) when fl_write(3) else
-                   lsrOutArr(2) when telling_lsr(3) else
+LSAQIArr(3) <= fl_out(3) when (fl_write(3) = '1') else
+                   lsrOutArr(3) when (telling_lsr(3) = '1') else
                    (others => '0');
 LSAQWArr(3) <= fl_write(3) or telling_lsr(3);
 
-LSAQIArr(4) <= fl_out(4) when fl_write(4) else
-                   lsrOutArr(4) when telling_lsr(4) else
+LSAQIArr(4) <= fl_out(4) when (fl_write(4) = '1') else
+                   lsrOutArr(4) when (telling_lsr(4) = '1') else
                    (others => '0');
-LSAQWArr(4) <= fl_write(i) or telling_lsr(3);
+LSAQWArr(4) <= fl_write(4) or telling_lsr(4);
 
-LSAQIArr(5) <= fl_out(5) when fl_write(5) else
-                   lsrOutArr(5) when telling_lsr(5) else
+LSAQIArr(5) <= fl_out(5) when (fl_write(5) = '1') else
+                   lsrOutArr(5) when (telling_lsr(5) = '1') else
                    (others => '0');
 LSAQWArr(5) <= fl_write(5) or telling_lsr(5);
 
-LSAQIArr(6) <= fl_out(6) when fl_write(6) else
-                   lsrOutArr(6) when telling_lsr(6) else
+LSAQIArr(6) <= fl_out(6) when (fl_write(6) = '1') else
+                   lsrOutArr(6) when (telling_lsr(6) = '1') else
                    (others => '0');
 LSAQWArr(6) <= fl_write(6) or telling_lsr(6);
 
-LSAQIArr(7) <= fl_out(7) when fl_write(7) else
-                   lsrOutArr(7) when telling_lsr(7) else
+LSAQIArr(7) <= fl_out(7) when (fl_write(7) = '1') else
+                   lsrOutArr(7) when (telling_lsr(7) = '1') else
                    (others => '0');
 LSAQWArr(7) <= fl_write(7) or telling_lsr(7);
 
-LSAQIArr(8) <= fl_out(8) when fl_write(8) else
-                   lsrOutArr(8) when telling_lsr(8) else
+LSAQIArr(8) <= fl_out(8) when (fl_write(8) = '1') else
+                   lsrOutArr(8) when (telling_lsr(8) = '1') else
                    (others => '0');
 LSAQWArr(8) <= fl_write(8) or telling_lsr(8);
 
 fl_val <= LSUM_fl_val or LSU_GEN_out_val;
-fl_din <= LSU_GEN_out1 when LSU_GEN_out_val else
-          LSUM_fl_out when LSUM_fl_val else
+fl_din <= LSU_GEN_out1 when (LSU_GEN_out_val = '1') else
+          LSUM_fl_out when (LSUM_fl_val = '1') else
           (others => '0');
+fl_port_in <= LSU_GEN_FACE when (LSU_GEN_out_val = '1') else
+           LSUM_fl_port when (LSUM_fl_val = '1') else
+             (others => '0');
 
 mainLSAQW <= LSUPQ_W(1) or LSUPQ_W(2) or LSUPQ_W(3) or LSUPQ_W(4) or LSUPQ_W(5) or LSUPQ_W(6) or LSUPQ_W(7) or LSUPQ_W(8);
-mainLSAQI <= LSUPQ_O(1) when LSUPQ_W(1) else
-             LSUPQ_O(2) when LSUPQ_W(2) else
-             LSUPQ_O(3) when LSUPQ_W(3) else
-             LSUPQ_O(4) when LSUPQ_W(4) else
-             LSUPQ_O(5) when LSUPQ_W(5) else
-             LSUPQ_O(6) when LSUPQ_W(6) else
-             LSUPQ_O(7) when LSUPQ_W(7) else
-             LSUPQ_O(8) when LSUPQ_W(8) else
+mainLSAQI <= LSUPQ_O(1) when (LSUPQ_W(1) = '1') else
+             LSUPQ_O(2) when (LSUPQ_W(2) = '1') else
+             LSUPQ_O(3) when (LSUPQ_W(3) = '1') else
+             LSUPQ_O(4) when (LSUPQ_W(4) = '1') else
+             LSUPQ_O(5) when (LSUPQ_W(5) = '1') else
+             LSUPQ_O(6) when (LSUPQ_W(6) = '1') else
+             LSUPQ_O(7) when (LSUPQ_W(7) = '1') else
+             LSUPQ_O(8) when (LSUPQ_W(8) = '1') else
              (others => '0');
 
 dbRAMwea <= lsu_gen_db_write or LSUM_db_write;
-dbRAMdin <= lsu_gen_db_dout when lsu_gen_db_write(0) else
-            LSUM_db_out when lsu_gen_db_write(0) else
+dbRAMdin <= lsu_gen_db_dout when (lsu_gen_db_write(0) = '1') else
+            LSUM_db_out when (lsu_gen_db_write(0) = '1') else
             (others => '0');
 
 end Behavioral;

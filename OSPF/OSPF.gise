@@ -103,6 +103,9 @@
     <file xil_pn:fileType="FILE_HTML" xil_pn:name="LinkStateUpdateMachine_envsettings.html"/>
     <file xil_pn:fileType="FILE_HTML" xil_pn:name="LinkStateUpdateMachine_summary.html"/>
     <file xil_pn:fileType="FILE_XRPT" xil_pn:name="LinkStateUpdateMachine_xst.xrpt"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="MainModule.prj"/>
+    <file xil_pn:fileType="FILE_XST_STX" xil_pn:name="MainModule.stx"/>
+    <file xil_pn:fileType="FILE_XST" xil_pn:name="MainModule.xst"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGDBUILD_LOG" xil_pn:name="Parser.bld"/>
     <file xil_pn:fileType="FILE_CMD_LOG" xil_pn:name="Parser.cmd_log"/>
     <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_LSO" xil_pn:name="Parser.lso"/>

@@ -111,33 +111,18 @@ Parsing architecture <Behavioral> of entity <dbtodijkstra>.
 Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" into library work
 Parsing entity <MainModule>.
 Parsing architecture <Behavioral> of entity <mainmodule>.
-ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 483: Cannot update 'in' object out_val1
-ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 484: Cannot update 'in' object out_val2
-ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 485: Cannot update 'in' object out_val3
-ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 486: Cannot update 'in' object out_val4
-ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 487: Cannot update 'in' object out_val5
-ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 488: Cannot update 'in' object out_val6
-ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 489: Cannot update 'in' object out_val7
-ERROR:HDLCompiler:294 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 490: Cannot update 'in' object out_val8
-ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 492: Type error near in_val1 ; current type std_logic_vector; expected type std_ulogic
-ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 493: Type error near in_val2 ; current type std_logic_vector; expected type std_ulogic
-ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 494: Type error near in_val3 ; current type std_logic_vector; expected type std_ulogic
-ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 495: Type error near in_val4 ; current type std_logic_vector; expected type std_ulogic
-ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 496: Type error near in_val5 ; current type std_logic_vector; expected type std_ulogic
-ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 497: Type error near in_val6 ; current type std_logic_vector; expected type std_ulogic
-ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 498: Type error near in_val7 ; current type std_logic_vector; expected type std_ulogic
-ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 499: Type error near in_val8 ; current type std_logic_vector; expected type std_ulogic
-WARNING:HDLCompiler:946 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 552: Actual for formal port state_in is neither a static name nor a globally static expression
-ERROR:HDLCompiler:32 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 562: <i> is already declared in this region.
-ERROR:HDLCompiler:1728 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 629: Type error near telling_plen ; current type ioarrayv; expected type std_logic
-ERROR:HDLCompiler:69 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 636: <lsr_db_addr> is not declared.
-Sorry, too many errors..
+WARNING:HDLCompiler:946 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 565: Actual for formal port state_in is neither a static name nor a globally static expression
+
+
+Total REAL time to Xst completion: 5.00 secs
+Total CPU time to Xst completion: 4.43 secs
+ 
 --> 
 
 
-Total memory usage is 347332 kilobytes
+Total memory usage is 348016 kilobytes
 
-Number of errors   :   19 (   0 filtered)
+Number of errors   :    0 (   0 filtered)
 Number of warnings :    1 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 
