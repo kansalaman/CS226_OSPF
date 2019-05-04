@@ -249,6 +249,16 @@ signal rst : std_logic := '0';
 --Queue Data Count Arrays
 signal ackQDCArr, LSAQDCArr : QDCArrayT;
 
+--Main LSA Queue I/O
+signal mainLSAQ
+--Database RAM I/O
+signal dbRAMena : std_logic;
+signal dbRAMwea : std_logic_vector(0 downto 0);
+signal dbRAMaddr : std_logic_vector(11 downto 0);
+signal dbRAMdin : std_logic_vector(7 downto 0);
+signal dbRAMdout : std_logic_vector(7 downto 0);
+signal dbRAMrea : std_logic;
+
 begin
   --Mapping outputs to Output Array
   out1 <= outputArray(1);
@@ -352,16 +362,45 @@ begin
     --TODO - LSR Machine
   end generate;
 
-  --COMPONENT RAMDB
-  --  PORT (
-  --    clka : IN STD_LOGIC;
-  --    ena : IN STD_LOGIC;
-  --    wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
-  --    addra : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-  --    dina : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-  --    douta : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
+  --LSU Update Machine
+  --component LinkStateUpdateMachine is
+  --  Generic
+  --  (
+  --    ADDR_SIZE : integer := 12;
+  --    PORTS : integer := 8
   --  );
-  --END COMPONENT;
+  --  Port
+  --  (
+  --    clk : in std_logic;
+  --    empty : in std_logic;
+  --    q_din : in std_logic_vector(7 downto 0);
+  --    q_read : out std_logic;
+  --    db_read : out std_logic;
+  --    db_addr : out std_logic_vector(ADDR_SIZE-1 downto 0);
+  --    db_din : in std_logic_vector(7 downto 0);
+  --    db_write : out std_logic;
+  --    db_dout : out std_logic_vector(7 downto 0);
+  --    fl_val : out std_logic;
+  --    fl_out : out std_logic_vector(7 downto 0);
+  --    fl_port : out std_logic_vector(7 downto 0);
+  --    dijkstra_on : out std_logic
+  --  );
+  --end component;
+
+  LSU_Update_M : LinkStateUpdateMachine
+    port map
+    (
+      clk => clk,
+      empty => mainLSAQE,
+      q_din => mainLSAQO,
+      q_read => mainLSAQR,
+      db_read => LSUMRAMrea,
+      db_addr => LSUMRAMaddr,
+      db_din => dbRAMdout,
+      db_write => dbRAM
+    );
+
+  --Database RAM
   Database_RAM : RAMDB
     port map
     (
