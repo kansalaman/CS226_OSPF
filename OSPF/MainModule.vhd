@@ -312,7 +312,7 @@ signal LSAQOArr, LSAQIArr : QArrayT;
 signal ackQWArr, ackQRArr, LSAQWArr, LSAQRArr : QVArrayT;
 --Queue Empty/Full Arrays
 signal ackQEArr, LSAQEArr : QVArrayT;
-signal ackQFArr, LSAQFArr : QVArrayT;
+
 --Queues super reset
 signal rst : std_logic := '0';
 --Queue Data Count Arrays
@@ -460,7 +460,7 @@ begin
         wr_en => ackQWArr(i),
         rd_en => ackQRArr(i),
         dout => ackQOArr(i),
-        full => ackQFArr(i),
+        full => open,
         empty => ackQEArr(i),
         data_count => ackQDCArr(i)
       );
@@ -474,7 +474,7 @@ begin
         wr_en => LSAQWArr(i),
         rd_en => LSAQRArr(i),
         dout => LSAQOArr(i),
-        full => LSAQFArr(i),
+        full => open,
         empty => LSAQEArr(i),
         data_count => LSAQDCArr(i)
       );
@@ -508,6 +508,7 @@ begin
         reply_signal => dummy_var
       );
     --TODO - DBD Machine
+
     --TODO - LSR Machine
     LSR_M : lsraction
       port map
@@ -554,11 +555,31 @@ begin
   --    dijkstra_on : out std_logic
   --  );
   --end component;
-
+--AckQ : InterfaceFIFO
+--      port map
+--      (
+--        clk => clk,
+--        rst => rst,
+--        din => ackQIArr(i),
+--        wr_en => ackQWArr(i),
+--        rd_en => ackQRArr(i),
+--        dout => ackQOArr(i),
+--        full => ackQFArr(i),
+--        empty => ackQEArr(i),
+--        data_count => ackQDCArr(i)
+--      );
   Main_Q : InterfaceFIFO
     port map
     (
-
+      clk => clk,
+      rst => rst,
+      din => mainLSAQI,
+      wr_en => mainLSAQW,
+      rd_en => mainLSAQR,
+      dout => mainLSAQO,
+      full => open,
+      empty => mainLSAQE,
+      data_count => mainLSADC
     );
   LSU_Update_M : LinkStateUpdateMachine
     port map
