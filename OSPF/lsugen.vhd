@@ -46,16 +46,16 @@ entity lsugen is
 	 
 	 -- Memory related controls
 	 clk : in std_logic;
-    empty : in std_logic;
+--    empty : in std_logic;
     db_read : out std_logic;
     db_addr : out std_logic_vector(ADDR_SIZE-1 downto 0);
     db_din : in std_logic_vector(7 downto 0);
     db_write : out std_logic;
     db_dout : out std_logic_vector(7 downto 0);
 	 db_busy_read : in std_logic;
-	 db_busy_write : in std_logic;
+	 db_busy_write : in std_logic
     
-    fl_port : out std_logic_vector(7 downto 0)
+--    fl_port : out std_logic_vector(7 downto 0)
   );
 end lsugen;
 
