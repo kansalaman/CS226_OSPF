@@ -294,7 +294,7 @@ architecture Behavioral of MainModule is
     Port
     (
      -- State determinatation
-    n1state : in std_logic_vector(2 downto 0);
+     n1state : in std_logic_vector(2 downto 0);
      n2state : in std_logic_vector(2 downto 0);
      n3state : in std_logic_vector(2 downto 0);
      n4state : in std_logic_vector(2 downto 0);
@@ -454,6 +454,10 @@ signal db2dj_addr, db2dj_db_addr : std_logic_vector(5 downto 0) := (others => '0
 signal dj_addr_read, dj_addr_write : std_logic_vector(5 downto 0) := (others => '0');
 signal dj_done : std_logic;
 
+--FLOODING I/O
+signal fl_out : IOArrayT;
+signal fl_write : IOArrayV;
+
 begin
   --Mapping i/o ports to i/o Array
   out1 <= outputArray(1);
@@ -532,10 +536,9 @@ begin
           lsr_outval => neighM_lsr_outval(i),
           db_rd_en => neighM_db_rd_en(i),
           db_addr => neighM_db_addr(i),
-          db_din => neighM_db_din(i),
+          db_din => dbRAMdout,
           db_busy => dummy_var
           );
-    end component;
 
     LSU_P : LSU_Parser
       generic map
@@ -662,6 +665,45 @@ begin
   --    dijkstra_on : out std_logic
   --  );
   --end component;
+  LSU_GEN : lsugen
+    PORT map
+    (
+      n1state => neighM_stateout(1),
+     n2state => neighM_stateout(2),
+     n3state => neighM_stateout(3),
+     n4state => neighM_stateout(4),
+     
+     n5state => neighM_stateout(5),
+     n6state => neighM_stateout(6),
+     n7state => neighM_stateout(7),
+     n8state => neighM_stateout(8),
+     
+     -- Neighbour's IP 
+     neigh1 => neighM_router_id(1),
+     neigh2 => neighM_router_id(2),
+     neigh3 => neighM_router_id(3),
+     neigh4 => neighM_router_id(4),
+     
+     neigh5 => neighM_router_id(5),
+     neigh6 => neighM_router_id(6),
+     neigh7 => neighM_router_id(7),
+     neigh8 => neighM_router_id(8),
+     
+     -- Flooding related controls
+     out_val => LSU_GEN_out_val,
+     out1 => LSU_GEN_out1,
+     negIface => LSU_GEN_FACE,
+     
+     -- Memory related controls
+     clk => clk,
+    db_read => lsu_gen_db_read,
+    db_addr => lsu_gen_db_addr,
+    db_din => dbRAMdout,
+    db_write => ,
+    db_dout => ,
+     db_busy_read => ,
+     db_busy_write =>
+      );
 
   Main_Q : InterfaceFIFO
     port map
@@ -686,7 +728,12 @@ begin
       db_read => LSUMRAMrea,
       db_addr => LSUMRAMaddr,
       db_din => dbRAMdout,
-      db_write => dbRAM
+      db_write => LSUM_dbRAM,
+      db_dout => LSUMDBOUT,
+      fl_val => LSUM_fl_val,
+      fl_out => LSUM_fl_out,
+      fl_port => LSUM_fl_port,
+      dijkstra_on => dijkstra_on
     );
 
   --Database RAM
@@ -710,48 +757,24 @@ begin
       port_in => fl_port_in,
 
       --Mux with LSAQ
-      out1 => fl_out1,
-      out2 => fl_out2,
-      out3 => fl_out3,
-      out4 => fl_out4,
-      out5 => fl_out5,
-      out6 => fl_out6,
-      out7 => fl_out7,
-      out8 => fl_out8,
+      out1 => fl_out(1),
+      out2 => fl_out(2),
+      out3 => fl_out(3),
+      out4 => fl_out(4),
+      out5 => fl_out(5),
+      out6 => fl_out(6),
+      out7 => fl_out(7),
+      out8 => fl_out(8),
 
-      write1 => fl_write1,
-      write2 => fl_write2,
-      write3 => fl_write3,
-      write4 => fl_write4,
-      write5 => fl_write5,
-      write6 => fl_write6,
-      write7 => fl_write7,
-      write8 => fl_write8
+      write1 => fl_write(1),
+      write2 => fl_write(2),
+      write3 => fl_write(3),
+      write4 => fl_write(4),
+      write5 => fl_write(5),
+      write6 => fl_write(6),
+      write7 => fl_write(7),
+      write8 => fl_write(8)
     );
-
-  --component DBtoDijkstra is
-  --  Generic
-  --  (
-  --    DB_ADDR_SIZE : integer := 12;
-  --    ADDR_SIZE : integer := 6;
-  --    NETWORK_SIZE : integer := 6;
-  --    COST_SIZE : integer := 6;
-  --    ROUTERID_SIZE : integer := 5;
-  --    PORTS : integer := 8
-  --  );
-  --  Port
-  --  (
-  --    clk : in STD_LOGIC;
-  --    write : out STD_LOGIC := '0';
-  --    addr : out STD_LOGIC_VECTOR(5 downto 0);
-  --    dout : out  STD_LOGIC_VECTOR ((PORTS*(NETWORK_SIZE+COST_SIZE)+2**ROUTERID_SIZE - 1) downto 0);
-  --    db_din : in STD_LOGIC_VECTOR(7 downto 0);
-  --    db_read : out STD_LOGIC;
-  --    db_addr : out STD_LOGIC_VECTOR(DB_ADDR_SIZE-1 downto 0);
-  --    enable : in STD_LOGIC;
-  --    d_on : out STD_LOGIC
-  --  );
-  --end component;
 
   DB2D : DBtoDijkstra
     port map
@@ -761,6 +784,7 @@ begin
       --TO DO Please MUX WITH RAMDijkstra's Address
       addr => db2dj_addr,
       dout => RAMDijkstra_din,
+      db_din => dbRAMdout,
       db_read => db2dj_db_read,
       db_addr => db2dj_db_addr,
 
@@ -812,6 +836,56 @@ begin
       dina => routingRAMdin,
       douta => routingRAMdout
     );
+
+
+--TODO : dbRAMaddr mux in all possibel addr
+-- neighM_db_rd_en(i) and neighM_db_addr(i),
+-- db_read => db2dj_db_read and db_addr => db2dj_db_addr,
+dbRAMaddr <= db2dj_db_addr when db2dj_db_read else
+             lsu_gen_db_addr when lsu_gen_db_read else
+             neighM_db_addr(1) when neighM_db_rd_en(1) else
+             neighM_db_addr(2) when neighM_db_rd_en(2) else
+             neighM_db_addr(3) when neighM_db_rd_en(3) else
+             neighM_db_addr(4) when neighM_db_rd_en(4) else
+             neighM_db_addr(5) when neighM_db_rd_en(5) else
+             neighM_db_addr(6) when neighM_db_rd_en(6) else
+             neighM_db_addr(7) when neighM_db_rd_en(7) else
+             neighM_db_addr(8) when neighM_db_rd_en(8) else
+             lsr_db_addr(1) when lsr_db_read(1) else
+             lsr_db_addr(2) when lsr_db_read(2) else
+             lsr_db_addr(3) when lsr_db_read(3) else
+             lsr_db_addr(4) when lsr_db_read(4) else
+             lsr_db_addr(5) when lsr_db_read(5) else
+             lsr_db_addr(6) when lsr_db_read(6) else
+             lsr_db_addr(7) when lsr_db_read(7) else
+             lsr_db_addr(8) when lsr_db_read(8) else
+             LSUMRAMaddr when LSUMRAMrea else
+             (others => '0');
+
+addra <= db2dj_addr or dj_addr_read;
+
+QUEUEMUX : for i in 1 to 8 loop
+    LSAQIArr(i) <= fl_out(i) when fl_write(i) else
+                   lsrOutArr(i) when telling_lsr(i) else
+                   (others => '0');
+    LSAQWArr(i) <= fl_write(i) or telling_lsr(i);
+end loop;
+
+fl_val <= LSUM_fl_val or LSU_GEN_out_val;
+fl_din <= LSU_GEN_out1 when LSU_GEN_out_val else
+          LSUM_fl_out when LSUM_fl_val else
+          (others => '0');
+
+mainLSAQW <= LSUPQ_W(1) or LSUPQ_W(2) or LSUPQ_W(3) or LSUPQ_W(4) or LSUPQ_W(5) or LSUPQ_W(6) or LSUPQ_W(7) or LSUPQ_W(8);
+mainLSAQI <= LSUPQ_O(1) when LSUPQ_W(1) else
+             LSUPQ_O(2) when LSUPQ_W(2) else
+             LSUPQ_O(3) when LSUPQ_W(3) else
+             LSUPQ_O(4) when LSUPQ_W(4) else
+             LSUPQ_O(5) when LSUPQ_W(5) else
+             LSUPQ_O(6) when LSUPQ_W(6) else
+             LSUPQ_O(7) when LSUPQ_W(7) else
+             LSUPQ_O(8) when LSUPQ_W(8) else
+             (others => '0');
 
 end Behavioral;
 
