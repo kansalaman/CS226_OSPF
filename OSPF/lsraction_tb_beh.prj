@@ -1,3 +1,0 @@
-vhdl work "ipcore_dir/RAMDB.vhd"
-vhdl work "lsraction.vhd"
-vhdl work "lsraction_tb.vhd"

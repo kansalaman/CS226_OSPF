@@ -61,15 +61,15 @@ ARCHITECTURE behavior OF LSUGEN_TB IS
          out1 : INOUT  std_logic_vector(7 downto 0);
          negIface : OUT  std_logic_vector(7 downto 0);
          clk : IN  std_logic;
-         empty : IN  std_logic;
+--         empty : IN  std_logic;
          db_read : OUT  std_logic;
          db_addr : OUT  std_logic_vector(11 downto 0);
          db_din : IN  std_logic_vector(7 downto 0);
          db_write : OUT  std_logic;
          db_dout : OUT  std_logic_vector(7 downto 0);
          db_busy_read : IN  std_logic;
-         db_busy_write : IN  std_logic;
-         fl_port : OUT  std_logic_vector(7 downto 0)
+         db_busy_write : IN  std_logic
+--         fl_port : OUT  std_logic_vector(7 downto 0)
         );
     END COMPONENT;
 	 
@@ -86,6 +86,7 @@ END COMPONENT;
 
 
    --Inputs
+	signal wea: std_logic_vector(0 downto 0) := (others => '0');
    signal n1state : std_logic_vector(2 downto 0) := (others => '0');
    signal n2state : std_logic_vector(2 downto 0) := (others => '0');
    signal n3state : std_logic_vector(2 downto 0) := (others => '0');
@@ -103,7 +104,7 @@ END COMPONENT;
    signal neigh7 : std_logic_vector(31 downto 0) := (others => '0');
    signal neigh8 : std_logic_vector(31 downto 0) := (others => '0');
    signal clk : std_logic := '0';
-   signal empty : std_logic := '0';
+--   signal empty : std_logic := '0';
    signal db_din : std_logic_vector(7 downto 0) := (others => '0');
    signal db_busy_read : std_logic := '0';
    signal db_busy_write : std_logic := '0';
@@ -116,12 +117,13 @@ END COMPONENT;
    signal db_addr : std_logic_vector(11 downto 0);
    signal db_write : std_logic;
    signal db_dout : std_logic_vector(7 downto 0);
-   signal fl_port : std_logic_vector(7 downto 0);
+--   signal fl_port : std_logic_vector(7 downto 0);
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
  
 BEGIN
+	wea(0) <= db_write;
 	neigh1 <= "11111111000000001111111100000000";
 	neigh2 <= "11111111000000001111111100000000";
 	neigh3 <= "11111111000000001111111100000000";
@@ -134,7 +136,7 @@ BEGIN
    comp: RAMDB PORT MAP (
 	 clka => clk, 
     ena => '1',
-    wea => "0",
+    wea => wea,
     addra => db_addr,
     dina => db_dout,
     douta => db_din);
@@ -161,16 +163,17 @@ BEGIN
           out1 => out1,
           negIface => negIface,
           clk => clk,
-          empty => empty,
+--          empty => empty,
           db_read => db_read,
           db_addr => db_addr,
           db_din => db_din,
           db_write => db_write,
           db_dout => db_dout,
           db_busy_read => db_busy_read,
-          db_busy_write => db_busy_write,
-          fl_port => fl_port
-        );
+          db_busy_write => db_busy_write);
+			 
+			 --          fl_port => fl_port
+        
 
 	
 

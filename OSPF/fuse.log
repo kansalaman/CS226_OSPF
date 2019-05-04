@@ -1,20 +1,20 @@
-Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -relaunch -intstyle "ise" -incremental -lib "secureip" -o "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsraction_tb_isim_beh.exe" -prj "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsraction_tb_beh.prj" "work.lsraction_tb" 
+Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -relaunch -intstyle "ise" -incremental -lib "secureip" -o "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB_isim_beh.exe" -prj "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB_beh.prj" "work.LSUGEN_TB" 
 ISim P.20131013 (signature 0xfbc00daa)
 Number of CPUs detected in this system: 4
 Turning on mult-threading, number of parallel sub-compilation jobs: 8 
 Determining compilation order of HDL files
 Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/ipcore_dir/RAMDB.vhd" into library work
-Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsraction.vhd" into library work
-Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsraction_tb.vhd" into library work
+Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/numones.vhd" into library work
+Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsugen.vhd" into library work
+Parsing VHDL file "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 103764 KB
-Fuse CPU Usage: 1570 ms
+Fuse Memory Usage: 104080 KB
+Fuse CPU Usage: 1420 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
 Compiling package std_logic_unsigned
-Compiling architecture behavioral of entity lsraction [\lsraction(12,8)\]
 Compiling package textio
 Compiling package std_logic_textio
 Compiling architecture output_stage_behavioral of entity BLK_MEM_GEN_V7_3_output_stage [\BLK_MEM_GEN_V7_3_output_stage("...]
@@ -23,10 +23,13 @@ Compiling architecture softecc_output_reg_stage_behavioral of entity BLK_MEM_GEN
 Compiling architecture mem_module_behavioral of entity BLK_MEM_GEN_V7_3_mem_module [\BLK_MEM_GEN_V7_3_mem_module("bl...]
 Compiling architecture behavioral of entity BLK_MEM_GEN_V7_3 [\BLK_MEM_GEN_V7_3("blk_mem_gen_v...]
 Compiling architecture ramdb_a of entity RAMDB [ramdb_default]
-Compiling architecture behavior of entity lsraction_tb
+Compiling architecture behavioral of entity numones [numones_default]
+Compiling architecture behavioral of entity lsugen [\lsugen(12,8)\]
+Compiling architecture behavior of entity lsugen_tb
 Time Resolution for simulation is 1ps.
-Compiled 21 VHDL Units
-Built simulation executable /home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/lsraction_tb_isim_beh.exe
-Fuse Memory Usage: 679992 KB
-Fuse CPU Usage: 1740 ms
-GCC CPU Usage: 330 ms
+Waiting for 1 sub-compilation(s) to finish...
+Compiled 23 VHDL Units
+Built simulation executable /home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/LSUGEN_TB_isim_beh.exe
+Fuse Memory Usage: 681136 KB
+Fuse CPU Usage: 1580 ms
+GCC CPU Usage: 700 ms

@@ -1,0 +1,31 @@
+Command line:
+   LSUGEN_TB_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  37299
+
+Sun May  5 00:20:37 2019
+
+
+ Elaboration Time: 0.04 sec
+
+ Current Memory Usage: 213.451 Meg
+
+ Total Signals          : 314
+ Total Nets             : 22248
+ Total Signal Drivers   : 131
+ Total Blocks           : 20
+ Total Primitive Blocks : 11
+ Total Processes        : 66
+ Total Traceable Variables  : 244
+ Total Scalar Nets and Variables : 23794
+Total Line Count : 1282
+Total Line Count : 1282
+Total Line Count : 1282
+
+ Total Simulation Time: 0.77 sec
+
+ Current Memory Usage: 288.952 Meg
+
+Sun May  5 00:36:04 2019
+

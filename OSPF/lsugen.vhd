@@ -85,8 +85,6 @@ constant metric6: std_logic_vector(15 downto 0) := zero8 & "00001001";
 constant metric7: std_logic_vector(15 downto 0) := zero8 & "00000011";
 constant metric8: std_logic_vector(15 downto 0) := zero8 & "00000101";
 
-
-
 signal newlen: std_logic_vector(15 downto 0); -- Combinational mapping
 signal num: std_logic_vector(3 downto 0);
 constant metric : std_logic_vector(15 downto 0) := zero8 & "00000011";
@@ -103,7 +101,11 @@ signal p_seqnum, n_seqnum: STD_LOGIC_VECTOR(31 downto 0);
 constant def_loc: std_logic_vector(11 downto 0) := zero8 & "0001";
 signal p_loc : std_logic_vector(ADDR_SIZE-1 downto 0) := def_loc;
 signal n_loc : std_logic_vector(ADDR_SIZE-1 downto 0) := def_loc;
-signal write_loc : std_logic_vector(ADDR_SIZE-1 downto 0) := def_loc;
+
+
+signal p_write_addr, n_write_addr: std_logic_vector(ADDR_SIZE-1 downto 0) := def_loc;
+signal skip : std_logic := '0';
+--signal write_loc : std_logic_vector(ADDR_SIZE-1 downto 0) := def_loc;
 
 signal cur_data: std_logic_vector(7 downto 0) := (others => '0');
 
@@ -165,8 +167,6 @@ signal g7: std_logic := '0';
 signal g8: std_logic := '0';
 
 begin
-db_write <= out_val;
-db_dout <= out1;
 --lsdbheader(175 downto 168) <= zero8;
 --lsdbheader(167 downto 160) <= "00000001";
 -- MAP
@@ -178,6 +178,24 @@ db_dout <= out1;
 --signal g6: std_logic := (act_on(5) and not (served(4)));
 --signal g7: std_logic := (act_on(6) and not (served(5)));
 --signal g8: std_logic := (act_on(7) and not (served(6)));
+
+db_dout <= out1;
+COMBWRITE: process(p_write_addr, out_val, skip, out1)
+begin
+	if (out_val ='1' and skip='1') then
+		db_write <= '0';
+--		db_dout <= out1;
+--		n_write_addr <= p_write_addr;
+	elsif (out_val = '1' and skip = '0') then
+		db_write <= '1';
+--		db_addr <= p_write_addr;
+--		db_dout <= out1;
+--		n_write_addr <= p_write_addr+1;
+	else
+		db_write <= '0';		
+	end if;
+end process;
+
 
 NUM1: numones port map( act_on, num);
 newlen <= conv_std_logic_vector(24 + (conv_integer(num) * 12), 16); 
@@ -195,13 +213,14 @@ SEQ: process(clk)
 			g8 <= act_on(7) and not served(7);
 			p_adj <= in_adj;
 			p_seqnum <= n_seqnum;
-			if( out_val = '1') then
-				if (p_headtimer = "10110" or p_headtimer ="10101" or p_headtimer ="00111" or p_headtimer ="01000" or p_headtimer ="00100" or p_headtimer ="00011" ) then
-				write_loc <= write_loc;
-				else
-				write_loc<= write_loc+1;
-				end if;
-			end if;
+--			if( out_val = '1') then
+--				if (p_headtimer = "10110" or p_headtimer ="10101" or p_headtimer ="00111" or p_headtimer ="01000" or p_headtimer ="00100" or p_headtimer ="00011" ) then
+----				write_loc <= write_loc;
+--				else
+--				write_loc<= write_loc+1;
+--				end if;
+--			end if;
+			p_write_addr <= n_write_addr;
 			p_readtimer <= n_readtimer;
 			p_loc <= n_loc;
 			p_adj <= n_adj;
@@ -213,17 +232,9 @@ SEQ: process(clk)
 		end if;
 	end process;
 
---COMB: process(write_loc, out_val)
---begin
---if (out_val = '1') then
---	db_addr <= write_loc;
---end if;
---
---end process;
---
 
 COMBSTATE: process(p_state, p_readtimer, p_adstimer, p_uptimer, p_headtimer,
-					p_adj, p_loc, db_din, p_seqnum, lsdbheader, newlen, write_loc)
+					p_adj, p_loc, db_din, p_seqnum, lsdbheader, newlen, p_write_addr)
 variable msb, lsb: integer;
 begin
 case p_state is
@@ -232,8 +243,9 @@ case p_state is
 			db_addr <= p_loc;
 			n_loc <= p_loc + 1;
 			n_state <= READ_HEADER;
-
+			n_write_addr <= p_write_addr;
 	when READ_HEADER =>
+	n_write_addr <= p_write_addr;
 	if (p_readtimer = "00001") then
 		n_state <= WAITING;
 		n_seqnum <= lsdbheader(95 downto 64);
@@ -261,6 +273,7 @@ case p_state is
 	end if;
 
 	when WAITING =>
+		n_write_addr <= p_write_addr;
 		out_val <='0';
 		served <= (others => '0');
 		if (p_uptimer = "00000") then
@@ -284,46 +297,74 @@ case p_state is
 			n_uptimer <= p_uptimer -1;
 		end if;
 	when SEND_HEADER => -- SENDING_HEADER
+--		n_write_addr <= p_write_addr+1;
+		db_addr <= p_write_addr;
 		msb:= conv_integer(p_headtimer) * 8 -1;
 		lsb:= msb-7;
-		db_addr <= write_loc;
+--		db_addr <= write_loc;
 		if (p_headtimer = "00001") then
 			n_state <= SENDING_ADS;
 			n_headtimer <= "11000";
 			out_val <= '1';
+			skip <= '0';
+			n_write_addr <= p_write_addr+1;
 			out1 <= "0000" & num;
 		else
 			out_val <= '1';
 			n_headtimer <= p_headtimer - 1;
 			if (p_headtimer = "01100") then
 				out1 <= p_seqnum(31 downto 24);
+				skip <= '0';
+				n_write_addr <= p_write_addr+1;
 			elsif (p_headtimer = "01011") then 
 				out1 <= p_seqnum (23 downto 16);
+				skip <= '0';
+				n_write_addr <= p_write_addr+1;
 			elsif (p_headtimer = "01010") then
 				out1 <= p_seqnum (15 downto 8);
+				skip <= '0';
+				n_write_addr <= p_write_addr+1;
 			elsif (p_headtimer = "01001") then
 				out1 <= p_seqnum(7 downto 0);
+				skip <= '0';
+				n_write_addr <= p_write_addr+1;
 			elsif (p_headtimer = "00110") then
 				out1	<= newlen(15 downto 8);
+				skip <= '0';
+				n_write_addr <= p_write_addr+1;
 			elsif (p_headtimer = "00101") then
 				out1 <= newlen(7 downto 0);
+				skip <= '0';
+								n_write_addr <= p_write_addr+1;
 			elsif (p_headtimer = "00010") then
 				out1 <= "00000000";
+				skip <= '0';
+								n_write_addr <= p_write_addr+1;
 --			elsif (p_headtimer = "00001") then
 --				out1 <= "0000" & num;
+			elsif (p_headtimer = "10110" or p_headtimer = "10101" or p_headtimer = "01000" or p_headtimer = "00111" or p_headtimer = "00100" or p_headtimer = "00011") then
+				skip <='1';
+				n_write_addr <= p_write_addr;
+				out1 <= lsdbheader(msb downto lsb);
 			else
+				skip <='0';
+				n_write_addr <= p_write_addr+1;
 				out1 <= lsdbheader(msb downto lsb);
 			end if;
 		end if;
 	when others => -- SENDING_ADS
+		
+		db_addr <= p_write_addr;
 		if (conv_integer(p_adstimer) > conv_integer(num)*12) then
 			n_state <= WAITING;
 			n_adstimer <= "00000001";
+			n_write_addr <= def_loc;
 			out_val <= '0';
 			out1 <= (others => '0');
 		else
-			db_addr <= write_loc;
+--			db_addr <= write_loc;
 			out_val <='1';
+			n_write_addr <= p_write_addr+1;
 			n_adstimer <= p_adstimer +1;
      if (p_adstimer = "00000001") then
                     if (g1 ='1') then
