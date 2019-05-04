@@ -44,7 +44,7 @@ def HelloPacket(rid, netmask, neighL):
 
 
 def DD(rid, LSAs, seqno):
-    plen = len(LSAs)//8 + 12
+    plen = len(LSAs)//8 + 8
     header = makeHeader(2, rid, plen)
     mtu = pad(1500, 16)
     options = pad(0, 16)
@@ -90,8 +90,9 @@ def LSA(lsid, seqno, linkarray):
 
 def LSU(rid, LSAList):
     LSAComb = "".join(LSAList)
-    header = makeHeader(4, rid, len(LSAComb)//8)
-    return header + LSAComb
+    header = makeHeader(4, rid, len(LSAComb)//8 + 1)
+
+    return header + pad(len(LSAList), 32) + LSAComb
 
 
 # Router A
@@ -143,6 +144,6 @@ ReqC = LSR("3.3.3.3", [LSA_A])
 
 LSU_B = LSU("2.2.2.2", [LSA_B, LSA_D, LSA_E])
 LSU_C = LSU("3.3.3.3", [LSA_C, LSA_D, LSA_E])
-for i in list(chunkstring(HelloB, 8)):
+for i in list(chunkstring("0"*20*8+LSU_B, 8)):
     print('in1 <= "'+i+'";')
     print("wait for clk_period;")
