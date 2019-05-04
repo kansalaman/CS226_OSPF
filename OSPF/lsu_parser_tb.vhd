@@ -159,7 +159,7 @@ BEGIN
 	  data_in <= "00000001";
 	  wait for clk_period;
 	  --end no. of advertisements here
-	  data_in <= "00000000";
+	  data_in <= "11000011";
 	  wait for clk_period;
 	  data_in <= "00000000";
 	  wait for clk_period;
@@ -231,9 +231,9 @@ BEGIN
 	  wait for clk_period;
 	  data_in <= "11111111";
 	  wait for clk_period;
-	  data_in <= "11111111";
+	  data_in <= "11000011";
 	  wait for clk_period;
-	  data_valid <= '1';
+	  data_valid <= '0';
 
       wait for clk_period*10;
 

@@ -22,7 +22,7 @@ entity LSU_Parser is
     Port ( state_in : in  STD_LOGIC_VECTOR (3 downto 0);
            data_in : in  STD_LOGIC_VECTOR (7 downto 0);
            data_valid : in  STD_LOGIC;
-			  clk : in std_logic;
+		   clk : in std_logic;
            write_to_q : out  STD_LOGIC;
            qout : out  STD_LOGIC_VECTOR (7 downto 0);
            ack_q_out : out STD_LOGIC_VECTOR(7 downto 0);
@@ -97,7 +97,7 @@ begin
         --code here writes to LSAq
 
         --just remove an or here
-        if((current_state=sendLSA and current_byte_no>=1 and current_byte_no<=20) or (current_state=LSU_strip and current_byte_no>= 25 and current_byte_no<=28)) then
+        if((current_state=sendLSA and current_byte_no>=1 and current_byte_no<=20)) then
             write_ack <= '1';
             ack_data_out <= data_in;
         else
