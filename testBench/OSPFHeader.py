@@ -44,7 +44,7 @@ def HelloPacket(rid, netmask, neighL):
 
 
 def DD(rid, LSAs, seqno):
-    plen = len(LSAs)//8 + 12
+    plen = len(LSAs)//8 + 8
     header = makeHeader(2, rid, plen)
     mtu = pad(1500, 16)
     options = pad(0, 16)
