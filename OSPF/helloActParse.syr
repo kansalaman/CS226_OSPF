@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.02 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.02 secs
  
 --> 
 Reading design: helloActParse.prj
@@ -207,21 +207,21 @@ Synthesizing Unit <helloActParse>.
     | Encoding           | auto                                           |
     | Implementation     | LUT                                            |
     -----------------------------------------------------------------------
-    Found 8-bit adder for signal <n1457> created at line 166.
-    Found 7-bit adder for signal <dbd_length> created at line 169.
-    Found 6-bit adder for signal <n1289> created at line 550.
-    Found 11-bit adder for signal <n1312> created at line 748.
-    Found 11-bit adder for signal <n1384> created at line 769.
-    Found 10-bit subtractor for signal <GND_5_o_GND_5_o_sub_146_OUT<9:0>> created at line 537.
-    Found 2-bit subtractor for signal <GND_5_o_GND_5_o_sub_567_OUT<1:0>> created at line 605.
-    Found 7-bit subtractor for signal <GND_5_o_GND_5_o_sub_1392_OUT<6:0>> created at line 769.
-    Found 5x2-bit multiplier for signal <n1458> created at line 166.
-    Found 10-bit 8-to-1 multiplexer for signal <next_time> created at line 328.
-    Found 7-bit 7-to-1 multiplexer for signal <p_dbd[2]_GND_5_o_wide_mux_1478_OUT> created at line 626.
+    Found 8-bit adder for signal <n1457> created at line 159.
+    Found 7-bit adder for signal <dbd_length> created at line 162.
+    Found 6-bit adder for signal <n1289> created at line 543.
+    Found 11-bit adder for signal <n1312> created at line 741.
+    Found 11-bit adder for signal <n1384> created at line 762.
+    Found 10-bit subtractor for signal <GND_5_o_GND_5_o_sub_146_OUT<9:0>> created at line 530.
+    Found 2-bit subtractor for signal <GND_5_o_GND_5_o_sub_567_OUT<1:0>> created at line 598.
+    Found 7-bit subtractor for signal <GND_5_o_GND_5_o_sub_1392_OUT<6:0>> created at line 762.
+    Found 5x2-bit multiplier for signal <n1458> created at line 159.
+    Found 10-bit 8-to-1 multiplexer for signal <next_time> created at line 321.
+    Found 7-bit 7-to-1 multiplexer for signal <p_dbd[2]_GND_5_o_wide_mux_1478_OUT> created at line 619.
 WARNING:Xst:737 - Found 1-bit latch for signal <lsa_queue_rd_en>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-    Found 32-bit comparator lessequal for signal <self[31]_router_id_sig[31]_LessThan_48_o> created at line 294
-    Found 32-bit comparator equal for signal <n0050> created at line 302
-    Found 32-bit comparator equal for signal <old_neighbor[31]_self[31]_equal_79_o> created at line 356
+    Found 32-bit comparator lessequal for signal <self[31]_router_id_sig[31]_LessThan_48_o> created at line 287
+    Found 32-bit comparator equal for signal <n0050> created at line 295
+    Found 32-bit comparator equal for signal <old_neighbor[31]_self[31]_equal_79_o> created at line 349
     Summary:
 	inferred   1 Multiplier(s).
 	inferred   8 Adder/Subtractor(s).
@@ -641,8 +641,8 @@ clk            |    4.739|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 44.00 secs
-Total CPU time to Xst completion: 36.67 secs
+Total REAL time to Xst completion: 48.00 secs
+Total CPU time to Xst completion: 38.44 secs
  
 --> 
 
