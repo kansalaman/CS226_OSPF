@@ -95,9 +95,17 @@ signal plen_vec1,plen_vec2 : std_logic_vector(31 downto 0);
 signal state_temp : integer range 0 to 3;
 signal temp_wait : integer := 0;
 begin
-lsa_length_int <= conv_integer(lsa_length);
 plen_vec1 <= std_logic_vector(to_unsigned(max_index+24,32));
 plen_vec2 <= std_logic_vector(to_unsigned(max_index+28,32));
+comb4: process(p_state,lsa_length)
+begin
+if(p_state=idle) then
+	lsa_length_int <= 50;
+else
+	lsa_length_int <= conv_integer(lsa_length);
+end if;
+end process;
+
 process(clk)
     variable current_byte_no : integer;
     variable current_state : states;
@@ -146,7 +154,9 @@ begin
         end if;
 
 
-        if(current_state=serve2 and dataobtained_p=19) then
+        if(current_state=idle) then
+            lsa_length <= "1111111111111111";
+        elsif(current_state=serve2 and dataobtained_p=19) then
             lsa_length(15 downto 8) <= data_arr(19);
         elsif(current_state=serve2 and dataobtained_p=20) then
             lsa_length(7 downto 0) <= data_arr(20);
@@ -247,7 +257,9 @@ begin
         -- end if;
         
         -- if((current_state=serve1 or current_state=serve2) and current_byte_no=1)
-        if((current_state=serve1 or current_state=serve2) and max_index+1=1) then
+        if(current_state=idle) then
+            dataobtained_p <= 0;
+        elsif((current_state=serve1 or current_state=serve2) and max_index+1=1) then
             dataobtained_p <= 0;
         elsif ((current_state=serve1 or current_state=serve2) and max_index+1=2) then
             dataobtained_p <= 0;

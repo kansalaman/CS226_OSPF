@@ -8,8 +8,8 @@ Parsing VHDL file "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/in
 Parsing VHDL file "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/iface_out_tb.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 102852 KB
-Fuse CPU Usage: 1190 ms
+Fuse Memory Usage: 102916 KB
+Fuse CPU Usage: 1250 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
@@ -25,6 +25,6 @@ Time Resolution for simulation is 1ps.
 Waiting for 1 sub-compilation(s) to finish...
 Compiled 16 VHDL Units
 Built simulation executable /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/iface_out_tb_isim_beh.exe
-Fuse Memory Usage: 678640 KB
-Fuse CPU Usage: 1320 ms
-GCC CPU Usage: 260 ms
+Fuse Memory Usage: 678704 KB
+Fuse CPU Usage: 1380 ms
+GCC CPU Usage: 320 ms

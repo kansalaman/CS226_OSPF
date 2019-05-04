@@ -244,7 +244,7 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1556948760" xil_pn:in_ck="-583331014889486785" xil_pn:name="TRANEXT_xstsynthesize_spartan6" xil_pn:prop_ck="-5121552907316860153" xil_pn:start_ts="1556948711">
+    <transform xil_pn:end_ts="1556955639" xil_pn:in_ck="-583331014889486785" xil_pn:name="TRANEXT_xstsynthesize_spartan6" xil_pn:prop_ck="-5121552907316860153" xil_pn:start_ts="1556955593">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="WarningsGenerated"/>
       <status xil_pn:value="ReadyToRun"/>
