@@ -1,0 +1,2 @@
+vhdl work "message_parser.vhd"
+vhdl work "parsertb.vhd"

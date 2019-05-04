@@ -1,0 +1,10 @@
+Command line:
+   parsertb_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  42785
+
+Sat May  4 17:20:01 2019
+
+
+ Elaboration Time: 0.01 sec

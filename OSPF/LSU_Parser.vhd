@@ -174,12 +174,19 @@ begin
             end if;
         
         when dumpLSU =>
-        if(p_counter=28) then
-            n_state <= dumpLSA;
-            n_counter <= 1;
+
+        if(data_valid <= '0') then
+            n_state <= IDLE;
+            n_counter <= 0;
         else
-            n_state <= p_state;
-            n_counter <= p_counter+1;
+
+            if(p_counter=28) then
+                n_state <= dumpLSA;
+                n_counter <= 1;
+            else
+                n_state <= p_state;
+                n_counter <= p_counter+1;
+            end if;
         end if;
 
         when dumpLSA =>
@@ -203,14 +210,20 @@ begin
             end if;
             
         when LSU_strip =>
-            if(p_counter=28) then
-                n_state <= sendLSA;
-                n_counter <= 1;
+            if(data_valid <= '0') then
+                n_state <= IDLE;
+                n_counter <= 0;
             else
-                n_state <= p_state;
-                n_counter <= p_counter+1;
+                if(p_counter=28) then
+                    n_state <= sendLSA;
+                    n_counter <= 1;
+                else
+                    n_state <= p_state;
+                    n_counter <= p_counter+1;
+                end if;
             end if;
         when sendLSA =>
+            
             if(processed_bytes = packet_length_int or data_valid='0') then
                 if(data_valid = '1' and state_in_int>=5 and state_in_int<=8) then
                     n_state <= LSU_strip;
