@@ -26,19 +26,39 @@ def makeHeader(type, rid, plen):
 
 def HelloPacket(rid, netmask, neighL):
     nmask = pad(int(IPv4Address(netmask)), 32)
-    hinterval = pad(100, 16)
+    hinterval = pad(1000, 16)
     options = pad(0, 8)
     rtrpri = pad(0, 8)
+    routerdead = pad(2000, 32)
     dr = pad(0, 32)
     bdr = pad(0, 32)
     neighpadded = []
     for i in neighL:
         neighpadded.append(pad(int(IPv4Address(i)), 32))
 
-    packet = nmask + hinterval + options + rtrpri + dr + bdr + "".join(neighpadded)
+    packet = nmask + hinterval + options + rtrpri + routerdead + dr + bdr + "".join(neighpadded)
     plen = len(packet)//8
+    # print(plen)
     header = makeHeader(1, rid, plen)
     return header + packet
+
+
+def DD(rid, LSAs, seqno):
+    plen = len(LSAs)//8 + 12
+    header = makeHeader(2, rid, plen)
+    mtu = pad(1500, 16)
+    options = pad(0, 16)
+    seqno = pad(seqno, 32)
+    return header + mtu + options + seqno + LSAs
+
+
+def LSR(rid, LSAHeaderl):
+    plen = len(LSAHeaderl)*12
+    header = makeHeader(3, rid, plen)
+    li = ""
+    for i in LSAHeaderl:
+        li = li + pad(1, 32) + i[32:96]
+    return header + li
 
 
 def LSA(lsid, seqno, linkarray):
@@ -109,5 +129,11 @@ links_E = [linkE1, linkE2, linkE3, linkE4]
 LSA_E = LSA("5.5.5.5", 2, links_E)
 
 # print(len(LSA_A)//8, len(LSA_B)//8, len(LSA_C)//8, len(LSA_D)//8)
-HelloB = HelloPacket("2.2.2.2", "0.0.0.0", ["5.5.5.5", "4.4.4.4"])
-HelloC = HelloPacket("3.3.3.3", "0.0.0.0", ["4.4.4.4", "5.5.5.5"])
+HelloB = "0"*20*8 + HelloPacket("2.2.2.2", "0.0.0.0", ["1.1.1.1", "5.5.5.5", "4.4.4.4"])
+HelloC = "0"*20*8 + HelloPacket("3.3.3.3", "0.0.0.0", ["1.1.1.1", "4.4.4.4", "5.5.5.5"])
+
+EmptyDDB = DD("2.2.2.2", "", 5)
+EmptyDDC = DD("3.3.3.3", "", 10)
+
+DDB = DD("2.2.2.2", LSA_B[:160] + LSA_D[:160] + LSA_E[:160], 6)
+DDC = DD("3.3.3.3", LSA_C[:160] + LSA_D[:160] + LSA_E[:160], 11)
