@@ -421,6 +421,7 @@ signal LSUMRAMaddr : std_logic_vector(11 downto 0) := (others => '0');
 signal LSUM_fl_val : std_logic := '0';
 signal LSUM_fl_out : std_logic_vector(7 downto 0);
 signal LSUM_fl_port : std_logic_vector(7 downto 0);
+signal LSUM_db_write : std_logic_vector(0 downto 0);
 
 --Main LSA Queue I/O
 signal mainLSAQW, mainLSAQR, mainLSAQE : std_logic := '0';
@@ -699,10 +700,10 @@ begin
     db_read => lsu_gen_db_read,
     db_addr => lsu_gen_db_addr,
     db_din => dbRAMdout,
-    db_write => ,
-    db_dout => ,
-     db_busy_read => ,
-     db_busy_write =>
+    db_write => lsu_gen_db_write(0),
+    db_dout => lsu_gen_db_dout,
+    db_busy_read => dummy_var,
+    db_busy_write => dummy_var
       );
 
   Main_Q : InterfaceFIFO
@@ -728,8 +729,8 @@ begin
       db_read => LSUMRAMrea,
       db_addr => LSUMRAMaddr,
       db_din => dbRAMdout,
-      db_write => LSUM_dbRAM,
-      db_dout => LSUMDBOUT,
+      db_write => LSUM_db_write(0),
+      db_dout => LSUM_db_out,
       fl_val => LSUM_fl_val,
       fl_out => LSUM_fl_out,
       fl_port => LSUM_fl_port,
@@ -864,12 +865,51 @@ dbRAMaddr <= db2dj_db_addr when db2dj_db_read else
 
 addra <= db2dj_addr or dj_addr_read;
 
-QUEUEMUX : for i in 1 to 8 loop
-    LSAQIArr(i) <= fl_out(i) when fl_write(i) else
-                   lsrOutArr(i) when telling_lsr(i) else
+--QUEUEMUX : for i in 1 to 8 loop
+--    LSAQIArr(i) <= fl_out(i) when fl_write(i) else
+--                   lsrOutArr(i) when telling_lsr(i) else
+--                   (others => '0');
+--    LSAQWArr(i) <= fl_write(i) or telling_lsr(i);
+--end loop;
+LSAQIArr(1) <= fl_out(1) when fl_write(1) else
+                   lsrOutArr(1) when telling_lsr(1) else
                    (others => '0');
-    LSAQWArr(i) <= fl_write(i) or telling_lsr(i);
-end loop;
+LSAQWArr(1) <= fl_write(1) or telling_lsr(1);
+
+LSAQIArr(2) <= fl_out(2) when fl_write(2) else
+                   lsrOutArr(i) when telling_lsr(2) else
+                   (others => '0');
+LSAQWArr(2) <= fl_write(2) or telling_lsr(2);
+
+LSAQIArr(3) <= fl_out(3) when fl_write(3) else
+                   lsrOutArr(2) when telling_lsr(3) else
+                   (others => '0');
+LSAQWArr(3) <= fl_write(3) or telling_lsr(3);
+
+LSAQIArr(4) <= fl_out(4) when fl_write(4) else
+                   lsrOutArr(4) when telling_lsr(4) else
+                   (others => '0');
+LSAQWArr(4) <= fl_write(i) or telling_lsr(3);
+
+LSAQIArr(5) <= fl_out(5) when fl_write(5) else
+                   lsrOutArr(5) when telling_lsr(5) else
+                   (others => '0');
+LSAQWArr(5) <= fl_write(5) or telling_lsr(5);
+
+LSAQIArr(6) <= fl_out(6) when fl_write(6) else
+                   lsrOutArr(6) when telling_lsr(6) else
+                   (others => '0');
+LSAQWArr(6) <= fl_write(6) or telling_lsr(6);
+
+LSAQIArr(7) <= fl_out(7) when fl_write(7) else
+                   lsrOutArr(7) when telling_lsr(7) else
+                   (others => '0');
+LSAQWArr(7) <= fl_write(7) or telling_lsr(7);
+
+LSAQIArr(8) <= fl_out(8) when fl_write(8) else
+                   lsrOutArr(8) when telling_lsr(8) else
+                   (others => '0');
+LSAQWArr(8) <= fl_write(8) or telling_lsr(8);
 
 fl_val <= LSUM_fl_val or LSU_GEN_out_val;
 fl_din <= LSU_GEN_out1 when LSU_GEN_out_val else
@@ -886,6 +926,11 @@ mainLSAQI <= LSUPQ_O(1) when LSUPQ_W(1) else
              LSUPQ_O(7) when LSUPQ_W(7) else
              LSUPQ_O(8) when LSUPQ_W(8) else
              (others => '0');
+
+dbRAMwea <= lsu_gen_db_write or LSUM_db_write;
+dbRAMdin <= lsu_gen_db_dout when lsu_gen_db_write(0) else
+            LSUM_db_out when lsu_gen_db_write(0) else
+            (others => '0');
 
 end Behavioral;
 

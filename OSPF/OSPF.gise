@@ -288,7 +288,7 @@
       <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
       <status xil_pn:value="OutputChanged"/>
-      <outfile xil_pn:name="LSUM_tb_isim_beh.wdb"/>
+      <status xil_pn:value="OutputRemoved"/>
       <outfile xil_pn:name="isim.cmd"/>
       <outfile xil_pn:name="isim.log"/>
     </transform>
@@ -323,26 +323,6 @@
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
       <status xil_pn:value="OutOfDateForPredecessor"/>
-    </transform>
-    <transform xil_pn:end_ts="1556964086" xil_pn:in_ck="2454819691477967036" xil_pn:name="TRANEXT_xstsynthesize_spartan6" xil_pn:prop_ck="4392962883346416698" xil_pn:start_ts="1556964057">
-      <status xil_pn:value="SuccessfullyRun"/>
-      <status xil_pn:value="WarningsGenerated"/>
-      <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForInputs"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
-      <status xil_pn:value="InputAdded"/>
-      <status xil_pn:value="InputChanged"/>
-      <outfile xil_pn:name="LinkStateUpdateMachine.lso"/>
-      <outfile xil_pn:name="LinkStateUpdateMachine.ngc"/>
-      <outfile xil_pn:name="LinkStateUpdateMachine.ngr"/>
-      <outfile xil_pn:name="LinkStateUpdateMachine.prj"/>
-      <outfile xil_pn:name="LinkStateUpdateMachine.stx"/>
-      <outfile xil_pn:name="LinkStateUpdateMachine.syr"/>
-      <outfile xil_pn:name="LinkStateUpdateMachine.xst"/>
-      <outfile xil_pn:name="LinkStateUpdateMachine_xst.xrpt"/>
-      <outfile xil_pn:name="_xmsgs/xst.xmsgs"/>
-      <outfile xil_pn:name="webtalk_pn.xml"/>
-      <outfile xil_pn:name="xst"/>
     </transform>
     <transform xil_pn:end_ts="1556834339" xil_pn:name="TRAN_compileBCD2" xil_pn:prop_ck="-967355504682509059" xil_pn:start_ts="1556834339">
       <status xil_pn:value="SuccessfullyRun"/>
