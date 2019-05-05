@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -lib "secureip" -o "/home/ise/ISE/CS226_OSPF/OSPF/LSUM_tb_isim_beh.exe" -prj "/home/ise/ISE/CS226_OSPF/OSPF/LSUM_tb_beh.prj" "work.LSUM_tb" 
+-intstyle "ise" -incremental -lib "secureip" -o "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/tb_Main_Machine_isim_beh.exe" -prj "/home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/tb_Main_Machine_beh.prj" "work.tb_Main_Machine" 

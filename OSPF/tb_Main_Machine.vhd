@@ -1,36 +1,6 @@
---------------------------------------------------------------------------------
--- Company: 
--- Engineer:
---
--- Create Date:   01:19:10 05/05/2019
--- Design Name:   
--- Module Name:   /home/ansh/Desktop/Academics/Semester 4/CS 226/Project/CS226_OSPF/OSPF/tb_Main_Machine.vhd
--- Project Name:  OSPF
--- Target Device:  
--- Tool versions:  
--- Description:   
--- 
--- VHDL Test Bench Created by ISE for module: MainModule
--- 
--- Dependencies:
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
---
--- Notes: 
--- This testbench has been automatically generated using types std_logic and
--- std_logic_vector for the ports of the unit under test.  Xilinx recommends
--- that these types always be used for the top-level I/O of a design in order
--- to guarantee that the testbench will bind correctly to the post-implementation 
--- simulation model.
---------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
  
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---USE ieee.numeric_std.ALL;
  
 ENTITY tb_Main_Machine IS
 END tb_Main_Machine;
@@ -50,14 +20,14 @@ ARCHITECTURE behavior OF tb_Main_Machine IS
          in6 : IN  std_logic_vector(7 downto 0);
          in7 : IN  std_logic_vector(7 downto 0);
          in8 : IN  std_logic_vector(7 downto 0);
-         in_val1 : IN  std_logic_vector(7 downto 0);
-         in_val2 : IN  std_logic_vector(7 downto 0);
-         in_val3 : IN  std_logic_vector(7 downto 0);
-         in_val4 : IN  std_logic_vector(7 downto 0);
-         in_val5 : IN  std_logic_vector(7 downto 0);
-         in_val6 : IN  std_logic_vector(7 downto 0);
-         in_val7 : IN  std_logic_vector(7 downto 0);
-         in_val8 : IN  std_logic_vector(7 downto 0);
+         in_val1 : IN  std_logic;
+         in_val2 : IN  std_logic;
+         in_val3 : IN  std_logic;
+         in_val4 : IN  std_logic;
+         in_val5 : IN  std_logic;
+         in_val6 : IN  std_logic;
+         in_val7 : IN  std_logic;
+         in_val8 : IN  std_logic;
          out1 : OUT  std_logic_vector(7 downto 0);
          out2 : OUT  std_logic_vector(7 downto 0);
          out3 : OUT  std_logic_vector(7 downto 0);
@@ -66,15 +36,15 @@ ARCHITECTURE behavior OF tb_Main_Machine IS
          out6 : OUT  std_logic_vector(7 downto 0);
          out7 : OUT  std_logic_vector(7 downto 0);
          out8 : OUT  std_logic_vector(7 downto 0);
-         out_val1 : IN  std_logic;
-         out_val2 : IN  std_logic;
-         out_val3 : IN  std_logic;
-         out_val4 : IN  std_logic;
-         out_val5 : IN  std_logic;
-         out_val6 : IN  std_logic;
-         out_val7 : IN  std_logic;
-         out_val8 : IN  std_logic;
-         dijkstra_on : IN  std_logic
+         out_val1 : OUT  std_logic;
+         out_val2 : OUT std_logic;
+         out_val3 : OUT std_logic;
+         out_val4 : OUT std_logic;
+         out_val5 : OUT std_logic;
+         out_val6 : OUT std_logic;
+         out_val7 : OUT std_logic;
+         out_val8 : OUT std_logic
+--         dijkstra_on : IN  std_logic
         );
     END COMPONENT;
     
@@ -89,14 +59,14 @@ ARCHITECTURE behavior OF tb_Main_Machine IS
    signal in6 : std_logic_vector(7 downto 0) := (others => '0');
    signal in7 : std_logic_vector(7 downto 0) := (others => '0');
    signal in8 : std_logic_vector(7 downto 0) := (others => '0');
-   signal in_val1 : std_logic_vector(7 downto 0) := (others => '0');
-   signal in_val2 : std_logic_vector(7 downto 0) := (others => '0');
-   signal in_val3 : std_logic_vector(7 downto 0) := (others => '0');
-   signal in_val4 : std_logic_vector(7 downto 0) := (others => '0');
-   signal in_val5 : std_logic_vector(7 downto 0) := (others => '0');
-   signal in_val6 : std_logic_vector(7 downto 0) := (others => '0');
-   signal in_val7 : std_logic_vector(7 downto 0) := (others => '0');
-   signal in_val8 : std_logic_vector(7 downto 0) := (others => '0');
+   signal in_val1, in_val2, in_val3, in_val4, in_val5, in_val6, in_val7, in_val8 : std_logic:='0';
+--   signal in_val2 : std_logic_vector(7 downto 0) := (others => '0');
+--   signal in_val3 : std_logic_vector(7 downto 0) := (others => '0');
+--   signal in_val4 : std_logic_vector(7 downto 0) := (others => '0');
+--   signal in_val5 : std_logic_vector(7 downto 0) := (others => '0');
+--   signal in_val6 : std_logic_vector(7 downto 0) := (others => '0');
+--   signal in_val7 : std_logic_vector(7 downto 0) := (others => '0');
+--   signal in_val8 : std_logic_vector(7 downto 0) := (others => '0');
    signal out_val1 : std_logic := '0';
    signal out_val2 : std_logic := '0';
    signal out_val3 : std_logic := '0';
@@ -105,7 +75,7 @@ ARCHITECTURE behavior OF tb_Main_Machine IS
    signal out_val6 : std_logic := '0';
    signal out_val7 : std_logic := '0';
    signal out_val8 : std_logic := '0';
-   signal dijkstra_on : std_logic := '0';
+--   signal dijkstra_on : std_logic := '0';
 
  	--Outputs
    signal out1 : std_logic_vector(7 downto 0);
@@ -156,8 +126,8 @@ BEGIN
           out_val5 => out_val5,
           out_val6 => out_val6,
           out_val7 => out_val7,
-          out_val8 => out_val8,
-          dijkstra_on => dijkstra_on
+          out_val8 => out_val8
+--          dijkstra_on => dijkstra_on
         );
 
    -- Clock process definitions
@@ -640,7 +610,7 @@ wait for clk_period;
 in_val3 <= '0';
 
 -- Reply DD_B after 200 clk_period 
-wait for 200 clk_period;
+wait for 200*clk_period;
 
 in_val2 <= '1';
 
@@ -830,6 +800,7 @@ in2<="01001000";
 wait for clk_period;
 in_val2 <= '0';
 
+wait for 200*clk_period;
 -- REPLY DBD FROM C after 200 clk cycles
 in_val3 <= '1';
 
@@ -1022,7 +993,7 @@ in_val3 <= '0';
 
 -- LSR FROM B
 
-wait for 120 clk_period;
+wait for 120*clk_period;
 
 in_val2 <= '1';
 in2<="00000010";
@@ -1102,7 +1073,7 @@ in_val2 <= '0';
 
 -- SENDING FROM LSU from C
 
-wait for 300 clk_period;
+wait for 300*clk_period;
 
 in_val3 <= '1';
 
@@ -1184,7 +1155,7 @@ in_val3 <= '0';
 
 
 -- Receiving LSU from from 2
-wait for 50 clk_period;
+wait for 50*clk_period;
 
 in_val2 <= '1';
 
@@ -1656,7 +1627,7 @@ wait for clk_period;
 in_val2 <= '0';
 
 
-wait for 400 clk_period;
+wait for 400*clk_period;
 
 -- SENDING LSU from C
 in_val3 <= '1';

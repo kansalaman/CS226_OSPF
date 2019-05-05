@@ -218,7 +218,6 @@ architecture Behavioral of MainModule is
     );
   END COMPONENT;
 
-  --The Holy Dijkstra Module
   component Dijkstra is
     Generic 
     ( 
@@ -460,8 +459,8 @@ signal routingRAMdout : std_logic_vector(63 downto 0) := (others => '0');
 
 --DBtoDijkstra I/O
 signal db2dj_d_on, db2dj_db_read : std_logic;
-signal db2dj_addr, db2dj_db_addr : std_logic_vector(5 downto 0) := (others => '0');
-
+signal db2dj_addr : std_logic_vector(5 downto 0) := (others => '0');
+signal db2dj_db_addr : std_logic_vector(11 downto 0) := (others => '0');
 --Dijkstra I/O
 signal dj_addr_read, dj_addr_write : std_logic_vector(5 downto 0) := (others => '0');
 signal dj_done : std_logic;
