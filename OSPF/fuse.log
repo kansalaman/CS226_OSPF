@@ -1,29 +1,30 @@
-Running: /Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/lsrgen_tb_isim_beh.exe -prj /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/lsrgen_tb_beh.prj work.lsrgen_tb 
+Running: /Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/iface_out_tb_isim_beh.exe -prj /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/iface_out_tb_beh.prj work.iface_out_tb 
 ISim P.20131013 (signature 0xfbc00daa)
 Number of CPUs detected in this system: 4
 Turning on mult-threading, number of parallel sub-compilation jobs: 8 
 Determining compilation order of HDL files
 Parsing VHDL file "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/ipcore_dir/FIFOACK.vhd" into library work
-Parsing VHDL file "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/lsr_gen.vhd" into library work
-Parsing VHDL file "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/lsrgen_tb.vhd" into library work
+Parsing VHDL file "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/interfaceOut.vhd" into library work
+Parsing VHDL file "/home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/iface_out_tb.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 101356 KB
-Fuse CPU Usage: 1150 ms
+Fuse Memory Usage: 102912 KB
+Fuse CPU Usage: 1190 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
 Compiling package std_logic_unsigned
+Compiling package numeric_std
+Compiling architecture behavioral of entity interfaceOut [\interfaceOut(('0','0','0','0','...]
 Compiling architecture behavioral of entity fifo_generator_v9_3_bhv_ss [\fifo_generator_v9_3_bhv_ss(11,8...]
 Compiling architecture behavioral of entity fifo_generator_v9_3_conv [\fifo_generator_v9_3_conv(1,0,11...]
 Compiling architecture behavioral of entity fifo_generator_v9_3 [\fifo_generator_v9_3(1,0,11,"Bla...]
 Compiling architecture fifoack_a of entity FIFOACK [fifoack_default]
-Compiling architecture behavioral of entity LSRgen [\LSRgen(('0','0','0','0','0','0'...]
-Compiling architecture behavior of entity lsrgen_tb
+Compiling architecture behavior of entity iface_out_tb
 Time Resolution for simulation is 1ps.
-Waiting for 2 sub-compilation(s) to finish...
-Compiled 15 VHDL Units
-Built simulation executable /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/lsrgen_tb_isim_beh.exe
-Fuse Memory Usage: 673476 KB
-Fuse CPU Usage: 1270 ms
-GCC CPU Usage: 2360 ms
+Waiting for 1 sub-compilation(s) to finish...
+Compiled 16 VHDL Units
+Built simulation executable /home/aman/Desktop/IITB/CS226/project_ospf/CS226_OSPF/OSPF/iface_out_tb_isim_beh.exe
+Fuse Memory Usage: 678700 KB
+Fuse CPU Usage: 1380 ms
+GCC CPU Usage: 1240 ms

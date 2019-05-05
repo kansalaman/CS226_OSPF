@@ -1,0 +1,31 @@
+Command line:
+   lsu_parser_tb_isim_beh.exe
+     -simmode  gui
+     -simrunnum  1
+     -socket  41253
+
+Sun May  5 05:42:43 2019
+
+
+ Elaboration Time: 0.02 sec
+
+ Current Memory Usage: 197.226 Meg
+
+ Total Signals          : 31
+ Total Nets             : 282
+ Total Signal Drivers   : 24
+ Total Blocks           : 6
+ Total Primitive Blocks : 5
+ Total Processes        : 11
+ Total Traceable Variables  : 18
+ Total Scalar Nets and Variables : 824
+Total Line Count : 221
+Total Line Count : 221
+Total Line Count : 221
+
+ Total Simulation Time: 0.09 sec
+
+ Current Memory Usage: 272.728 Meg
+
+Sun May  5 05:44:36 2019
+
