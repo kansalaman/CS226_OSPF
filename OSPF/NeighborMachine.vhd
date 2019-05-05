@@ -66,7 +66,6 @@ architecture Behavioral of NeighborMachine is
          router_id : OUT  std_logic_vector(31 downto 0);
          out1 : OUT  std_logic_vector(7 downto 0);
          dbd_outval : OUT  std_logic;
-         lsr_outval : OUT  std_logic;
          dbd_rd_en : OUT  std_logic;
          dbd_rst : OUT  std_logic;
          numLSA : IN  std_logic_vector(1 downto 0);
@@ -75,10 +74,7 @@ architecture Behavioral of NeighborMachine is
          dbd_empty : IN  std_logic;
          lsa_queue_wr_en : OUT  std_logic;
          lsa_queue_dout : OUT  std_logic_vector(7 downto 0);
-         lsa_queue_rd_en : OUT  std_logic;
-         lsa_queue_din : IN  std_logic_vector(7 downto 0);
-         lsa_queue_val : IN  std_logic;
-         lsa_queue_empty : IN  std_logic
+         loading_done : IN STD_LOGIC
         );
     END COMPONENT;
     COMPONENT LSAFetcher
@@ -96,24 +92,20 @@ architecture Behavioral of NeighborMachine is
          empty : OUT std_logic
         );
     END COMPONENT;
-    --COMPONENT lsaFilter
-    --PORT(
-    --    clk : IN std_logic
-    --    );
-    --END COMPONENT;
-    COMPONENT FIFOLSU IS
-    PORT (
-      clk : IN STD_LOGIC;
-      rst : IN STD_LOGIC;
-      din : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-      wr_en : IN STD_LOGIC;
-      rd_en : IN STD_LOGIC;
-      dout : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-      full : OUT STD_LOGIC;
-      empty : OUT STD_LOGIC;
-      data_count : OUT STD_LOGIC_VECTOR(11 DOWNTO 0)
+    component LSRgen is
+    Generic
+    (
+        router_id : std_logic_vector(31 downto 0) := "11110011000000000000000000000000"
     );
-    END COMPONENT;
+    Port ( clk : in  STD_LOGIC;
+           wr_en : in  STD_LOGIC;
+           --rst : in STD_LOGIC;
+           din : in  STD_LOGIC_VECTOR (7 downto 0);
+        --    rd_en : in  STD_LOGIC;
+           dout : out  STD_LOGIC_VECTOR (7 downto 0);
+           out_val : out std_logic;
+           done_sending : out  STD_LOGIC);
+    end component;
 
    signal dbd_rd_en : std_logic;
    signal dbd_rst : std_logic;
@@ -123,10 +115,11 @@ architecture Behavioral of NeighborMachine is
    signal dbd_empty : std_logic;
    signal lsa_queue_wr_en : std_logic;
    signal lsa_queue_dout : std_logic_vector(7 downto 0);
-   signal lsa_queue_rd_en : std_logic;
-   signal lsa_queue_din : std_logic_vector(7 downto 0);
-   signal lsa_queue_val : std_logic;
-   signal lsa_queue_empty : std_logic;
+   signal loading_done : std_logic;
+   signal dbd_out1 : STD_LOGIC_VECTOR(7 downto 0);
+   signal lsr_out : STD_LOGIC_VECTOR(7 downto 0);
+   signal dbd_outval_sig : STD_LOGIC;
+   signal lsr_outval_sig : STD_LOGIC;
 
 begin
     hello_act_parse : helloActParse PORT MAP(
@@ -139,9 +132,8 @@ begin
                     hellogenin => hellogenin,
                     stateout => stateout,
                     router_id => router_id,
-                    out1 => out1,
-                    dbd_outval => dbd_outval,
-                    lsr_outval => lsr_outval,
+                    out1 => dbd_out1,
+                    dbd_outval => dbd_outval_sig,
                     dbd_rd_en => dbd_rd_en,
                     dbd_rst => dbd_rst,
                     numLSA => numLSA,
@@ -150,10 +142,7 @@ begin
                     dbd_empty => dbd_empty,
                     lsa_queue_wr_en => lsa_queue_wr_en,
                     lsa_queue_dout => lsa_queue_dout,
-                    lsa_queue_rd_en => lsa_queue_rd_en,
-                    lsa_queue_din => lsa_queue_din,
-                    lsa_queue_val => lsa_queue_val,
-                    lsa_queue_empty => lsa_queue_empty
+                    loading_done => loading_done
         );
     fetcher : LSAFetcher PORT MAP(
                     clk => clk,
@@ -168,16 +157,23 @@ begin
                     rd_val => dbd_valid,
                     empty => dbd_empty
         );
-    queue : FIFOLSU PORT MAP(
+    lsr_gen : LSRgen
+        GENERIC MAP (
+          router_id => self)
+        PORT MAP (
           clk => clk,
-          rst => '0',
-          din =>  lsa_queue_dout,
           wr_en => lsa_queue_wr_en,
-          rd_en => lsa_queue_rd_en,
-          dout =>  lsa_queue_din,
-          full =>  open,
-          empty =>  lsa_queue_empty,
-          data_count => open
-    );
+          din => lsa_queue_dout,
+          dout => lsr_out,
+          out_val => lsr_outval_sig,
+          done_sending => loading_done
+
+          );
+    out1 <= dbd_out1 when (dbd_outval_sig = '1') else
+            lsr_out when (lsr_outval_sig = '1') else
+            (others => '0');
+    dbd_outval <= dbd_outval_sig;
+    lsr_outval <= lsr_outval_sig;
+
 end Behavioral;
 

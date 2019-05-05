@@ -1,4 +1,5 @@
-vhdl work "ipcore_dir/FIFOLSU.vhd"
+vhdl work "ipcore_dir/FIFOACK.vhd"
+vhdl work "lsr_gen.vhd"
 vhdl work "LSAFetcher.vhd"
 vhdl work "helloActParse.vhd"
 vhdl work "NeighborMachine.vhd"

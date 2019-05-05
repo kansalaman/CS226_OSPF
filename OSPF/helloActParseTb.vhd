@@ -54,7 +54,6 @@ ARCHITECTURE behavior OF helloActParseTb IS
          router_id : OUT  std_logic_vector(31 downto 0);
          out1 : OUT  std_logic_vector(7 downto 0);
          dbd_outval : OUT  std_logic;
-         lsr_outval : OUT  std_logic;
          dbd_rd_en : OUT  std_logic;
          dbd_rst : OUT  std_logic;
          numLSA : IN  std_logic_vector(1 downto 0);
@@ -63,10 +62,7 @@ ARCHITECTURE behavior OF helloActParseTb IS
          dbd_empty : IN  std_logic;
          lsa_queue_wr_en : OUT  std_logic;
          lsa_queue_dout : OUT  std_logic_vector(7 downto 0);
-         lsa_queue_rd_en : OUT  std_logic;
-         lsa_queue_din : IN  std_logic_vector(7 downto 0);
-         lsa_queue_val : IN  std_logic;
-         lsa_queue_empty : IN  std_logic
+         loading_done : in STD_LOGIC
         );
     END COMPONENT;
     COMPONENT LSAFetcher
@@ -94,21 +90,22 @@ ARCHITECTURE behavior OF helloActParseTb IS
      dina : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
      douta : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
     );
-   END component;
-   COMPONENT FIFOLSU IS
-    PORT (
-      clk : IN STD_LOGIC;
-      rst : IN STD_LOGIC;
-      din : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-      wr_en : IN STD_LOGIC;
-      rd_en : IN STD_LOGIC;
-      dout : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-      full : OUT STD_LOGIC;
-      empty : OUT STD_LOGIC;
-      data_count : OUT STD_LOGIC_VECTOR(11 DOWNTO 0)
+    END COMPONENT;
+
+    component LSRgen is
+    Generic
+    (
+        router_id : std_logic_vector(31 downto 0) := "11110011000000000000000000000000"
     );
-   END COMPONENT;
-    
+    Port ( clk : in  STD_LOGIC;
+           wr_en : in  STD_LOGIC;
+           --rst : in STD_LOGIC;
+           din : in  STD_LOGIC_VECTOR (7 downto 0);
+        --    rd_en : in  STD_LOGIC;
+           dout : out  STD_LOGIC_VECTOR (7 downto 0);
+           out_val : out std_logic;
+           done_sending : out  STD_LOGIC);
+    end component;
 
    --Inputs
    signal clk : std_logic := '0';
@@ -123,27 +120,23 @@ ARCHITECTURE behavior OF helloActParseTb IS
    signal dbd_valid : std_logic := '0';
    signal dbd_empty : std_logic := '0';
    signal lsa_queue_din : std_logic_vector(7 downto 0) := (others => '0');
-   signal lsa_queue_val : std_logic := '0';
-   signal lsa_queue_empty : std_logic := '0';
-
  	--Outputs
    signal stateout : std_logic_vector(2 downto 0);
    signal router_id : std_logic_vector(31 downto 0);
-   signal out1 : std_logic_vector(7 downto 0);
+   signal dbd_out1 : std_logic_vector(7 downto 0);
    signal dbd_outval : std_logic;
    signal lsr_outval : std_logic;
    signal dbd_rd_en : std_logic;
    signal dbd_rst : std_logic;
    signal lsa_queue_wr_en : std_logic;
    signal lsa_queue_dout : std_logic_vector(7 downto 0);
-   signal lsa_queue_rd_en : std_logic;
-
-
    --EXTRAS
    signal db_addr : STD_LOGIC_VECTOR(11 downto 0);
    signal db_din : STD_LOGIC_VECTOR(7 downto 0);
    signal db_busy : STD_LOGIC := '0';
    signal db_rd_en : STD_LOGIC;
+   signal loading_done : STD_LOGIC;
+   signal lsr_out : STD_LOGIC_VECTOR(7 downto 0);
    -- Clock period definitions
    constant clk_period : time := 10 ns;
  
@@ -160,9 +153,8 @@ BEGIN
           hellogenin => hellogenin,
           stateout => stateout,
           router_id => router_id,
-          out1 => out1,
+          out1 => dbd_out1,
           dbd_outval => dbd_outval,
-          lsr_outval => lsr_outval,
           dbd_rd_en => dbd_rd_en,
           dbd_rst => dbd_rst,
           numLSA => numLSA,
@@ -171,10 +163,7 @@ BEGIN
           dbd_empty => dbd_empty,
           lsa_queue_wr_en => lsa_queue_wr_en,
           lsa_queue_dout => lsa_queue_dout,
-          lsa_queue_rd_en => lsa_queue_rd_en,
-          lsa_queue_din => lsa_queue_din,
-          lsa_queue_val => lsa_queue_val,
-          lsa_queue_empty => lsa_queue_empty
+          loading_done => loading_done
         );
    ram : RAMDB PORT MAP(
           clka => clk,
@@ -184,17 +173,18 @@ BEGIN
           dina => (others => '0'),
           douta => db_din
      );
-   queue : FIFOLSU PORT MAP(
+   lsr_gen : LSRgen
+        GENERIC MAP (
+          router_id => self)
+        PORT MAP (
           clk => clk,
-          rst => '0',
-          din =>  lsa_queue_dout,
           wr_en => lsa_queue_wr_en,
-          rd_en => lsa_queue_rd_en,
-          dout =>  lsa_queue_din,
-          full =>  open,
-          empty =>  lsa_queue_empty,
-          data_count => open
-    );
+          din => lsa_queue_dout,
+          dout => lsr_out,
+          out_val => lsr_outval,
+          done_sending => loading_done
+
+          );
    fetcher : LSAFetcher PORT MAP(
           clk => clk,
           rd_en => dbd_rd_en,

@@ -2,3 +2,6 @@ xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/NeighborMachine.xs
 xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/NeighborMachine.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/NeighborMachine.syr" 
 xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/NeighborMachine.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/NeighborMachine.syr" 
 xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/NeighborMachine.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/NeighborMachine.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/NeighborMachine.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/NeighborMachine.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/NeighborMachine.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/NeighborMachine.syr" 
+xst -intstyle ise -ifn "/home/yash20/isefiles/CS226_OSPF/OSPF/NeighborMachine.xst" -ofn "/home/yash20/isefiles/CS226_OSPF/OSPF/NeighborMachine.syr" 
