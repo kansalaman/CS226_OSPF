@@ -407,6 +407,8 @@ signal LSAQOArr, LSAQIArr : QArrayT;
 signal ackQWArr, ackQRArr, LSAQWArr, LSAQRArr : QVArrayT;
 --Queue Empty/Full Arrays
 signal ackQEArr, LSAQEArr : QVArrayT;
+signal INT_OUT_ARR : IOArrayT;
+signal INT_OUT_V : IOArrayV;
 
 --Queues super reset
 signal rst : std_logic := '0';
@@ -588,8 +590,8 @@ begin
         readq2 => LSAQRArr(i),
         empq1 => ackQEArr(i),
         empq2 => LSAQEArr(i),
-        dout => outputArray(i),
-        dout_val => outputvalArray(i)
+        dout => INT_OUT_ARR(i),
+        dout_val => INT_OUT_V(i)
       );
 
     AckQ : InterfaceFIFO
@@ -949,5 +951,44 @@ dbRAMdin <= lsu_gen_db_dout when (lsu_gen_db_write(0) = '1') else
             LSUM_db_out when (lsu_gen_db_write(0) = '1') else
             (others => '0');
 
+outputArray(1) <= haOArr(1) when (haVArr(1) = '1') else
+                  neighM_outArr(1) when (neighM_dbd_outval(1) = '1' or neighM_lsr_outval(1) = '1') else
+                  INT_OUT_ARR(1) when (INT_OUT_V(1) = '1') else
+                  (others => '0');
+outputvalArray(2) <= haVArr(2) or neighM_dbd_outval(2) or neighM_lsr_outval(2) or INT_OUT_V(2);
+outputArray(2) <= haOArr(2) when (haVArr(2) = '1') else
+                  neighM_outArr(2) when (neighM_dbd_outval(2) = '1' or neighM_lsr_outval(2) = '1') else
+                  INT_OUT_ARR(2) when (INT_OUT_V(2) = '1') else
+                  (others => '0');
+outputvalArray(3) <= haVArr(3) or neighM_dbd_outval(3) or neighM_lsr_outval(3) or INT_OUT_V(3);
+outputArray(3) <= haOArr(3) when (haVArr(3) = '1') else
+                  neighM_outArr(3) when (neighM_dbd_outval(3) = '1' or neighM_lsr_outval(3) = '1') else
+                  INT_OUT_ARR(3) when (INT_OUT_V(3) = '1') else
+                  (others => '0');
+outputvalArray(4) <= haVArr(4) or neighM_dbd_outval(4) or neighM_lsr_outval(4) or INT_OUT_V(4);
+outputArray(4) <= haOArr(4) when (haVArr(4) = '1') else
+                  neighM_outArr(4) when (neighM_dbd_outval(4) = '1' or neighM_lsr_outval(4) = '1') else
+                  INT_OUT_ARR(4) when (INT_OUT_V(4) = '1') else
+                  (others => '0');
+outputvalArray(5) <= haVArr(5) or neighM_dbd_outval(5) or neighM_lsr_outval(5) or INT_OUT_V(5);
+outputArray(5) <= haOArr(5) when (haVArr(5) = '1') else
+                  neighM_outArr(5) when (neighM_dbd_outval(5) = '1' or neighM_lsr_outval(5) = '1') else
+                  INT_OUT_ARR(5) when (INT_OUT_V(5) = '1') else
+                  (others => '0');
+outputvalArray(6) <= haVArr(6) or neighM_dbd_outval(6) or neighM_lsr_outval(6) or INT_OUT_V(6);
+outputArray(6) <= haOArr(6) when (haVArr(6) = '1') else
+                  neighM_outArr(6) when (neighM_dbd_outval(6) = '1' or neighM_lsr_outval(6) = '1') else
+                  INT_OUT_ARR(6) when (INT_OUT_V(6) = '1') else
+                  (others => '0');
+outputvalArray(7) <= haVArr(7) or neighM_dbd_outval(7) or neighM_lsr_outval(7) or INT_OUT_V(7);
+outputArray(7) <= haOArr(7) when (haVArr(7) = '1') else
+                  neighM_outArr(7) when (neighM_dbd_outval(7) = '1' or neighM_lsr_outval(7) = '1') else
+                  INT_OUT_ARR(7) when (INT_OUT_V(7) = '1') else
+                  (others => '0');
+outputvalArray(8) <= haVArr(8) or neighM_dbd_outval(8) or neighM_lsr_outval(8) or INT_OUT_V(8);
+outputArray(8) <= haOArr(8) when (haVArr(8) = '1') else
+                  neighM_outArr(8) when (neighM_dbd_outval(8) = '1' or neighM_lsr_outval(8) = '1') else
+                  INT_OUT_ARR(8) when (INT_OUT_V(8) = '1') else
+                  (others => '0');
 end Behavioral;
 

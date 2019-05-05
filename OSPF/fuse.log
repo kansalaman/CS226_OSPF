@@ -27,12 +27,12 @@ Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/FloodingFSM.vhd" into l
 Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/Dijkstra.vhd" into library work
 Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/DBtoDijkstra.vhd" into library work
 Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" into library work
-WARNING:HDLCompiler:946 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 566: Actual for formal port state_in is neither a static name nor a globally static expression
+WARNING:HDLCompiler:946 - "/home/yash20/isefiles/CS226_OSPF/OSPF/MainModule.vhd" Line 568: Actual for formal port state_in is neither a static name nor a globally static expression
 Parsing VHDL file "/home/yash20/isefiles/CS226_OSPF/OSPF/tb_Main_Machine.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 119848 KB
-Fuse CPU Usage: 1310 ms
+Fuse Memory Usage: 119920 KB
+Fuse CPU Usage: 1170 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
@@ -100,6 +100,6 @@ Compiling architecture behavior of entity tb_main_machine
 Time Resolution for simulation is 1ps.
 Compiled 134 VHDL Units
 Built simulation executable /home/yash20/isefiles/CS226_OSPF/OSPF/tb_Main_Machine_isim_beh.exe
-Fuse Memory Usage: 144848 KB
-Fuse CPU Usage: 1800 ms
-GCC CPU Usage: 8360 ms
+Fuse Memory Usage: 144976 KB
+Fuse CPU Usage: 1630 ms
+GCC CPU Usage: 5890 ms

@@ -1,5 +1,6 @@
 ISim log file
 Running: /home/yash20/isefiles/CS226_OSPF/OSPF/tb_Main_Machine_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb /home/yash20/isefiles/CS226_OSPF/OSPF/tb_Main_Machine_isim_beh.wdb 
+INFO: There is another simulation running in the same directory. Using database file name isim1.wdb.
 ISim P.20131013 (signature 0xfbc00daa)
 WARNING: A WEBPACK license was found.
 WARNING: Please use Xilinx License Configuration Manager to check out a full ISim license.
@@ -38,7 +39,7 @@ at 0 ps, Instance /tb_main_machine/uut/\interface_outputs(8)\/LSU_P/ : Warning: 
 at 0 ps, Instance /tb_main_machine/uut/LSU_GEN/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
 Finished circuit initialization process.
 # restart
-# run 100.00us
+# run 30us
 Simulator is doing circuit initialization process.
 at 0 ps, Instance /tb_main_machine/uut/\interface_outputs(1)\/NM/hello_act_parse/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
 at 0 ps, Instance /tb_main_machine/uut/\interface_outputs(1)\/NM/hello_act_parse/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
