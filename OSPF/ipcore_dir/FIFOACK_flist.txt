@@ -1,0 +1,16 @@
+# Output products list for <FIFOACK>
+FIFOACK/doc/fifo_generator_v9_3_readme.txt
+FIFOACK/doc/fifo_generator_v9_3_vinfo.html
+FIFOACK/doc/pg057-fifo-generator.pdf
+FIFOACK/fifo_generator_v9_3_readme.txt
+FIFOACK.asy
+FIFOACK.gise
+FIFOACK.ngc
+FIFOACK.sym
+FIFOACK.vhd
+FIFOACK.vho
+FIFOACK.xco
+FIFOACK.xise
+FIFOACK_flist.txt
+FIFOACK_xmdf.tcl
+_xmsgs/pn_parser.xmsgs

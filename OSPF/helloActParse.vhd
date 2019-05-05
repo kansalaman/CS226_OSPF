@@ -42,7 +42,6 @@ entity helloActParse is
            router_id : out STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
            out1 : out STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
            dbd_outval : out STD_LOGIC := '0';
-           lsr_outval : out STD_LOGIC := '0';
            dbd_rd_en : out STD_LOGIC := '0';
            dbd_rst : out STD_LOGIC := '0';
            numLSA : in STD_LOGIC_VECTOR(1 downto 0);
@@ -51,10 +50,7 @@ entity helloActParse is
            dbd_empty : in STD_LOGIC;
            lsa_queue_wr_en : out STD_LOGIC := '0';
 		   lsa_queue_dout : out STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
-		   lsa_queue_rd_en : out STD_LOGIC := '0';
-		   lsa_queue_din : in STD_LOGIC_VECTOR(7 downto 0);
-		   lsa_queue_val : in STD_LOGIC;
-		   lsa_queue_empty : in STD_LOGIC);
+		   loading_done : in STD_LOGIC);
 end helloActParse;
 
 architecture Behavioral of helloActParse is
@@ -75,8 +71,7 @@ architecture Behavioral of helloActParse is
 	signal receiving_complete : STD_LOGIC := '1';
 
 	signal dbd_out1 : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
-	signal lsr_out1 : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
-	signal lsr_outval_sig : STD_LOGIC := '0';
+
 	signal dbd_outval_sig : STD_LOGIC := '0';
 
 	signal router_id_sig : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
@@ -200,14 +195,6 @@ begin
 			old_neighbor <= active_neighbor;
 		end if;
 		
-		if (lsa_queue_val = '1') then
-			lsr_outval_sig <= '1';
-			lsr_out1 <= lsa_queue_din;
-		else
-			lsr_outval_sig <= '0';
-			lsr_out1 <= (others => '0');
-		end if ;
-
 		if (ID_part = "00" and routid_sig = '1') then
 			router_id_sig <= neighbor_id;
 		end if ;
@@ -326,7 +313,7 @@ COMBSTATE : process(p_state, ID_part, old_neighbor, routerid_val,
 							master, temp_dbd_received, dbd_length, curr_seqnum,
 							curr_seqnum, dbd_length, sending_complete, 
 							seqnum_error, neighbor_more, more_sig,
-							init_sig, receiving_complete, lsa_queue_empty)
+							init_sig, receiving_complete, loading_done)
 begin
 	case( p_state ) is
 		when DOWN =>
@@ -529,11 +516,9 @@ begin
 
 		when LOADING =>
 			next_time <= max_time;
-			if (lsa_queue_empty = '1') then
-				lsa_queue_rd_en <= '0';
+			if (loading_done = '1') then
 				n_state <= FULL;
 			else
-				lsa_queue_rd_en <= '1';
 				n_state <= p_state;
 			end if ;
 
@@ -894,10 +879,8 @@ stateout <= "000" when p_state = DOWN else
 				"110" when p_state = LOADING else
 				"111";
 out1 <= dbd_out1 when dbd_outval_sig = '1' else
-		lsr_out1 when lsr_outval_sig = '1' else
 		(others => '0');
 
-lsr_outval <= lsr_outval_sig;
 dbd_outval <= dbd_outval_sig;
 
 end Behavioral;
