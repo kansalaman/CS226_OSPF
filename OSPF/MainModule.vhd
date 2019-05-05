@@ -951,6 +951,7 @@ dbRAMdin <= lsu_gen_db_dout when (lsu_gen_db_write(0) = '1') else
             LSUM_db_out when (lsu_gen_db_write(0) = '1') else
             (others => '0');
 
+outputvalArray(1) <= haVArr(1) or neighM_dbd_outval(1) or neighM_lsr_outval(1) or INT_OUT_V(1);
 outputArray(1) <= haOArr(1) when (haVArr(1) = '1') else
                   neighM_outArr(1) when (neighM_dbd_outval(1) = '1' or neighM_lsr_outval(1) = '1') else
                   INT_OUT_ARR(1) when (INT_OUT_V(1) = '1') else
