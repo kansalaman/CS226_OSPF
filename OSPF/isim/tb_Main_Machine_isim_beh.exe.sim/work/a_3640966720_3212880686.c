@@ -21,7 +21,7 @@
 #include <malloc.h>
 #define alloca _alloca
 #endif
-static const char *ng0 = "/home/yash20/isefiles/CS226_OSPF/OSPF/Comparator_Simple.vhd";
+static const char *ng0 = "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.vhd";
 extern char *IEEE_P_2592010699;
 
 

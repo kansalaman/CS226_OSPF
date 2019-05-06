@@ -1,0 +1,28 @@
+Command line:
+   NeighborMachine_isim_beh.exe
+     -simmode  gui
+     -simrunnum  1
+     -socket  55097
+
+Mon May  6 10:33:11 2019
+
+
+ Elaboration Time: 0.13 sec
+
+ Current Memory Usage: 208.056 Meg
+
+ Total Signals          : 624
+ Total Nets             : 11507
+ Total Signal Drivers   : 266
+ Total Blocks           : 35
+ Total Primitive Blocks : 20
+ Total Processes        : 111
+ Total Traceable Variables  : 337
+ Total Scalar Nets and Variables : 12595
+
+ Total Simulation Time: 0.16 sec
+
+ Current Memory Usage: 285.655 Meg
+
+Mon May  6 10:33:12 2019
+

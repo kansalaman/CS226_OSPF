@@ -1,6 +1,7 @@
-from testBench.padder import  pad, chunkstring
+from padder import pad, chunkstring
 from ipaddress import IPv4Address
 import random
+
 
 def makeHeader(type, rid, plen):
     '''
@@ -144,3 +145,9 @@ ReqC = LSR("3.3.3.3", [LSA_A])
 
 LSU_B = LSU("2.2.2.2", [LSA_B, LSA_D, LSA_E])
 LSU_C = LSU("3.3.3.3", [LSA_C, LSA_D, LSA_E])
+
+for j in range(20):
+    print("in2 <= \"" + "0"*8 + "\";\nwait for clk_period;")
+# for i in list(chunkstring(LSA_A, 8)):
+#     print(i)
+    

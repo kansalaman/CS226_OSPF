@@ -45,7 +45,7 @@
 # PART OF THIS FILE AT ALL TIMES.
 
 
-set device xq6slx150tfgg676-2
+set device xa6slx4csg225-3
 set projName RAMDB
 set design RAMDB
 set projDir [file dirname [info script]]

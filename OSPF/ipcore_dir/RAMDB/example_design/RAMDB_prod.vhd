@@ -74,8 +74,8 @@
 -- Configured Core Parameter Values:
 -- (Refer to the SIM Parameters table in the datasheet for more information on
 -- the these parameters.)
---    C_FAMILY                    :  qspartan6 
---    C_XDEVICEFAMILY             :  qspartan6 
+--    C_FAMILY                    :  aspartan6 
+--    C_XDEVICEFAMILY             :  aspartan6 
 --    C_INTERFACE_TYPE            :  0 
 --    C_ENABLE_32BIT_ADDRESS      :  0 
 --    C_AXI_TYPE                  :  1 
@@ -85,8 +85,8 @@
 --    C_BYTE_SIZE                 :  8 
 --    C_ALGORITHM                 :  1 
 --    C_PRIM_TYPE                 :  1 
---    C_LOAD_INIT_FILE            :  0 
---    C_INIT_FILE_NAME            :  no_coe_file_loaded 
+--    C_LOAD_INIT_FILE            :  1 
+--    C_INIT_FILE_NAME            :  RAMDB.mif 
 --    C_USE_DEFAULT_DATA          :  1 
 --    C_DEFAULT_DATA              :  0 
 --    C_RST_TYPE                  :  SYNC 

@@ -5,10 +5,10 @@
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 
-  ENTITY testbench IS
-  END testbench;
+  ENTITY NMtestbench IS
+  END NMtestbench;
 
-  ARCHITECTURE behavior OF testbench IS 
+  ARCHITECTURE behavior OF NMtestbench IS 
 
   -- Component Declaration
           COMPONENT NeighborMachine
@@ -103,7 +103,7 @@ use IEEE.STD_LOGIC_ARITH.ALL;
         wait for 100 ns; -- wait until global set/reset completes
         wait for 100 ns;  
 
-      wait for clk_period*10;
+      wait for clk_period*10.5;
       hellogenin <= '1';
       wait for clk_period*5;
       hellogenin <= '0';

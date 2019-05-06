@@ -1,7 +1,7 @@
 run
 -ifmt VHDL
 -ent RAMDB_exdes
--p xq6slx150t-fgg676-2
+-p xa6slx4-csg225-3
 -ifn xst.prj
 -write_timing_constraints No
 -iobuf YES

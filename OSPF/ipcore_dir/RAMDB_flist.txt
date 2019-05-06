@@ -45,6 +45,7 @@ RAMDB/simulation/timing/wave_mti.do
 RAMDB/simulation/timing/wave_ncsim.sv
 RAMDB.asy
 RAMDB.gise
+RAMDB.mif
 RAMDB.ngc
 RAMDB.sym
 RAMDB.vhd

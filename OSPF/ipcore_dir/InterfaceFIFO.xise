@@ -30,18 +30,18 @@
 
   <properties>
     <property xil_pn:name="Auto Implementation Top" xil_pn:value="false" xil_pn:valueState="non-default"/>
-    <property xil_pn:name="Device" xil_pn:value="xa7a100t" xil_pn:valueState="default"/>
-    <property xil_pn:name="Device Family" xil_pn:value="Automotive Artix7" xil_pn:valueState="default"/>
+    <property xil_pn:name="Device" xil_pn:value="xa6slx4" xil_pn:valueState="default"/>
+    <property xil_pn:name="Device Family" xil_pn:value="Automotive Spartan6" xil_pn:valueState="default"/>
     <property xil_pn:name="Implementation Stop View" xil_pn:value="PreSynthesis" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Implementation Top" xil_pn:value="Architecture|InterfaceFIFO|InterfaceFIFO_a" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Implementation Top File" xil_pn:value="InterfaceFIFO.vhd" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Implementation Top Instance Path" xil_pn:value="/InterfaceFIFO" xil_pn:valueState="non-default"/>
-    <property xil_pn:name="Package" xil_pn:value="csg324" xil_pn:valueState="default"/>
+    <property xil_pn:name="Package" xil_pn:value="csg225" xil_pn:valueState="default"/>
     <property xil_pn:name="Preferred Language" xil_pn:value="Verilog" xil_pn:valueState="default"/>
     <property xil_pn:name="Project Generator" xil_pn:value="CoreGen" xil_pn:valueState="non-default"/>
     <property xil_pn:name="Property Specification in Project File" xil_pn:value="Store all values" xil_pn:valueState="default"/>
     <property xil_pn:name="Simulator" xil_pn:value="ISim (VHDL/Verilog)" xil_pn:valueState="default"/>
-    <property xil_pn:name="Speed Grade" xil_pn:value="-2I" xil_pn:valueState="default"/>
+    <property xil_pn:name="Speed Grade" xil_pn:value="-3" xil_pn:valueState="default"/>
     <property xil_pn:name="Synthesis Tool" xil_pn:value="XST (VHDL/Verilog)" xil_pn:valueState="default"/>
     <property xil_pn:name="Top-Level Source Type" xil_pn:value="HDL" xil_pn:valueState="default"/>
     <property xil_pn:name="Working Directory" xil_pn:value="." xil_pn:valueState="non-default"/>
@@ -49,7 +49,7 @@
     <!-- The following properties are for internal use only. These should not be modified.-->
     <!--                                                                                  -->
     <property xil_pn:name="PROP_DesignName" xil_pn:value="InterfaceFIFO" xil_pn:valueState="non-default"/>
-    <property xil_pn:name="PROP_DevFamilyPMName" xil_pn:value="aartix7" xil_pn:valueState="default"/>
+    <property xil_pn:name="PROP_DevFamilyPMName" xil_pn:value="aspartan6" xil_pn:valueState="default"/>
     <property xil_pn:name="PROP_intProjectCreationTimestamp" xil_pn:value="2019-05-04T12:15:27" xil_pn:valueState="non-default"/>
     <property xil_pn:name="PROP_intWbtProjectID" xil_pn:value="C54BFD8CF944F8B5E8358B9A481BB68E" xil_pn:valueState="non-default"/>
     <property xil_pn:name="PROP_intWorkingDirLocWRTProjDir" xil_pn:value="Same" xil_pn:valueState="non-default"/>

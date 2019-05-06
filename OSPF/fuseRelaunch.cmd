@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -lib "secureip" -o "/home/yash20/isefiles/CS226_OSPF/OSPF/tb_Main_Machine_isim_beh.exe" -prj "/home/yash20/isefiles/CS226_OSPF/OSPF/tb_Main_Machine_beh.prj" "tb_Main_Machine" 
+-intstyle "ise" -incremental -lib "secureip" -o "/home/ise/ISE/CS226_OSPF/OSPF/NMtestbench_isim_beh.exe" -prj "/home/ise/ISE/CS226_OSPF/OSPF/NMtestbench_beh.prj" "work.NMtestbench" 

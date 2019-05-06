@@ -30,7 +30,7 @@ copy ..\example_design\RAMDB_exdes.ucf results\
 cd results
 
 echo 'Running ngdbuild'
-ngdbuild -p xq6slx150t-fgg676-2 RAMDB_exdes
+ngdbuild -p xa6slx4-csg225-3 RAMDB_exdes
 
 echo 'Running map'
 map RAMDB_exdes -o mapped.ncd  -pr i
