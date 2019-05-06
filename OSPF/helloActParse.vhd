@@ -380,10 +380,8 @@ begin
 								n_state <= EXCHANGE_LISTENING;
 							elsif (master = '1') then
 								n_state <= DOWN;
-							elsif (init_sig = '0') then
-								n_state <= EXCHANGE_SENDING;
 							else
-								n_state <= DOWN;
+								n_state <= EXCHANGE_SENDING;
 							end if ;
 						when LSA_PART1 =>
 							n_state <= p_state;
@@ -844,6 +842,7 @@ SEQREAD : process(clk)
 begin
 	if (clk = '1' and clk'event) then
 		if (ID_part = "00" and dbd_val = '1') then
+			assert (dbd_val = '0') report "Reached" severity note;
 			case( p_read ) is
 				when IDLE_R =>
 					p_read <= OPTIONS;

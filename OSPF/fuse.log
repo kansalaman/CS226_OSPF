@@ -1,23 +1,44 @@
-Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -relaunch -intstyle "ise" -incremental -lib "secureip" -o "/home/ise/ISE/CS226_OSPF/OSPF/NMtestbench_isim_beh.exe" -prj "/home/ise/ISE/CS226_OSPF/OSPF/NMtestbench_beh.prj" "work.NMtestbench" 
+Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -relaunch -intstyle "ise" -incremental -lib "secureip" -o "/home/ise/ISE/CS226_OSPF/OSPF/tb_Main_Machine_isim_beh.exe" -prj "/home/ise/ISE/CS226_OSPF/OSPF/tb_Main_Machine_beh.prj" "work.tb_Main_Machine" 
 ISim P.20160913 (signature 0xfbc00daa)
 Number of CPUs detected in this system: 1
 Turning on mult-threading, number of parallel sub-compilation jobs: 0 
 Determining compilation order of HDL files
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/ipcore_dir/RAMDijkstra.vhd" into library work
 Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/ipcore_dir/RAMDB.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/ipcore_dir/RoutingDB.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/ipcore_dir/InterfaceFIFO.vhd" into library work
 Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/ipcore_dir/FIFOACK.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Simple.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator_Single.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/numones.vhd" into library work
 Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/lsr_gen.vhd" into library work
 Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/LSAFetcher.vhd" into library work
 Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/helloActParse.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Comparator.vhd" into library work
 Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/NeighborMachine.vhd" into library work
-Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/NeighborMachineTb.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/message_parser.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/LSU_Parser.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/lsugen.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/lsraction.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/LinkStateUpdateMachine.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/interfaceOut.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/helloalive.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/FloodingFSM.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/Dijkstra.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/DBtoDijkstra.vhd" into library work
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/MainModule.vhd" into library work
+WARNING:HDLCompiler:946 - "/home/ise/ISE/CS226_OSPF/OSPF/MainModule.vhd" Line 568: Actual for formal port state_in is neither a static name nor a globally static expression
+Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/tb_Main_Machine.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 106756 KB
-Fuse CPU Usage: 1430 ms
+Fuse Memory Usage: 119604 KB
+Fuse CPU Usage: 2070 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
 Compiling package std_logic_unsigned
+Compiling package numeric_std
+Compiling architecture behavioral of entity Parser [parser_default]
 Compiling architecture behavioral of entity helloActParse [helloactparse_default]
 Compiling architecture behavioral of entity LSAFetcher [\LSAFetcher(12)\]
 Compiling architecture behavioral of entity fifo_generator_v9_3_bhv_ss [\fifo_generator_v9_3_bhv_ss(10,8...]
@@ -26,6 +47,24 @@ Compiling architecture behavioral of entity fifo_generator_v9_3 [\fifo_generator
 Compiling architecture fifoack_a of entity FIFOACK [fifoack_default]
 Compiling architecture behavioral of entity LSRgen [\LSRgen(('0','0','0','0','0','0'...]
 Compiling architecture behavioral of entity NeighborMachine [\NeighborMachine(('0','0','0','0...]
+Compiling architecture behavioral of entity LSU_Parser [\LSU_Parser(('0','0','0','0','0'...]
+Compiling architecture behavioral of entity interfaceOut [\interfaceOut(('0','0','0','0','...]
+Compiling architecture behavioral of entity fifo_generator_v9_3_bhv_ss [\fifo_generator_v9_3_bhv_ss(11,8...]
+Compiling architecture behavioral of entity fifo_generator_v9_3_conv [\fifo_generator_v9_3_conv(1,0,11...]
+Compiling architecture behavioral of entity fifo_generator_v9_3 [\fifo_generator_v9_3(1,0,11,"Bla...]
+Compiling architecture interfacefifo_a of entity InterfaceFIFO [interfacefifo_default]
+Compiling architecture behavioral of entity helloalive [\helloalive(('0','0','0','0','0'...]
+Compiling architecture behavioral of entity lsraction [\lsraction(12,8)\]
+Compiling architecture behavioral of entity LSU_Parser [\LSU_Parser(('0','0','0','0','0'...]
+Compiling architecture behavioral of entity LSU_Parser [\LSU_Parser(('0','0','0','0','0'...]
+Compiling architecture behavioral of entity LSU_Parser [\LSU_Parser(('0','0','0','0','0'...]
+Compiling architecture behavioral of entity LSU_Parser [\LSU_Parser(('0','0','0','0','0'...]
+Compiling architecture behavioral of entity LSU_Parser [\LSU_Parser(('0','0','0','0','0'...]
+Compiling architecture behavioral of entity LSU_Parser [\LSU_Parser(('0','0','0','0','0'...]
+Compiling architecture behavioral of entity LSU_Parser [\LSU_Parser(('0','0','0','0','1'...]
+Compiling architecture behavioral of entity numones [numones_default]
+Compiling architecture behavioral of entity lsugen [\lsugen(12,8)\]
+Compiling architecture behavioral of entity LinkStateUpdateMachine [\LinkStateUpdateMachine(12,8)\]
 Compiling package textio
 Compiling package std_logic_textio
 Compiling architecture output_stage_behavioral of entity BLK_MEM_GEN_V7_3_output_stage [\BLK_MEM_GEN_V7_3_output_stage("...]
@@ -34,10 +73,33 @@ Compiling architecture softecc_output_reg_stage_behavioral of entity BLK_MEM_GEN
 Compiling architecture mem_module_behavioral of entity BLK_MEM_GEN_V7_3_mem_module [\BLK_MEM_GEN_V7_3_mem_module("bl...]
 Compiling architecture behavioral of entity BLK_MEM_GEN_V7_3 [\BLK_MEM_GEN_V7_3("blk_mem_gen_v...]
 Compiling architecture ramdb_a of entity RAMDB [ramdb_default]
-Compiling architecture behavior of entity nmtestbench
+Compiling architecture behavioral of entity FloodingFSM [floodingfsm_default]
+Compiling architecture behavioral of entity DBtoDijkstra [\DBtoDijkstra(12,6,6,6,5,8)\]
+Compiling architecture output_stage_behavioral of entity BLK_MEM_GEN_V7_3_output_stage [\BLK_MEM_GEN_V7_3_output_stage("...]
+Compiling architecture output_stage_behavioral of entity BLK_MEM_GEN_V7_3_output_stage [\BLK_MEM_GEN_V7_3_output_stage("...]
+Compiling architecture softecc_output_reg_stage_behavioral of entity BLK_MEM_GEN_V7_3_softecc_output_reg_stage [\BLK_MEM_GEN_V7_3_softecc_output...]
+Compiling architecture mem_module_behavioral of entity BLK_MEM_GEN_V7_3_mem_module [\BLK_MEM_GEN_V7_3_mem_module("bl...]
+Compiling architecture behavioral of entity BLK_MEM_GEN_V7_3 [\BLK_MEM_GEN_V7_3("blk_mem_gen_v...]
+Compiling architecture ramdijkstra_a of entity RAMDijkstra [ramdijkstra_default]
+Compiling architecture behavioral of entity Comparator_Simple [\Comparator_Simple(6,6)\]
+Compiling architecture behavioral of entity Comparator_Single [\Comparator_Single(6,6,5)\]
+Compiling architecture behavioral of entity Comparator_Single [\Comparator_Single(6,6,4)\]
+Compiling architecture behavioral of entity Comparator_Single [\Comparator_Single(6,6,3)\]
+Compiling architecture behavioral of entity Comparator_Single [\Comparator_Single(6,6,2)\]
+Compiling architecture behavioral of entity Comparator_Single [\Comparator_Single(6,6,1)\]
+Compiling architecture behavioral of entity Comparator [\Comparator(6,6)\]
+Compiling architecture behavioral of entity Dijkstra [\Dijkstra(8,6,6,32,1)\]
+Compiling architecture output_stage_behavioral of entity BLK_MEM_GEN_V7_3_output_stage [\BLK_MEM_GEN_V7_3_output_stage("...]
+Compiling architecture output_stage_behavioral of entity BLK_MEM_GEN_V7_3_output_stage [\BLK_MEM_GEN_V7_3_output_stage("...]
+Compiling architecture softecc_output_reg_stage_behavioral of entity BLK_MEM_GEN_V7_3_softecc_output_reg_stage [\BLK_MEM_GEN_V7_3_softecc_output...]
+Compiling architecture mem_module_behavioral of entity BLK_MEM_GEN_V7_3_mem_module [\BLK_MEM_GEN_V7_3_mem_module("bl...]
+Compiling architecture behavioral of entity BLK_MEM_GEN_V7_3 [\BLK_MEM_GEN_V7_3("blk_mem_gen_v...]
+Compiling architecture routingdb_a of entity RoutingDB [routingdb_default]
+Compiling architecture behavioral of entity MainModule [mainmodule_default]
+Compiling architecture behavior of entity tb_main_machine
 Time Resolution for simulation is 1ps.
-Compiled 35 VHDL Units
-Built simulation executable /home/ise/ISE/CS226_OSPF/OSPF/NMtestbench_isim_beh.exe
-Fuse Memory Usage: 125900 KB
-Fuse CPU Usage: 1910 ms
-GCC CPU Usage: 480 ms
+Compiled 134 VHDL Units
+Built simulation executable /home/ise/ISE/CS226_OSPF/OSPF/tb_Main_Machine_isim_beh.exe
+Fuse Memory Usage: 145228 KB
+Fuse CPU Usage: 3450 ms
+GCC CPU Usage: 970 ms
