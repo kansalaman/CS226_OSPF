@@ -281,9 +281,9 @@ begin
 				lsa_queue_dout <= (others => '0');
 			end if ;
 		end if;
-		--if (n_dbd = IDLE and (n_state = EXSTART or n_state = EXCHANGE_SENDING)) then
-		--	sending_complete <= not(sending_complete);
-		--end if ;
+		if (n_state = EXCHANGE_LISTENING) then
+			sending_complete <= '0';
+		end if ;
 	end if;
 end process;
 
@@ -750,73 +750,7 @@ begin
 		end case ;
 	end if ;
 end process;
----------- SENDING DBD STATE MACHINE --------
---COMBDBD : process(p_state, p_dbd, sending_length, dbd_length)
---begin
---	case( p_dbd ) is
---		when IDLE =>
---			if (p_state = EXSTART) then
---				n_dbd <= SENDING_IP;
---				sending_len_next <= IPlength;
---				next_enable <= '0';
---			elsif (p_state = EXCHANGE_SENDING) then
---				if (more_sig = '1') then
---					n_dbd <= FETCHING_LSA;
---					next_enable <= '1';
---				else
---					n_dbd <= SENDING_IP;				
---					next_enable <= '0';
---				end if ;
---				sending_len_next <= zero7;
---			else
---				n_dbd <= p_dbd;
---				sending_len_next <= zero7;
---				next_enable <= '0';
---			end if ;
---		when FETCHING_LSA =>
---			if (receiving_lsa = receiving_begin) then
---				next_enable <= '1';
---				n_dbd <= FETCHING_LSA;
---			elsif (dbd_valid = '0') then
---				next_enable <= '1';
---				n_dbd <= SENDING_IP;
---			else
---				next_enable <= '0';
---				n_dbd <= FETCHING_LSA;
---			end if ;
---			--n_dbd <= SENDING_IP;
---			--sending_len_next <= IPlength;
---		when SENDING_IP =>
---			next_enable <= '0';
---			if (sending_length = zero7) then
---				n_dbd <= SENDING_OSPFHEAD;
---				sending_len_next <= ospflength;
---			else
---				n_dbd <= p_dbd;
---				sending_len_next <= sending_length - 1;
---			end if ;
---		when SENDING_OSPFHEAD =>
---			next_enable <= '0';
---			if (sending_length = zero7) then
---				n_dbd <= SENDING_DBD;
---				sending_len_next <= dbd_length;
---			else
---				n_dbd <= p_dbd;
---				sending_len_next <= sending_length - 1;
---			end if ;
---		when others => --SENDING_DBD
---			next_enable <= '0';
---			if (sending_length = zero7) then
---				n_dbd <= IDLE;
---				sending_len_next <= zero7;
---			else
---				n_dbd <= p_dbd;
---				sending_len_next <= sending_length - 1;
---			end if;
---	end case ;
---end process;
-----------------------------------
-
+-------------------------------------------
 
 -------- READING DBD STATE MACHINE --------
 SEQREAD : process(clk)
