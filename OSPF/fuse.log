@@ -31,8 +31,8 @@ WARNING:HDLCompiler:946 - "/home/ise/ISE/CS226_OSPF/OSPF/MainModule.vhd" Line 56
 Parsing VHDL file "/home/ise/ISE/CS226_OSPF/OSPF/tb_Main_Machine.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 119600 KB
-Fuse CPU Usage: 2000 ms
+Fuse Memory Usage: 119544 KB
+Fuse CPU Usage: 2100 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package std_logic_arith
@@ -100,6 +100,6 @@ Compiling architecture behavior of entity tb_main_machine
 Time Resolution for simulation is 1ps.
 Compiled 134 VHDL Units
 Built simulation executable /home/ise/ISE/CS226_OSPF/OSPF/tb_Main_Machine_isim_beh.exe
-Fuse Memory Usage: 145224 KB
-Fuse CPU Usage: 3350 ms
+Fuse Memory Usage: 145220 KB
+Fuse CPU Usage: 3460 ms
 GCC CPU Usage: 710 ms

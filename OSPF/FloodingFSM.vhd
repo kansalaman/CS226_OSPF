@@ -90,21 +90,21 @@ begin
       end if;
     when others =>
 	 n_temp <= din;
+   write_arr <= port_in;
+   writeLoop : for i in 0 to 7 loop
+     if (port_in(i) = '0') then
+       out_arr(i) <= p_temp;
+     else
+       out_arr(i) <= (others => '0');
+     end if;
+   end loop;
     if (val = '1') then
-      write_arr <= port_in;
-      writeLoop : for i in 0 to 7 loop
-        if (port_in(i) = '0') then
-          out_arr(i) <= p_temp;
-        else
-          out_arr(i) <= (others => '0');
-        end if;
-      end loop;
-		n_state <= FLOODING;
+		  n_state <= FLOODING;
     else
-      write_arr <= (others => '1');
-      writeNULL : for i in 0 to 7 loop
-        out_arr(i) <= (others => '0');
-      end loop;
+      --write_arr <= (others => '1');
+      --writeNULL : for i in 0 to 7 loop
+      --  out_arr(i) <= (others => '0');
+      --end loop;
 		n_state <= IDLE;
     end if;
   end case;

@@ -104,7 +104,8 @@ architecture Behavioral of NeighborMachine is
         --    rd_en : in  STD_LOGIC;
            dout : out  STD_LOGIC_VECTOR (7 downto 0);
            out_val : out std_logic;
-           done_sending : out  STD_LOGIC);
+           done_sending : out  STD_LOGIC;
+			  statein : in STD_LOGIC_VECTOR(2 downto 0));
     end component;
 
    signal dbd_rd_en : std_logic;
@@ -120,6 +121,7 @@ architecture Behavioral of NeighborMachine is
    signal lsr_out : STD_LOGIC_VECTOR(7 downto 0);
    signal dbd_outval_sig : STD_LOGIC;
    signal lsr_outval_sig : STD_LOGIC;
+	signal state_sig : STD_LOGIC_VECTOR(2 downto 0);
 
 begin
     hello_act_parse : helloActParse PORT MAP(
@@ -130,7 +132,7 @@ begin
                     dbd_val => dbd_val,
                     in1 => in1,
                     hellogenin => hellogenin,
-                    stateout => stateout,
+                    stateout => state_sig,
                     router_id => router_id,
                     out1 => dbd_out1,
                     dbd_outval => dbd_outval_sig,
@@ -166,14 +168,15 @@ begin
           din => lsa_queue_dout,
           dout => lsr_out,
           out_val => lsr_outval_sig,
-          done_sending => loading_done
-
+          done_sending => loading_done,
+			 statein => state_sig
           );
     out1 <= dbd_out1 when (dbd_outval_sig = '1') else
             lsr_out when (lsr_outval_sig = '1') else
             (others => '0');
     dbd_outval <= dbd_outval_sig;
     lsr_outval <= lsr_outval_sig;
+	 stateout <= state_sig;
 
 end Behavioral;
 

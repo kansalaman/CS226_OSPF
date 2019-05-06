@@ -42,7 +42,8 @@ entity LSRgen is
         --    rd_en : in  STD_LOGIC;
            dout : out  STD_LOGIC_VECTOR (7 downto 0);
            out_val : out std_logic;
-           done_sending : out  STD_LOGIC);
+           done_sending : out  STD_LOGIC;
+			  statein : in std_logic_vector(2 downto 0));
 end LSRgen;
 
 architecture Behavioral of LSRgen is
@@ -177,11 +178,11 @@ if(data_obtained < 20) then
 end if;
 end process;	
 
-comb1 : process(p_state,p_counter,qempt)
+comb1 : process(p_state,p_counter,qempt,statein)
 begin
 	case p_state is
 		when IDLE =>
-			if(qempt = '0') then
+			if(qempt = '0' and statein = "110") then
 				n_state <= q_reading;
 				n_counter <= 1;
 			else

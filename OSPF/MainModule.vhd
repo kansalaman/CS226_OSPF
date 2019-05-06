@@ -858,7 +858,9 @@ begin
 --TODO : dbRAMaddr mux in all possibel addr
 -- neighM_db_rd_en(i) and neighM_db_addr(i),
 -- db_read => db2dj_db_read and db_addr => db2dj_db_addr,
-dbRAMaddr <= db2dj_db_addr when (db2dj_db_read = '1') else
+dbRAMaddr <= lsu_gen_db_addr when (lsu_gen_db_write(0) = '1') else
+				 LSUMRAMaddr when (LSUM_db_write(0) = '1') else
+				 db2dj_db_addr when (db2dj_db_read = '1') else
              lsu_gen_db_addr when (lsu_gen_db_read = '1') else
              neighM_db_addr(1) when (neighM_db_rd_en(1) = '1') else
              neighM_db_addr(2) when (neighM_db_rd_en(2) = '1') else
@@ -876,6 +878,7 @@ dbRAMaddr <= db2dj_db_addr when (db2dj_db_read = '1') else
              lsr_db_addr(6) when (lsr_db_read(6) = '1') else
              lsr_db_addr(7) when (lsr_db_read(7) = '1') else
              lsr_db_addr(8) when (lsr_db_read(8) = '1') else
+				 lsu_gen_db_addr when (lsu_gen_db_read = '1') else
              LSUMRAMaddr when (LSUMRAMrea = '1') else
              (others => '0');
 
@@ -951,45 +954,12 @@ dbRAMdin <= lsu_gen_db_dout when (lsu_gen_db_write(0) = '1') else
             LSUM_db_out when (lsu_gen_db_write(0) = '1') else
             (others => '0');
 
-outputvalArray(1) <= haVArr(1) or neighM_dbd_outval(1) or neighM_lsr_outval(1) or INT_OUT_V(1);
-outputArray(1) <= haOArr(1) when (haVArr(1) = '1') else
-                  neighM_outArr(1) when (neighM_dbd_outval(1) = '1' or neighM_lsr_outval(1) = '1') else
-                  INT_OUT_ARR(1) when (INT_OUT_V(1) = '1') else
-                  (others => '0');
-outputvalArray(2) <= haVArr(2) or neighM_dbd_outval(2) or neighM_lsr_outval(2) or INT_OUT_V(2);
-outputArray(2) <= haOArr(2) when (haVArr(2) = '1') else
-                  neighM_outArr(2) when (neighM_dbd_outval(2) = '1' or neighM_lsr_outval(2) = '1') else
-                  INT_OUT_ARR(2) when (INT_OUT_V(2) = '1') else
-                  (others => '0');
-outputvalArray(3) <= haVArr(3) or neighM_dbd_outval(3) or neighM_lsr_outval(3) or INT_OUT_V(3);
-outputArray(3) <= haOArr(3) when (haVArr(3) = '1') else
-                  neighM_outArr(3) when (neighM_dbd_outval(3) = '1' or neighM_lsr_outval(3) = '1') else
-                  INT_OUT_ARR(3) when (INT_OUT_V(3) = '1') else
-                  (others => '0');
-outputvalArray(4) <= haVArr(4) or neighM_dbd_outval(4) or neighM_lsr_outval(4) or INT_OUT_V(4);
-outputArray(4) <= haOArr(4) when (haVArr(4) = '1') else
-                  neighM_outArr(4) when (neighM_dbd_outval(4) = '1' or neighM_lsr_outval(4) = '1') else
-                  INT_OUT_ARR(4) when (INT_OUT_V(4) = '1') else
-                  (others => '0');
-outputvalArray(5) <= haVArr(5) or neighM_dbd_outval(5) or neighM_lsr_outval(5) or INT_OUT_V(5);
-outputArray(5) <= haOArr(5) when (haVArr(5) = '1') else
-                  neighM_outArr(5) when (neighM_dbd_outval(5) = '1' or neighM_lsr_outval(5) = '1') else
-                  INT_OUT_ARR(5) when (INT_OUT_V(5) = '1') else
-                  (others => '0');
-outputvalArray(6) <= haVArr(6) or neighM_dbd_outval(6) or neighM_lsr_outval(6) or INT_OUT_V(6);
-outputArray(6) <= haOArr(6) when (haVArr(6) = '1') else
-                  neighM_outArr(6) when (neighM_dbd_outval(6) = '1' or neighM_lsr_outval(6) = '1') else
-                  INT_OUT_ARR(6) when (INT_OUT_V(6) = '1') else
-                  (others => '0');
-outputvalArray(7) <= haVArr(7) or neighM_dbd_outval(7) or neighM_lsr_outval(7) or INT_OUT_V(7);
-outputArray(7) <= haOArr(7) when (haVArr(7) = '1') else
-                  neighM_outArr(7) when (neighM_dbd_outval(7) = '1' or neighM_lsr_outval(7) = '1') else
-                  INT_OUT_ARR(7) when (INT_OUT_V(7) = '1') else
-                  (others => '0');
-outputvalArray(8) <= haVArr(8) or neighM_dbd_outval(8) or neighM_lsr_outval(8) or INT_OUT_V(8);
-outputArray(8) <= haOArr(8) when (haVArr(8) = '1') else
-                  neighM_outArr(8) when (neighM_dbd_outval(8) = '1' or neighM_lsr_outval(8) = '1') else
-                  INT_OUT_ARR(8) when (INT_OUT_V(8) = '1') else
-                  (others => '0');
+OUTMUX : for i in 1 to 8 generate
+  outputvalArray(i) <= haVArr(i) or neighM_dbd_outval(i) or neighM_lsr_outval(i) or INT_OUT_V(i);
+  outputArray(i) <= neighM_outArr(i) when (neighM_dbd_outval(i) = '1' or neighM_lsr_outval(i) = '1') else
+                    INT_OUT_ARR(i) when (INT_OUT_V(i) = '1') else
+                    haOArr(i) when (haVArr(i) = '1') else
+                    (others => '0');
+end generate;
 end Behavioral;
 

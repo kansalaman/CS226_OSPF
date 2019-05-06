@@ -206,17 +206,17 @@ begin
 		dbd_val_sig <= dbd_val;
 
 		if ((n_state = EXSTART) or n_state = EXCHANGE_SENDING) then
-			if (p_read = LSA_PART1
-				or p_read = LSA_PART2
-				or p_read = LSA_PART5
-				or p_read = LSA_PART3
-				or p_read = LSA_PART4) then
-				lsa_queue_wr_en <= '1';
-				lsa_queue_dout <= in1;
-			elsif (ID_part = "00" and dbd_val_sig = '1') then
-				lsa_queue_wr_en <= '0';
-				lsa_queue_dout <= (others => '0');
-				lsa_queue_dout <= (others => '0');
+			--if (p_read = LSA_PART1
+			--	or p_read = LSA_PART2
+			--	or p_read = LSA_PART5
+			--	or p_read = LSA_PART3
+			--	or p_read = LSA_PART4) then
+			--	lsa_queue_wr_en <= '1';
+			--	lsa_queue_dout <= in1;
+			if (ID_part = "00" and dbd_val_sig = '1') then
+				--lsa_queue_wr_en <= '0';
+				--lsa_queue_dout <= (others => '0');
+				--lsa_queue_dout <= (others => '0');
 				if (p_read = OPTIONS) then
 					neighbor_more <= temp_dbd_received(1);
 					if (temp_dbd_received(2) = '1') then --INIT from their end
@@ -237,22 +237,22 @@ begin
 					end if ;
 					init_sig <= '0';
 				end if;
-			else
-				lsa_queue_wr_en <= '0';
-				lsa_queue_dout <= (others => '0');
+			--else
+			--	lsa_queue_wr_en <= '0';
+			--	lsa_queue_dout <= (others => '0');
 			end if ;
 		elsif (n_state = EXCHANGE_LISTENING) then
 			send <= '1';
-			if (p_read = LSA_PART1
-				or p_read = LSA_PART2
-				or p_read = LSA_PART5
-				or p_read = LSA_PART3
-				or p_read = LSA_PART4) then
-				lsa_queue_wr_en <= '1';
-				lsa_queue_dout <= in1;
-			elsif (ID_part = "00" and dbd_val_sig = '1') then
-				lsa_queue_wr_en <= '0';
-				lsa_queue_dout <= (others => '0');
+			--if (p_read = LSA_PART1
+			--	or p_read = LSA_PART2
+			--	or p_read = LSA_PART5
+			--	or p_read = LSA_PART3
+			--	or p_read = LSA_PART4) then
+			--	lsa_queue_wr_en <= '1';
+			--	lsa_queue_dout <= in1;
+			if (ID_part = "00" and dbd_val_sig = '1') then
+				--lsa_queue_wr_en <= '0';
+				--lsa_queue_dout <= (others => '0');
 				if (p_read = OPTIONS) then
 					neighbor_more <= temp_dbd_received(1);
 					if (temp_dbd_received(2) = '1') then --INIT from their end
@@ -276,14 +276,11 @@ begin
 					end if ;
 					init_sig <= '0';
 				end if;
-			else
-				lsa_queue_wr_en <= '0';
-				lsa_queue_dout <= (others => '0');
+			--else
+			--	lsa_queue_wr_en <= '0';
+			--	lsa_queue_dout <= (others => '0');
 			end if ;
 		end if;
-		if (n_state = EXCHANGE_LISTENING) then
-			sending_complete <= '0';
-		end if ;
 	end if;
 end process;
 
@@ -754,32 +751,42 @@ end process;
 
 -------- READING DBD STATE MACHINE --------
 SEQREAD : process(clk)
+	variable p_var : DBD_READ;
 begin
 	if (clk = '1' and clk'event) then
 		if (ID_part = "00" and dbd_val = '1') then
-			assert (dbd_val = '0') report "Reached" severity note;
 			case( p_read ) is
 				when IDLE_R =>
-					p_read <= OPTIONS;
+					p_var := OPTIONS;
 				when OPTIONS =>
-					p_read <= SEQNUM;
+					p_var := SEQNUM;
 				when SEQNUM =>
-					p_read <= LSA_PART1;
+					p_var := LSA_PART1;
 				when LSA_PART1 =>
-					p_read <= LSA_PART2;
+					p_var := LSA_PART2;
 				when LSA_PART2 =>
-					p_read <= LSA_PART3;
+					p_var := LSA_PART3;
 				when LSA_PART3 =>
-					p_read <= LSA_PART4;
+					p_var := LSA_PART4;
 				when LSA_PART4 =>
-					p_read <= LSA_PART5;
+					p_var := LSA_PART5;
 				when others =>
-					p_read <= LSA_PART1;
+					p_var := LSA_PART1;
 			end case ;
 		elsif (dbd_val = '0') then
 			-- LET THE STATE MACHINE KNOW READING IS COMPLETE
-			p_read <= IDLE_R;
+			p_var := IDLE_R;
+		else
+			p_var := p_read;
 		end if ;
+		p_read <= p_var;
+		if (p_var = LSA_PART1 or p_var = LSA_PART2 or p_var = LSA_PART3 or p_var = LSA_PART4 or p_var = LSA_PART5) then
+			lsa_queue_wr_en <= '1';
+			lsa_queue_dout <= in1;
+		else
+			lsa_queue_wr_en <= '0';
+			lsa_queue_dout <= (others => '0');
+		end if;
 	end if ;
 end process;
 ----------------------------------------
