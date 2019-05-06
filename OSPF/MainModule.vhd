@@ -442,7 +442,7 @@ signal mainLSAQI, mainLSAQO : std_logic_vector(7 downto 0);
 signal mainLSAQDC : std_logic_vector(11 downto 0);
 
 --Database RAM I/O
-signal dbRAMena : std_logic;
+signal dbRAMena : std_logic := '1';
 signal dbRAMwea : std_logic_vector(0 downto 0);
 signal dbRAMaddr : std_logic_vector(11 downto 0);
 signal dbRAMdin : std_logic_vector(7 downto 0);

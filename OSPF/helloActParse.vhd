@@ -109,6 +109,7 @@ architecture Behavioral of helloActParse is
 	signal dbd_length : STD_LOGIC_VECTOR(6 downto 0);
 
 	signal temp_dbd_received : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
+	signal send : STD_LOGIC := '1';
 
 	signal master : STD_LOGIC := '1';
 	signal more_sig : STD_LOGIC := '1';
@@ -163,7 +164,7 @@ dbd_packet(543 downto 515) <= (others => '0');
 dbd_packet(514) <= init_sig;
 dbd_packet(513) <= more_sig;
 dbd_packet(512) <= master;
-dbd_packet(511 downto 480) <= defaultseq;
+dbd_packet(511 downto 480) <= curr_seqnum;
 dbd_packet(479 downto 320) <= lsa_packet1;
 dbd_packet(319 downto 160) <= lsa_packet2;
 dbd_packet(159 downto 0) <= lsa_packet3;
@@ -184,6 +185,7 @@ begin
 			seqnum_error <= '0';
 			curr_seqnum <= defaultseq;
 			dbd_rst <= '1';
+			send <= '1';
 		else
 			dbd_rst <= '0';
 		end if ;
@@ -202,32 +204,8 @@ begin
 		routid_sig <= routerid_val;
 		neighval_sig <= neighbor_val;
 		dbd_val_sig <= dbd_val;
-		--case( n_dbd ) is
-		--	when IDLE =>
-		--		dbd_out1 <= (others => '0');
-		--		dbd_outval_sig <= '0';
 
-		--	when FETCHING_LSA =>
-		--		dbd_out1 <= (others => '0');
-		--		dbd_outval_sig <= '0';
-		--		if (dbd_valid = '1') then
-		--			r_msb := conv_integer(receiving_lsa)*8 + 7;
-		--			l_msb := conv_integer(receiving_lsa)*8;
-		--			dbd_packet(r_msb downto l_msb) <= dbd_out;
-		--			receiving_lsa <= receiving_lsa - 1;
-		--		end if;
-		--	when SENDING_IP =>
-		--		receiving_lsa <= receiving_begin;
-		--		dbd_out1 <= IPheader(msb downto lsb);
-		--		dbd_outval_sig <= '1';
-		--	when SENDING_OSPFHEAD =>
-		--		dbd_out1 <= ospfheader(msb downto lsb);
-		--		dbd_outval_sig <= '1';
-		--	when others => --SENDING_DBD
-		--		dbd_out1 <= dbd_packet(msb downto lsb);
-		--		dbd_outval_sig <= '1';
-		--end case ;
-		if (n_state = EXSTART) then
+		if ((n_state = EXSTART) or n_state = EXCHANGE_SENDING) then
 			if (p_read = LSA_PART1
 				or p_read = LSA_PART2
 				or p_read = LSA_PART5
@@ -237,6 +215,7 @@ begin
 				lsa_queue_dout <= in1;
 			elsif (ID_part = "00" and dbd_val_sig = '1') then
 				lsa_queue_wr_en <= '0';
+				lsa_queue_dout <= (others => '0');
 				lsa_queue_dout <= (others => '0');
 				if (p_read = OPTIONS) then
 					neighbor_more <= temp_dbd_received(1);
@@ -263,6 +242,7 @@ begin
 				lsa_queue_dout <= (others => '0');
 			end if ;
 		elsif (n_state = EXCHANGE_LISTENING) then
+			send <= '1';
 			if (p_read = LSA_PART1
 				or p_read = LSA_PART2
 				or p_read = LSA_PART5
@@ -617,7 +597,7 @@ begin
 	if (clk = '1' and clk'event) then
 		case( p_dbd ) is
 			when IDLE =>
-				if (p_state = EXSTART) then
+				if (p_state = EXSTART and send = '1') then
 					sending_complete <= '0';
 					p_dbd <= SENDING_IP;
 					msb := 0;
@@ -648,7 +628,7 @@ begin
 					dbd_outval_sig <= '0';
 				end if ;
 			when LSA_WAIT =>
-				if (dbd_valid <= '1') then
+				if (dbd_valid = '1') then
 					dbd_rd_en <= '0';
 					p_dbd <= FETCHING_LSA1;
 					msb := 0;
@@ -757,6 +737,7 @@ begin
 					dbd_out1 <= (others => '0');
 					dbd_outval_sig <= '0';
 					sending_complete <= '1';
+					send <= '0';
 				else
 					p_dbd <= SENDING_DBD;
 					msb := conv_integer(sending_length + 1)*8;
