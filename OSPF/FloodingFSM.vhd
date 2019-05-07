@@ -80,17 +80,17 @@ begin
 	 writeIDLE : for i in 0 to 7 loop
         out_arr(i) <= (others => '0');
       end loop;
-    write_arr <= (others => '1');
       if (val = '1') then
         n_temp <= din;
         n_state <= FLOODING;
+        write_arr <= port_in;
       else
+        write_arr <= (others => '1');
         n_temp <= (others => '0');
         n_state <= IDLE;
       end if;
     when others =>
 	 n_temp <= din;
-   write_arr <= port_in;
    writeLoop : for i in 0 to 7 loop
      if (port_in(i) = '0') then
        out_arr(i) <= p_temp;
@@ -100,12 +100,13 @@ begin
    end loop;
     if (val = '1') then
 		  n_state <= FLOODING;
+      write_arr <= port_in;
     else
-      --write_arr <= (others => '1');
+      write_arr <= (others => '1');
       --writeNULL : for i in 0 to 7 loop
       --  out_arr(i) <= (others => '0');
       --end loop;
-		n_state <= IDLE;
+		  n_state <= IDLE;
     end if;
   end case;
 end process;

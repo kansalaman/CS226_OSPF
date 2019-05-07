@@ -36,7 +36,7 @@ entity lsraction is
 			  data_val: in STD_LOGIC;
            out1 : inout  STD_LOGIC_VECTOR (7 downto 0):= "00000000";
 			  badreq: out STD_LOGIC;
-           out_val : out  STD_LOGIC;
+           out_val : out  STD_LOGIC:='0';
 			 
 			 -- Memory related controls
 			 -- empty : in std_logic;
@@ -116,12 +116,15 @@ variable increment: integer := 0;
 begin	
 	case (p_state) is 
 		when IDLE =>
+			out_val <= '0';
 			if (len_val = '1') then
 				n_state <= WAIT_FOR_DATA;
 				savelen <= len - conv_std_logic_vector(24, 16);
 				n_len <= len - conv_std_logic_vector(24, 16);
+--				out_val <= '0';
 --				n_state <= RECV;
 			else
+				out_val <= '0';
 				n_state <= p_state;
 				savelen <= zero8 & zero8;
 			end if;
@@ -166,6 +169,7 @@ begin
 			end if;
 		end if;
 		when JTER =>  		
+		out_val <= '0';
 		if (p_lsacounter = "000") then
 				n_state <= IDLE;
 				n_lsacounter <= "000";
@@ -250,6 +254,8 @@ begin
 			if (p_sendcounter = advlen -1) then
 				db_read <= '0';
 				db_addr <= p_loc;
+--				out_val <= '0';
+--				out1 <= db_din;
 				n_sendcounter <= (others => '0'); 
 				next_search_loc <= zero8 & "0001";
 				n_loc <= zero8 & "0001";

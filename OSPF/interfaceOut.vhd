@@ -312,7 +312,7 @@ begin
             if(packet_count = 3) then
                 n_state <= makeHead;
                 n_counter <= 1;
-            elsif(empq1='1') then
+            elsif(empq1 /= '0') then
                 n_state <= makeHead;
                 n_counter <= 1;
             elsif(p_counter=lsa_length_int and temp_wait/=0) then
@@ -329,7 +329,7 @@ begin
             if(packet_count = 3) then
                 n_state <= makeHead;
                 n_counter <= 1;
-            elsif(empq2='1') then
+            elsif(empq2 /= '0') then
                 n_state <= makeHead;
                 n_counter <= 1;
             elsif(p_counter=lsa_length_int and temp_wait/=0) then

@@ -1790,7 +1790,7 @@ LAB4:    xsi_set_current_line(312, ng0);
 LAB15:    t1 = (t0 + 1832U);
     t2 = *((char **)t1);
     t3 = *((unsigned char *)t2);
-    t6 = (t3 == (unsigned char)3);
+    t6 = (t3 != (unsigned char)2);
     if (t6 != 0)
         goto LAB16;
 
@@ -1861,7 +1861,7 @@ LAB5:    xsi_set_current_line(329, ng0);
 LAB30:    t1 = (t0 + 1992U);
     t2 = *((char **)t1);
     t3 = *((unsigned char *)t2);
-    t6 = (t3 == (unsigned char)3);
+    t6 = (t3 != (unsigned char)2);
     if (t6 != 0)
         goto LAB31;
 

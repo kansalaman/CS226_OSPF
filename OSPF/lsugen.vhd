@@ -50,7 +50,7 @@ entity lsugen is
     db_read : out std_logic;
     db_addr : out std_logic_vector(ADDR_SIZE-1 downto 0);
     db_din : in std_logic_vector(7 downto 0);
-    db_write : out std_logic;
+    db_write : out std_logic := '0';
     db_dout : out std_logic_vector(7 downto 0);
 	 db_busy_read : in std_logic;
 	 db_busy_write : in std_logic
@@ -77,8 +77,8 @@ constant typeval : std_logic_vector(7 downto 0) := "00000001";
 
 -- Link metrics
 constant metric1: std_logic_vector(15 downto 0) := zero8 & "00000001";
-constant metric2: std_logic_vector(15 downto 0) := zero8 & "00000101";
-constant metric3: std_logic_vector(15 downto 0) := zero8 & "00000011";
+constant metric2: std_logic_vector(15 downto 0) := zero8 & "00000001";
+constant metric3: std_logic_vector(15 downto 0) := zero8 & "00000101";
 constant metric4: std_logic_vector(15 downto 0) := zero8 & "00000011";
 constant metric5: std_logic_vector(15 downto 0) := zero8 & "00000001";
 constant metric6: std_logic_vector(15 downto 0) := zero8 & "00001001";

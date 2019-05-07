@@ -32,8 +32,8 @@ entity MainModule is
 
     --Outputs
     out1, out2, out3, out4, out5, out6, out7, out8 : out std_logic_vector(7 downto 0);
-    out_val1, out_val2, out_val3, out_val4, out_val5, out_val6, out_val7, out_val8 : out std_logic
-
+    out_val1, out_val2, out_val3, out_val4, out_val5, out_val6, out_val7, out_val8 : out std_logic;
+    dijkstra_on : in std_logic
   );
 end MainModule;
 
@@ -397,7 +397,7 @@ signal haVArr : IOArrayV;
 --LSR I/O
 signal lsrOutArr : IOArrayT;
 
-signal lsrOutVArr, lsr_db_read  : IOArrayV;
+signal lsrOutVArr, lsr_db_read  : IOArrayV := (others => '0');
 type LsrAddrT is array(1 to 8) of std_logic_vector(11 downto 0);
 signal lsr_db_addr : LsrAddrT;
 
@@ -423,7 +423,7 @@ signal LSUM_fl_out : std_logic_vector(7 downto 0);
 signal LSUM_fl_port : std_logic_vector(7 downto 0);
 signal LSUM_db_write : std_logic_vector(0 downto 0);
 signal LSUM_db_out : std_logic_vector(7 downto 0);
-signal dijkstra_on : std_logic;
+signal dijkstra_on_lsum : std_logic;
 
 --LSUGEN I/O
 signal LSU_GEN_out_val : STD_LOGIC;
@@ -470,8 +470,8 @@ signal dj_addr_read, dj_addr_write : std_logic_vector(5 downto 0) := (others => 
 signal dj_done : std_logic;
 
 --FLOODING I/O
-signal fl_out : IOArrayT;
-signal fl_write : IOArrayV;
+signal fl_out : IOArrayT := (others => (others => '0'));
+signal fl_write : IOArrayV := (others => '0');
 signal fl_val : std_logic;
 signal fl_port_in, fl_din : std_logic_vector(7 downto 0);
 
@@ -750,7 +750,7 @@ begin
       fl_val => LSUM_fl_val,
       fl_out => LSUM_fl_out,
       fl_port => LSUM_fl_port,
-      dijkstra_on => dijkstra_on
+      dijkstra_on => dijkstra_on_lsum
     );
 
   --Database RAM
@@ -878,57 +878,19 @@ dbRAMaddr <= lsu_gen_db_addr when (lsu_gen_db_write(0) = '1') else
              lsr_db_addr(6) when (lsr_db_read(6) = '1') else
              lsr_db_addr(7) when (lsr_db_read(7) = '1') else
              lsr_db_addr(8) when (lsr_db_read(8) = '1') else
-				 lsu_gen_db_addr when (lsu_gen_db_read = '1') else
              LSUMRAMaddr when (LSUMRAMrea = '1') else
              (others => '0');
 
 RAMDijkstra_addr <= db2dj_addr or dj_addr_read;
 
---QUEUEMUX : for i in 1 to 8 loop
---    LSAQIArr(i) <= fl_out(i) when (fl_write(i) = '1') else
---                   lsrOutArr(i) when (telling_lsr(i) = '1') else
---                   (others => '0');
---    LSAQWArr(i) <= fl_write(i) or telling_lsr(i);
---end loop;
-LSAQIArr(1) <= fl_out(1) when (fl_write(1) = '1') else
-                   lsrOutArr(1) when (telling_lsr(1) = '1') else
-                   (others => '0');
-LSAQWArr(1) <= fl_write(1) or telling_lsr(1);
 
-LSAQIArr(2) <= fl_out(2) when (fl_write(2) = '1') else
-                   lsrOutArr(2) when (telling_lsr(2) = '1') else
-                   (others => '0');
-LSAQWArr(2) <= fl_write(2) or telling_lsr(2);
+QUEUEMUX : for i in 1 to 8 generate
+    LSAQIArr(i) <= fl_out(i) when (fl_write(i) = '1') else
+                   lsrOutArr(i) when (lsrOutVArr(i) = '1') else
+                    (others => '0');
+    LSAQWArr(i) <= fl_write(i) or lsrOutVArr(i);
 
-LSAQIArr(3) <= fl_out(3) when (fl_write(3) = '1') else
-                   lsrOutArr(3) when (telling_lsr(3) = '1') else
-                   (others => '0');
-LSAQWArr(3) <= fl_write(3) or telling_lsr(3);
-
-LSAQIArr(4) <= fl_out(4) when (fl_write(4) = '1') else
-                   lsrOutArr(4) when (telling_lsr(4) = '1') else
-                   (others => '0');
-LSAQWArr(4) <= fl_write(4) or telling_lsr(4);
-
-LSAQIArr(5) <= fl_out(5) when (fl_write(5) = '1') else
-                   lsrOutArr(5) when (telling_lsr(5) = '1') else
-                   (others => '0');
-LSAQWArr(5) <= fl_write(5) or telling_lsr(5);
-
-LSAQIArr(6) <= fl_out(6) when (fl_write(6) = '1') else
-                   lsrOutArr(6) when (telling_lsr(6) = '1') else
-                   (others => '0');
-LSAQWArr(6) <= fl_write(6) or telling_lsr(6);
-
-LSAQIArr(7) <= fl_out(7) when (fl_write(7) = '1') else
-                   lsrOutArr(7) when (telling_lsr(7) = '1') else
-                   (others => '0');
-LSAQWArr(7) <= fl_write(7) or telling_lsr(7);
-
-LSAQIArr(8) <= fl_out(8) when (fl_write(8) = '1') else
-                   lsrOutArr(8) when (telling_lsr(8) = '1') else
-                   (others => '0');
-LSAQWArr(8) <= fl_write(8) or telling_lsr(8);
+end generate;
 
 fl_val <= LSUM_fl_val or LSU_GEN_out_val;
 fl_din <= LSU_GEN_out1 when (LSU_GEN_out_val = '1') else
@@ -951,7 +913,7 @@ mainLSAQI <= LSUPQ_O(1) when (LSUPQ_W(1) = '1') else
 
 dbRAMwea <= lsu_gen_db_write or LSUM_db_write;
 dbRAMdin <= lsu_gen_db_dout when (lsu_gen_db_write(0) = '1') else
-            LSUM_db_out when (lsu_gen_db_write(0) = '1') else
+            LSUM_db_out when (LSUM_db_write = "1") else
             (others => '0');
 
 OUTMUX : for i in 1 to 8 generate

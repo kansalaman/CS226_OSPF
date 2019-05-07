@@ -31,16 +31,16 @@ entity LinkStateUpdateMachine is
   (
     clk : in std_logic;
     empty : in std_logic;
-    q_din : in std_logic_vector(7 downto 0);
-    q_read : out std_logic;
-    db_read : out std_logic;
+    q_din : in std_logic_vector(7 downto 0) := (others => '0');
+    q_read : out std_logic := '0';
+    db_read : out std_logic := '0';
     db_addr : out std_logic_vector(ADDR_SIZE-1 downto 0);
-    db_din : in std_logic_vector(7 downto 0);
-    db_write : out std_logic;
-    db_dout : out std_logic_vector(7 downto 0);
-    fl_val : out std_logic;
-    fl_out : out std_logic_vector(7 downto 0);
-    fl_port : out std_logic_vector(7 downto 0);
+    db_din : in std_logic_vector(7 downto 0) := (others => '0');
+    db_write : out std_logic := '0';
+    db_dout : out std_logic_vector(7 downto 0) := (others => '0');
+    fl_val : out std_logic := '0';
+    fl_out : out std_logic_vector(7 downto 0) := (others => '0');
+    fl_port : out std_logic_vector(7 downto 0) := (others => '0');
     dijkstra_on : out std_logic
   );
 end LinkStateUpdateMachine;

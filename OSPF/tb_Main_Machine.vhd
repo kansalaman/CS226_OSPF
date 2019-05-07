@@ -43,8 +43,8 @@ ARCHITECTURE behavior OF tb_Main_Machine IS
          out_val5 : OUT std_logic;
          out_val6 : OUT std_logic;
          out_val7 : OUT std_logic;
-         out_val8 : OUT std_logic
---         dijkstra_on : IN  std_logic
+         out_val8 : OUT std_logic;
+         dijkstra_on : IN  std_logic
         );
     END COMPONENT;
     
@@ -75,7 +75,7 @@ ARCHITECTURE behavior OF tb_Main_Machine IS
    signal out_val6 : std_logic := '0';
    signal out_val7 : std_logic := '0';
    signal out_val8 : std_logic := '0';
---   signal dijkstra_on : std_logic := '0';
+   signal dijkstra_on : std_logic := '0';
 
  	--Outputs
    signal out1 : std_logic_vector(7 downto 0);
@@ -126,8 +126,8 @@ BEGIN
           out_val5 => out_val5,
           out_val6 => out_val6,
           out_val7 => out_val7,
-          out_val8 => out_val8
---          dijkstra_on => dijkstra_on
+          out_val8 => out_val8,
+          dijkstra_on => dijkstra_on
         );
 
    -- Clock process definitions
@@ -1436,7 +1436,7 @@ in2<="00000100";
 wait for clk_period;
 in2<="00000000";
 wait for clk_period;
-in2<="11100101";
+in2<="11101000";
 wait for clk_period;
 in2<="00000010";
 wait for clk_period;
@@ -1948,7 +1948,7 @@ in3<="00000100";
 wait for clk_period;
 in3<="00000000";
 wait for clk_period;
-in3<="11100101";
+in3<="11101000";
 wait for clk_period;
 in3<="00000011";
 wait for clk_period;
@@ -2406,9 +2406,11 @@ in3<="00000000";
 wait for clk_period;
 in3<="00000011";
 wait for clk_period;
-
 in_val3 <= '0';
-
+wait for 421*clk_period;
+dijkstra_on <= '1';
+wait for clk_period;
+dijkstra_on <= '0';
 
       wait;
    end process;
