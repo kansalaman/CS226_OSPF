@@ -1,2 +1,0 @@
-vhdl isim_temp "message_parser.vhd"
-vhdl isim_temp "parser_tb.vhd"

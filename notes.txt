@@ -1,6 +1,0 @@
--- Convince sir to allow different input-output buses for hello and LSU updates to ensure:-
-    1. No timing issues due to queues
-    2. There are no issues of interference of the 2 independent algorithms
-    3. Not related to OSPF, the core of the project. 
-    4. In reality, OSPF module should not work on packet management.
-    

@@ -1,2 +1,0 @@
-vhdl isim_temp "helloalive.vhd"
-vhdl isim_temp "tb_helloalive.vhd"

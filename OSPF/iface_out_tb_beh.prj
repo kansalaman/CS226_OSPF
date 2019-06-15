@@ -1,3 +1,0 @@
-vhdl work "ipcore_dir/FIFOACK.vhd"
-vhdl work "interfaceOut.vhd"
-vhdl work "iface_out_tb.vhd"
